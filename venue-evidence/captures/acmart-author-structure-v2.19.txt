@@ -1,0 +1,15 @@
+Source: acmart v2.19 documented source and supplied acmart.cls
+Version: 2.19, 2026-06-27
+
+Relevant author-structure conclusions:
+- Use one independent author record per person.
+- A shared affiliation is repeated per author.
+- Institution, city, and country are structured affiliation fields.
+- Place \correspondingauthor immediately after the corresponding author's name; the corresponding author must have an email.
+- ORCID may be attached to each author with \orcid.
+
+Project application:
+- Haoyi Zhang, Mengyang Wu, and Md Maruf Hasan each have independent XJTLU author records.
+- Huaijin Ran has an independent NTU Singapore record, is fourth author, and is marked with \correspondingauthor.
+- All four records contain the user-provided ORCID and email.
+- All four ORCID strings pass the ISO 7064 MOD 11-2 checksum; ownership is not inferred from checksum validity.

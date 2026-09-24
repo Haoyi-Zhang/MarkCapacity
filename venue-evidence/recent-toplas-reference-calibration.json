@@ -1,0 +1,204 @@
+{
+  "schema": "RECENT_TOPLAS_REFERENCE_CALIBRATION_V1",
+  "generated_at": "2026-07-22T09:41:00+09:00",
+  "venue": "ACM Transactions on Programming Languages and Systems",
+  "track": "Research Article",
+  "sample_size": 12,
+  "selection_rule": "Twelve recent TOPLAS research articles closest in formal semantics, metatheory, program analysis, correctness, or observational/security reasoning; selected before computing the statistic.",
+  "count_method": "For each final published article, count the numbered scholarly bibliography by its terminal reference label. Conference precursors, repositories, documentation, and supplementary-resource citations are not substituted for the TOPLAS article bibliography.",
+  "reference_counts_sorted": [
+    20,
+    27,
+    32,
+    46,
+    59,
+    60,
+    63,
+    64,
+    88,
+    88,
+    89,
+    95
+  ],
+  "median": 61.5,
+  "p75": 88,
+  "p75_method": "nearest-rank: sorted value at ceil(0.75*n)",
+  "numeric_reference_floor": 62,
+  "floor_rule": "ceil(sample median); the floor is a coverage sanity check and never permission to pad.",
+  "current_manuscript_reference_count": 68,
+  "floor_verdict": "PASS_EXCEEDS_FLOOR_BY_SIX_WITH_NO_UNUSED_ENTRY",
+  "records": [
+    {
+      "paper_id": "SV01",
+      "title": "Locally Abstract, Globally Concrete Semantics of Concurrent Programming Languages",
+      "authors": [
+        "Crystal Chang Din",
+        "Reiner Hähnle",
+        "Ludovic Henrio",
+        "Einar Broch Johnsen",
+        "Violet Ka I Pun",
+        "Silvia Lizeth Tapia Tarifa"
+      ],
+      "year": 2024,
+      "doi": "10.1145/3648439",
+      "reference_count": 89,
+      "count_locator": "final published numbered bibliography terminates at [89]",
+      "verification_status": "VERIFIED_FINAL_PUBLISHED_REFERENCE_LIST"
+    },
+    {
+      "paper_id": "SV02",
+      "title": "Interactive Abstract Interpretation with Demanded Summarization",
+      "authors": [
+        "Benno Stein",
+        "Bor-Yuh Evan Chang",
+        "Manu Sridharan"
+      ],
+      "year": 2024,
+      "doi": "10.1145/3648441",
+      "reference_count": 88,
+      "count_locator": "final published numbered bibliography terminates at [88]",
+      "verification_status": "VERIFIED_FINAL_PUBLISHED_REFERENCE_LIST"
+    },
+    {
+      "paper_id": "SV03",
+      "title": "Proving Correctness of Parallel Implementations of Transition System Models",
+      "authors": [
+        "Frank S. de Boer",
+        "Einar Broch Johnsen",
+        "Violet Ka I Pun",
+        "Silvia Lizeth Tapia Tarifa"
+      ],
+      "year": 2024,
+      "doi": "10.1145/3660630",
+      "reference_count": 60,
+      "count_locator": "final published numbered bibliography terminates at [60]",
+      "verification_status": "VERIFIED_FINAL_PUBLISHED_REFERENCE_LIST"
+    },
+    {
+      "paper_id": "SV04",
+      "title": "Modal Crash Types for WAR-Aware Intermittent Computing",
+      "authors": [
+        "Myra Dotzel",
+        "Farzaneh Derakhshan",
+        "Milijana Surbatovich",
+        "Limin Jia"
+      ],
+      "year": 2025,
+      "doi": "10.1145/3716311",
+      "reference_count": 64,
+      "count_locator": "final published numbered bibliography terminates at [64]",
+      "verification_status": "VERIFIED_FINAL_PUBLISHED_REFERENCE_LIST"
+    },
+    {
+      "paper_id": "SV05",
+      "title": "Scoped Effects, Scoped Operations, and Parameterized Algebraic Theories",
+      "authors": [
+        "Cristina Matache",
+        "Sam Lindley",
+        "Sean Moss",
+        "Sam Staton",
+        "Nicolas Wu",
+        "Zhixuan Yang"
+      ],
+      "year": 2025,
+      "doi": "10.1145/3731678",
+      "reference_count": 46,
+      "count_locator": "final published numbered bibliography terminates at [46]",
+      "verification_status": "VERIFIED_FINAL_PUBLISHED_REFERENCE_LIST"
+    },
+    {
+      "paper_id": "SV06",
+      "title": "Outcome Logic: A Unified Approach to the Metatheory of Program Logics with Branching Effects",
+      "authors": [
+        "Noam Zilberstein"
+      ],
+      "year": 2025,
+      "doi": "10.1145/3743131",
+      "reference_count": 95,
+      "count_locator": "final published numbered bibliography terminates at [95]",
+      "verification_status": "VERIFIED_FINAL_PUBLISHED_REFERENCE_LIST"
+    },
+    {
+      "paper_id": "SV07",
+      "title": "Universal Composability Is Robust Compilation",
+      "authors": [
+        "Marco Patrignani",
+        "Robert Künnemann",
+        "Riad S. Wahby",
+        "Ethan Cecchetti"
+      ],
+      "year": 2024,
+      "doi": "10.1145/3698234",
+      "reference_count": 88,
+      "count_locator": "final published numbered bibliography terminates at [88]",
+      "verification_status": "VERIFIED_FINAL_PUBLISHED_REFERENCE_LIST"
+    },
+    {
+      "paper_id": "SV08",
+      "title": "A Modular Approach to Metatheoretic Reasoning for Extensible Languages",
+      "authors": [
+        "Dawn Michaelson",
+        "Gopalan Nadathur",
+        "Eric Van Wyk"
+      ],
+      "year": 2025,
+      "doi": "10.1145/3731555",
+      "reference_count": 20,
+      "count_locator": "final published numbered bibliography terminates at [20]",
+      "verification_status": "VERIFIED_FINAL_PUBLISHED_REFERENCE_LIST"
+    },
+    {
+      "paper_id": "SV09",
+      "title": "Polynomial Bounds of CFLOBDDs against BDDs",
+      "authors": [
+        "Xusheng Zhi",
+        "Thomas Reps"
+      ],
+      "year": 2025,
+      "doi": "10.1145/3716313",
+      "reference_count": 27,
+      "count_locator": "final published numbered bibliography terminates at [27]",
+      "verification_status": "VERIFIED_FINAL_PUBLISHED_REFERENCE_LIST"
+    },
+    {
+      "paper_id": "SV10",
+      "title": "Generic Bidirectional Typing for Dependent Type Theories",
+      "authors": [
+        "Thiago Felicissimo"
+      ],
+      "year": 2025,
+      "doi": "10.1145/3715095",
+      "reference_count": 63,
+      "count_locator": "final published numbered bibliography terminates at [63]",
+      "verification_status": "VERIFIED_FINAL_PUBLISHED_REFERENCE_LIST"
+    },
+    {
+      "paper_id": "SV11",
+      "title": "Observational Equality Meets CIC",
+      "authors": [
+        "Loïc Pujet",
+        "Yann Leray",
+        "Nicolas Tabareau"
+      ],
+      "year": 2025,
+      "doi": "10.1145/3719342",
+      "reference_count": 32,
+      "count_locator": "final published numbered bibliography terminates at [32]",
+      "verification_status": "VERIFIED_FINAL_PUBLISHED_REFERENCE_LIST"
+    },
+    {
+      "paper_id": "SV12",
+      "title": "A Layered Approach to Intensional Analysis in Type Theory",
+      "authors": [
+        "Jason Z. S. Hu",
+        "Brigitte Pientka"
+      ],
+      "year": 2024,
+      "doi": "10.1145/3707203",
+      "reference_count": 59,
+      "count_locator": "final published numbered bibliography terminates at [59]",
+      "verification_status": "VERIFIED_FINAL_PUBLISHED_REFERENCE_LIST"
+    }
+  ],
+  "limitations": "The calibration measures bibliography size only. It does not prescribe scientific quality, section structure, or a target count above the floor."
+}

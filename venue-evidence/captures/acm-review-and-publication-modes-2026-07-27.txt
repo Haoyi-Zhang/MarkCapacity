@@ -1,0 +1,21 @@
+Sources rechecked read-only on 2026-07-27 UTC
+
+1. ACM TOPLAS Submission Instructions
+   URL: https://compilers.cs.ucla.edu/toplas/submissions.html
+   Visible requirements: submit through ACM Manuscript Central; submit a full paper with appropriate citations; include a cover letter documenting thesis, workshop, conference, or journal versions; prepare the submission in ACM LaTeX or Word style. The visible page does not state whether current review is anonymous.
+
+2. ACM Master Article Template / current official small-journal template
+   URL: https://www.acm.org/publications/authors/submissions
+   Official template listing: https://www.overleaf.com/latex/templates/association-for-computing-machinery-acm-small-standard-format-template/sksvmbxyfhnw
+   Current guidance distinguishes review from publication output. Review manuscripts use the single-column `manuscript` mode. The `review` option adds continuous line numbers. Accepted manuscripts are transformed through the ACM production workflow.
+
+3. acmart 2.19 documentation and samples
+   URL: https://ctan.org/pkg/acmart
+   Samples: https://ctan.org/tex-archive/macros/latex/contrib/acmart/samples
+   The maintained class is version 2.19 dated 2026-06-27. The class documentation lists TOPLAS under the `acmsmall` small-journal publication format. The sample set includes both `acmsmall-submission.pdf` and publication-layout examples. The class implements review line numbers when the `review` option is active.
+
+Conservative project decision
+- Preserve the exactly 48-page `acmsmall,screen` PDF as the internal publication-size manuscript.
+- Generate `manuscript,screen,review` and `manuscript,screen,review,anonymous` derivatives, each with class-controlled US-Letter geometry and line numbers.
+- Do not choose identified versus anonymous review from incomplete public evidence. The live TOPLAS portal or current journal-specific guide must decide immediately before submission.
+- Never change margins manually or edit the supplied class/style files.

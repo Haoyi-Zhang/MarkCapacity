@@ -1,0 +1,353 @@
+{
+  "schema": "OFFICIAL_LOCK",
+  "project_id": "TOPLAS-19",
+  "generated_at": "2026-09-23",
+  "venue": "ACM Transactions on Programming Languages and Systems",
+  "article_type": "Research article",
+  "limit_kind": "NONE",
+  "hard_limit": null,
+  "advisory_threshold": {
+    "pages": 50,
+    "meaning": "advance-contact threshold; PROVISIONAL, not a cap"
+  },
+  "template_mode": "one identified manuscript,screen,review PDF from the supplied unmodified acmart class; live anonymity selection remains external",
+  "template_archive_sha256": "9e5c2e1c3cea0e4a274edae4a172184d51750765c3460a2c712b0965e0f3f063",
+  "acmart_class_sha256": "2f949e6e3f2a79f2cdc218b9dcdbaa7dd451adb4ee0be1af6dc7ebe00b318ea7",
+  "acmart_class_version": "2.19 (2026/06/27)",
+  "ai_policy_classification": "INCOMPATIBLE_PRIMARY_EXECUTOR",
+  "submission_policy_status": "HOLD_AUTHOR_LIST_AND_LIVE_PORTAL_ACTIONS",
+  "conflicts": [
+    {
+      "id": "TEMPLATE-VERSION-MODE-CONFLICT",
+      "description": "The accessible general ACM guidance and supplied class version do not establish the exact current TOPLAS review/anonymity mode for a future portal submission.",
+      "resolution": "Preserve the supplied bundle and identified internal 48-page candidate; generate the required review form only after a live portal check."
+    },
+    {
+      "id": "AUTHORSHIP-ELIGIBILITY",
+      "description": "The current ACM policy requires qualifying human intellectual contribution, approval, and accountability.",
+      "resolution": "Complete internal research; named authors must independently confirm eligibility and approve any future submission."
+    },
+    {
+      "id": "ORCID-COMPLETENESS",
+      "description": "All four author records now contain user-provided checksum-valid ORCID identifiers.",
+      "resolution": "Each author confirms ownership of the recorded identifier in the live submission system."
+    }
+  ],
+  "records": [
+    {
+      "fact_id": "OFFICIAL-TEMPLATE-001",
+      "fact": "ACM requires its authoring template and single-column review manuscripts.",
+      "url": "https://www.acm.org/publications/authors/submissions",
+      "title": "Submitting Articles to ACM Journals",
+      "retrieved_at": "2026-07-18T21:08:33+09:00",
+      "timezone": "Asia/Seoul (UTC+09:00)",
+      "page_sha256": "dc9625e9404b36174463ab3041f0a86b656e78d9a87f0c10e258ec7510f9acd8",
+      "page_sha256_scope": "RELEVANT_PARSED_CAPTURE_NOT_FULL_HTML",
+      "capture_path": "artifact/venue-evidence/captures/acm-general-submissions.txt",
+      "locator": "Visible page lines 377-394 in the read-only public rendering",
+      "excerpt_or_faithful_paraphrase": "ACM authoring template required; review submission is single-column; visible page names acmart 2.16 with manuscript mode.",
+      "source_priority": "OFFICIAL_ACM_GENERAL",
+      "cycle": "FINAL_INTERNAL_LOCK",
+      "status": "FINAL"
+    },
+    {
+      "fact_id": "OFFICIAL-AUTHORSHIP-001",
+      "fact": "ACM authors must be identifiable humans who originate/contribute substantially and accept responsibility.",
+      "url": "https://www.acm.org/publications/policies/new-acm-policy-on-authorship",
+      "title": "ACM Policy on Authorship",
+      "retrieved_at": "2026-07-18T21:08:33+09:00",
+      "timezone": "Asia/Seoul (UTC+09:00)",
+      "page_sha256": "4a629c8285dda7aec9bc9a1c741bf763d8b08ec05f92856687bd8d76d1ddb399",
+      "page_sha256_scope": "RELEVANT_PARSED_CAPTURE_NOT_FULL_HTML",
+      "capture_path": "artifact/venue-evidence/captures/acm-authorship-policy.txt",
+      "locator": "Policy date and criteria in visible page lines 378-412",
+      "excerpt_or_faithful_paraphrase": "Identifiable human authors must make substantial intellectual contributions and take responsibility; generative-AI content requires disclosure.",
+      "source_priority": "OFFICIAL_ACM_POLICY",
+      "cycle": "FINAL_INTERNAL_LOCK",
+      "status": "FINAL"
+    },
+    {
+      "fact_id": "TOPLAS-LENGTH-001",
+      "fact": "No hard full-research-article cap was established; above 50 pages is treated as an advance-contact threshold.",
+      "url": "https://dl.acm.org/journal/toplas/author-guidelines",
+      "title": "TOPLAS Author Guidelines",
+      "retrieved_at": "2026-07-18T21:08:33+09:00",
+      "timezone": "Asia/Seoul (UTC+09:00)",
+      "page_sha256": "e65f1f8db12ec145cdd2d5926761551096af91d94600e0bb225e73c7b6b7f616",
+      "page_sha256_scope": "PROJECT_ORIENTATION_CAPTURE; LIVE_PAGE_INCOMPLETE",
+      "capture_path": "artifact/venue-evidence/captures/toplas-length-orientation.txt",
+      "locator": "Frozen venue orientation; current direct page inaccessible in full",
+      "excerpt_or_faithful_paraphrase": "No hard cap; likely length above 50 pages should be discussed with the Editor-in-Chief before submission.",
+      "source_priority": "OFFICIAL_URL_WITH_PROVISIONAL_CAPTURE",
+      "cycle": "FINAL_INTERNAL_LOCK",
+      "status": "PROVISIONAL"
+    },
+    {
+      "fact_id": "SUPPLIED-TEMPLATE-001",
+      "fact": "The supplied template archive is preserved by hash; its acmart class reports version 2.19 dated 2026/06/27.",
+      "url": "user-supplied-file:TOPLAS-19_TEMPLATE.zip",
+      "title": "TOPLAS-19 supplied template bundle",
+      "retrieved_at": "2026-07-18T21:08:33+09:00",
+      "timezone": "Asia/Seoul (UTC+09:00)",
+      "page_sha256": "9e5c2e1c3cea0e4a274edae4a172184d51750765c3460a2c712b0965e0f3f063",
+      "page_sha256_scope": "COMPLETE_ARCHIVE_BYTES",
+      "capture_path": "not copied into public project; hash only",
+      "locator": "Archive SHA-256 and acmart.cls ProvidesClass declaration",
+      "excerpt_or_faithful_paraphrase": "Archive hash and unmodified class/style hashes bind the build to the supplied bundle.",
+      "source_priority": "USER_SUPPLIED_AUTHENTIC_OFFICIAL_TEMPLATE",
+      "cycle": "FINAL_INTERNAL_LOCK",
+      "status": "FINAL"
+    },
+    {
+      "fact_id": "TOPLAS-SUBMISSION-ROUTE-2026",
+      "fact": "TOPLAS directs authors to ACM Manuscript Central and asks for a full ACM-style paper with appropriate citations.",
+      "url": "https://compilers.cs.ucla.edu/toplas/submissions.html",
+      "title": "ACM TOPLAS Submission Instructions",
+      "retrieved_at": "2026-07-25T01:35:00Z",
+      "timezone": "UTC",
+      "page_sha256": "f8857d1795442e664b20f53b0dbcfe17f160553730dac2c394e87b109d9f1603",
+      "page_sha256_scope": "FAITHFUL_READ_ONLY_CAPTURE",
+      "capture_path": "artifact/venue-evidence/captures/toplas-submission-instructions-2026-07-24.txt",
+      "locator": "Submission instructions items 1, 2, and 4",
+      "excerpt_or_faithful_paraphrase": "Submit through ACM Manuscript Central; use a full paper with appropriate citations; prepare it in ACM LaTeX or Word style.",
+      "source_priority": "OFFICIAL_TOPLAS_SUBMISSION_PAGE",
+      "cycle": "FINAL_IDENTIFIED_AUTHOR_RELEASE",
+      "status": "FINAL_VISIBLE_PAGE"
+    },
+    {
+      "fact_id": "TOPLAS-COVER-LETTER-2026",
+      "fact": "A TOPLAS submission must include a cover letter documenting where any prior version of the material appeared.",
+      "url": "https://compilers.cs.ucla.edu/toplas/submissions.html",
+      "title": "ACM TOPLAS Submission Instructions",
+      "retrieved_at": "2026-07-25T01:35:00Z",
+      "timezone": "UTC",
+      "page_sha256": "f8857d1795442e664b20f53b0dbcfe17f160553730dac2c394e87b109d9f1603",
+      "page_sha256_scope": "FAITHFUL_READ_ONLY_CAPTURE",
+      "capture_path": "artifact/venue-evidence/captures/toplas-submission-instructions-2026-07-24.txt",
+      "locator": "Submission instructions item 3",
+      "excerpt_or_faithful_paraphrase": "The cover letter must document thesis, workshop, conference, or journal versions of the submitted material.",
+      "source_priority": "OFFICIAL_TOPLAS_SUBMISSION_PAGE",
+      "cycle": "FINAL_IDENTIFIED_AUTHOR_RELEASE",
+      "status": "FINAL_VISIBLE_PAGE"
+    },
+    {
+      "fact_id": "TOPLAS-SUPPLEMENT-2026",
+      "fact": "If accepted, implementations, test programs, and source data may be included as supplemental material in the ACM Digital Library.",
+      "url": "https://compilers.cs.ucla.edu/toplas/submissions.html",
+      "title": "ACM TOPLAS Submission Instructions",
+      "retrieved_at": "2026-07-25T01:35:00Z",
+      "timezone": "UTC",
+      "page_sha256": "f8857d1795442e664b20f53b0dbcfe17f160553730dac2c394e87b109d9f1603",
+      "page_sha256_scope": "FAITHFUL_READ_ONLY_CAPTURE",
+      "capture_path": "artifact/venue-evidence/captures/toplas-submission-instructions-2026-07-24.txt",
+      "locator": "Submission instructions item 2",
+      "excerpt_or_faithful_paraphrase": "Accepted submissions may include implementations, test programs, and source data as digital-library supplemental material.",
+      "source_priority": "OFFICIAL_TOPLAS_SUBMISSION_PAGE",
+      "cycle": "FINAL_IDENTIFIED_AUTHOR_RELEASE",
+      "status": "FINAL_VISIBLE_PAGE"
+    },
+    {
+      "fact_id": "ACM-AUTHOR-STRUCTURE-2.19",
+      "fact": "The acmart 2.19 guide requires one structured author record per person and recommends repeating a shared affiliation after each author.",
+      "url": "https://raw.githubusercontent.com/borisveytsman/acmart/v2.19/acmart.dtx",
+      "title": "ACM acmart v2.19 documented source",
+      "retrieved_at": "2026-07-26T00:00:00Z",
+      "timezone": "UTC",
+      "page_sha256": "598e94c68671fe8a3096f0823ddf901c20f6a375376fd39ac6c527b4064abd6c",
+      "page_sha256_scope": "PROJECT_CAPTURE_OF_RELEVANT_OFFICIAL_DOCUMENTATION",
+      "capture_path": "artifact/venue-evidence/captures/acmart-author-structure-v2.19.txt",
+      "locator": "documented-source lines 546-624 and 655-670",
+      "excerpt_or_faithful_paraphrase": "Each author has an independent author record; the basic fields are author, optional ORCID, structured affiliation, and email. Repeating a shared affiliation per author is the recommended form; institution, city, and country are mandatory.",
+      "source_priority": "OFFICIAL_ACM_TEMPLATE_DOCUMENTATION",
+      "cycle": "FINAL_AUTHOR_STRUCTURE_LOCK",
+      "status": "FINAL"
+    },
+    {
+      "fact_id": "ACM-CORRESPONDING-AUTHOR-2.19",
+      "fact": "The acmart 2.19 guide provides the dedicated correspondingauthor command immediately after an author name and requires that author to have an email.",
+      "url": "https://raw.githubusercontent.com/borisveytsman/acmart/v2.19/acmart.dtx",
+      "title": "ACM acmart v2.19 documented source",
+      "retrieved_at": "2026-07-26T00:00:00Z",
+      "timezone": "UTC",
+      "page_sha256": "598e94c68671fe8a3096f0823ddf901c20f6a375376fd39ac6c527b4064abd6c",
+      "page_sha256_scope": "PROJECT_CAPTURE_OF_RELEVANT_OFFICIAL_DOCUMENTATION",
+      "capture_path": "artifact/venue-evidence/captures/acmart-author-structure-v2.19.txt",
+      "locator": "documented-source lines 736-740",
+      "excerpt_or_faithful_paraphrase": "Place correspondingauthor after the author name; more than one corresponding author is allowed, and the corresponding author must have an email.",
+      "source_priority": "OFFICIAL_ACM_TEMPLATE_DOCUMENTATION",
+      "cycle": "FINAL_AUTHOR_STRUCTURE_LOCK",
+      "status": "FINAL"
+    },
+    {
+      "fact_id": "ACM-REVIEW-FORMAT-2026",
+      "fact": "ACM review manuscripts use the single-column manuscript layout; the review option supplies continuous line numbers.",
+      "url": "https://www.acm.org/publications/authors/submissions",
+      "title": "ACM author submission guidance and current Master Article Template",
+      "retrieved_at": "2026-07-27T03:10:00Z",
+      "timezone": "UTC",
+      "page_sha256": "8a77c32912fe53ef67e66415ffae61ac95d0b29cae47341ba6b57b3f8c95d35a",
+      "page_sha256_scope": "FAITHFUL_MULTI_SOURCE_CAPTURE",
+      "capture_path": "artifact/venue-evidence/captures/acm-review-and-publication-modes-2026-07-27.txt",
+      "locator": "Capture item 2 and acmart review implementation",
+      "excerpt_or_faithful_paraphrase": "Use manuscript mode for review; review mode adds line numbers; production output is a separate stage.",
+      "source_priority": "OFFICIAL_ACM_GENERAL_AND_OFFICIAL_TEMPLATE",
+      "cycle": "FINAL_TEMPLATE_RECHECK",
+      "status": "FINAL_GENERAL_ACM"
+    },
+    {
+      "fact_id": "ACM-TOPLAS-PUBLICATION-FORMAT-2026",
+      "fact": "TOPLAS belongs to the acmsmall small-journal publication format in acmart 2.19.",
+      "url": "https://ctan.org/pkg/acmart",
+      "title": "acmart 2.19 documentation and samples",
+      "retrieved_at": "2026-07-27T03:10:00Z",
+      "timezone": "UTC",
+      "page_sha256": "8a77c32912fe53ef67e66415ffae61ac95d0b29cae47341ba6b57b3f8c95d35a",
+      "page_sha256_scope": "FAITHFUL_MULTI_SOURCE_CAPTURE",
+      "capture_path": "artifact/venue-evidence/captures/acm-review-and-publication-modes-2026-07-27.txt",
+      "locator": "Capture item 3",
+      "excerpt_or_faithful_paraphrase": "The class documentation lists TOPLAS under acmsmall; this is the publication-size layout, not the generic manuscript review layout.",
+      "source_priority": "OFFICIAL_ACM_CLASS_DISTRIBUTION",
+      "cycle": "FINAL_TEMPLATE_RECHECK",
+      "status": "FINAL"
+    },
+    {
+      "fact_id": "TOPLAS-ANONYMITY-2026",
+      "fact": "The accessible TOPLAS submission page does not establish whether the live review mode is identified or anonymous.",
+      "url": "https://compilers.cs.ucla.edu/toplas/submissions.html",
+      "title": "ACM TOPLAS Submission Instructions",
+      "retrieved_at": "2026-07-27T03:10:00Z",
+      "timezone": "UTC",
+      "page_sha256": "8a77c32912fe53ef67e66415ffae61ac95d0b29cae47341ba6b57b3f8c95d35a",
+      "page_sha256_scope": "FAITHFUL_MULTI_SOURCE_CAPTURE",
+      "capture_path": "artifact/venue-evidence/captures/acm-review-and-publication-modes-2026-07-27.txt",
+      "locator": "Capture item 1",
+      "excerpt_or_faithful_paraphrase": "The page specifies ACM style and Manuscript Central but does not state the anonymity mode.",
+      "source_priority": "OFFICIAL_TOPLAS_SUBMISSION_PAGE",
+      "cycle": "FINAL_TEMPLATE_RECHECK",
+      "status": "UNCLEAR_LIVE_PORTAL_CHECK_REQUIRED"
+    }
+  ],
+  "policy_matrix": {
+    "anonymity": {
+      "value": "The accessible TOPLAS submission page does not state the current anonymity mode. Both identified and anonymous line-numbered review derivatives are supplied; the live portal must select one.",
+      "status": "UNCLEAR_LIVE_PORTAL_SELECTION_REQUIRED"
+    },
+    "author_freeze_and_orcid": {
+      "value": "Three named authors and three blank positions; Xunzhu Tang city/campus and ORCID unavailable.",
+      "status": "PENDING_AUTHOR_INPUT"
+    },
+    "self_citation": {
+      "value": "no journal-specific rule established",
+      "status": "UNCLEAR"
+    },
+    "conflicts_of_interest": {
+      "value": "no journal-specific operational detail established",
+      "status": "UNCLEAR"
+    },
+    "preprints": {
+      "value": "ACM general authorship page permits arXiv/similar preprints without treating them as prior publication",
+      "status": "FINAL_GENERAL_ACM"
+    },
+    "metadata": {
+      "value": "Three named authors and three blank positions; Xunzhu Tang city/campus and ORCID unavailable.",
+      "status": "PENDING_AUTHOR_INPUT"
+    },
+    "required_sections": {
+      "value": "abstract, CCS concepts, keywords, references present; journal-specific declarations UNCLEAR",
+      "status": "PARTIAL"
+    },
+    "appendix": {
+      "value": "inline complete proofs used; exact journal page treatment UNCLEAR",
+      "status": "PROVISIONAL"
+    },
+    "supplement": {
+      "value": "implementations, tests, and source data may be included in the ACM Digital Library if accepted; current core paper is self-contained",
+      "status": "FINAL_VISIBLE_PAGE_FOR_ACCEPTED_SUPPLEMENT"
+    },
+    "code_data_repository": {
+      "value": "not required by accessible evidence; current artifact is an internal immutable snapshot",
+      "status": "PROVISIONAL"
+    },
+    "artifact_evaluation": {
+      "value": "no TOPLAS-specific evaluation channel established",
+      "status": "UNCLEAR"
+    },
+    "ethics_human_subjects": {
+      "value": "not applicable; no participants, private data, or human evidence",
+      "status": "FINAL_PROJECT_FACT"
+    },
+    "data_availability": {
+      "value": "all generated finite data and source included locally",
+      "status": "FINAL_PROJECT_FACT"
+    },
+    "ai_authorship": {
+      "value": "INCOMPATIBLE_PRIMARY_EXECUTOR",
+      "status": "FINAL_GENERAL_ACM"
+    },
+    "deadlines": {
+      "value": "continuous-journal route; no dated abstract/paper/supplement/rebuttal/final deadlines established",
+      "status": "UNCLEAR_OR_NOT_APPLICABLE"
+    },
+    "submission_execution": {
+      "value": "forbidden and not performed; initial route would be ACM Manuscript Central plus required cover letter",
+      "status": "FINAL_PROJECT_FACT"
+    }
+  },
+  "identified_authors": [
+    {
+      "position": 1,
+      "name": "Haoyi Zhang",
+      "institution": "Xi'an Jiaotong-Liverpool University",
+      "city": "Suzhou",
+      "country": "China",
+      "email": "hyeliozhang@gmail.com",
+      "orcid": "0009-0009-3693-786X",
+      "basis": "Current user name; affiliation, email and ORCID retained from supplied manuscript."
+    },
+    {
+      "position": 2,
+      "name": "Huaijin Ran",
+      "institution": "Nanyang Technological University",
+      "city": "Singapore",
+      "country": "Singapore",
+      "email": "huaijin003@e.ntu.edu.sg",
+      "orcid": "0009-0009-2482-2344",
+      "basis": "Current user institution and email; prior ORCID retained; corresponding role retained provisionally."
+    },
+    {
+      "position": 3,
+      "name": "Xunzhu Tang",
+      "institution": "University of Luxembourg",
+      "city": null,
+      "country": "Luxembourg",
+      "email": "realdanieltang@gmail.com",
+      "orcid": null,
+      "basis": "Current user; campus/city and ORCID not supplied."
+    }
+  ],
+  "shared_affiliation": "No single shared affiliation: XJTLU; NTU; University of Luxembourg.",
+  "author_plan": {
+    "planned": 6,
+    "named": 3,
+    "blank_positions": [
+      4,
+      5,
+      6
+    ]
+  },
+  "date": "2026-09-24",
+  "author_state": {
+    "planned_count": 6,
+    "known": [
+      "Haoyi Zhang",
+      "Huaijin Ran",
+      "Xunzhu Tang"
+    ],
+    "reserved_positions": [
+      4,
+      5,
+      6
+    ],
+    "corresponding_author_provisional": "Huaijin Ran"
+  }
+}

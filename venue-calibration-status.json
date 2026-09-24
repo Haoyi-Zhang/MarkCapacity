@@ -1,0 +1,31 @@
+{
+  "schema": "VENUE_CALIBRATION_STATUS_V4",
+  "generated_at": "2026-07-22T09:41:00+09:00",
+  "records": 23,
+  "same_venue_closest_recent": 12,
+  "same_venue_high_visibility_substitutes": 5,
+  "adjacent_top_venue": 6,
+  "reference_count_calibration_status": "COMPLETE_AND_REPRODUCIBLE",
+  "reference_counts_sorted": [
+    20,
+    27,
+    32,
+    46,
+    59,
+    60,
+    63,
+    64,
+    88,
+    88,
+    89,
+    95
+  ],
+  "reference_count_median": 61.5,
+  "reference_count_p75": 88,
+  "reference_floor": 62,
+  "manuscript_reference_count": 68,
+  "reference_floor_verdict": "PASS_EXCEEDS_FLOOR_BY_SIX_NO_PADDING",
+  "structural_measurement_status": "REFERENCE_COUNT_COMPLETE; narrative and display strategy calibrated qualitatively without forcing a synthetic universal outline",
+  "explanation": "The requested recent-TOPLAS bibliography calibration uses twelve final published numbered reference lists. The current 68-entry bibliography remains claim-driven rather than padded to P75.",
+  "effect_on_research": "Every retained item independently passes scholarly-status, strong-relevance, local-support, DOI, use, and exact-entry-integrity checks; the floor does not authorize padding."
+}

@@ -1,0 +1,6 @@
+ACM's authorship policy is dated September 16, 2025. It requires every listed
+author to be an identifiable human, to have made substantial intellectual
+contributions including conception/design/analysis and drafting or revision,
+and to take responsibility for the work. Generative-AI content may be used only
+with full disclosure, while generative-AI systems cannot be authors. Under the
+project's primary-executor workflow, future ACM submission eligibility is held.

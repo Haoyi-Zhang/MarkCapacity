@@ -1,0 +1,35 @@
+{
+  "schema": "SUBMISSION_MATERIALS_MAP",
+  "date": "2026-09-24",
+  "status": "HOLD_AUTHOR_LIST_AND_LIVE_PORTAL_ACTIONS",
+  "rows": [
+    {
+      "material": "main review PDF",
+      "path": "paper/main.pdf",
+      "format": "identified ACM manuscript review PDF with continuous line numbers",
+      "anonymity": "identified working draft; live portal rule unresolved",
+      "status": "FINAL_INTERNAL_FILE_AUTHOR_LIST_INCOMPLETE"
+    },
+    {
+      "material": "paper source",
+      "path": "paper/main.tex; paper/references.bib; supplied class and bibliography style",
+      "status": "COMPLETE_INTERNAL"
+    },
+    {
+      "material": "finite checker",
+      "path": "artifact/src; artifact/tests; artifact/run-tests.sh",
+      "status": "COMPLETE_REPRODUCIBLE"
+    },
+    {
+      "material": "cover letter",
+      "path": null,
+      "status": "EXTERNAL_HUMAN_ACTION_REQUIRED"
+    },
+    {
+      "material": "portal metadata and conflicts",
+      "path": null,
+      "status": "EXTERNAL_HUMAN_ACTION_REQUIRED"
+    }
+  ],
+  "note": "Only one PDF is retained in the final internal package. If the live portal requires anonymous review, generate a compliant anonymous copy after the author list and policy are final."
+}

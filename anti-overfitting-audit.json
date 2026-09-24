@@ -1,0 +1,36 @@
+{
+  "schema": "ANTI_OVERFITTING_AUDIT",
+  "date": "2026-09-24",
+  "full_test_count": 61,
+  "manuscript_sha256": "16ae4dd981df37bebf3576fa615582fad3ea88dd03d415ab930c7b3d73858362",
+  "checker_source_sha256": "6d1c0c2b2ea1912540cf4efb2e00a8ed2afbe280fa02c92f3359ca8c97d50682",
+  "run_all_sha256": "a016d98d22bd0a3456aa96398819e97c1aa6eff5b27b5cd8e9c366e9c3eeb6d8",
+  "witness_checker_sha256": "923dda01c36711f608c9321a24ea5e5cdf65cc610d26db0c133df1221bda947d",
+  "test_hashes": {
+    "test_woc.py": "e3191a9cf4db7525442e711d330793e2aef71c6ad634d06692c0d41d8ca83f2e",
+    "test_witness_boundaries.py": "dcbcb6e5bd323ab4fd002265f9053ab88363efcd62e3e7ee1aec4fb60b65d554",
+    "test_package_integrity.py": "820d156d62b92feb67fc6c174c0b9893c3337731cc2e1941466a11d9d86eeb99"
+  },
+  "representation_invariances": [
+    "program renaming",
+    "duplicate representatives",
+    "disjoint union",
+    "component decomposition"
+  ],
+  "independent_routes": [
+    "quotient solver versus direct program-label oracle",
+    "access solver versus direct source/output oracle",
+    "list optimizer versus direct source/output enumeration",
+    "shared-random triangle primal witness versus dual certificate",
+    "semantic product versus explicit hypergraph product"
+  ],
+  "unscreened_cases": {
+    "fixed_holdout_cases": true,
+    "larger_stress_instances": 240,
+    "filtered_by_outcome": false,
+    "positive_access_instances": 13,
+    "negative_access_instances": 227
+  },
+  "limits": "All finite checks share the declared semantic inputs. They do not prove contextual equivalence, validate a real compiler relation, or replace the arbitrary-set proofs.",
+  "verdict": "PASS"
+}

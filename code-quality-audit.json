@@ -1,0 +1,70 @@
+{
+  "schema": "CODE_QUALITY_AUDIT",
+  "date": "2026-09-24",
+  "python_compileall": "PASS",
+  "unit_and_integrity_tests": 61,
+  "deterministic_scientific_reexecution": "PASS",
+  "coverage": {
+    "scope": "scientific unit tests plus run_all; package-integrity tests excluded from this engineering metric",
+    "overall_statement_coverage_percent": 89.42,
+    "files": {
+      "run_all.py": {
+        "covered_lines": 122,
+        "num_statements": 126,
+        "percent_covered": 96.82539682539682,
+        "percent_covered_display": "97",
+        "missing_lines": 4,
+        "excluded_lines": 0,
+        "percent_statements_covered": 96.82539682539682,
+        "percent_statements_covered_display": "97"
+      },
+      "witness_checks.py": {
+        "covered_lines": 67,
+        "num_statements": 72,
+        "percent_covered": 93.05555555555556,
+        "percent_covered_display": "93",
+        "missing_lines": 5,
+        "excluded_lines": 0,
+        "percent_statements_covered": 93.05555555555556,
+        "percent_statements_covered_display": "93"
+      },
+      "woc.py": {
+        "covered_lines": 648,
+        "num_statements": 738,
+        "percent_covered": 87.8048780487805,
+        "percent_covered_display": "88",
+        "missing_lines": 90,
+        "excluded_lines": 0,
+        "percent_statements_covered": 87.8048780487805,
+        "percent_statements_covered_display": "88"
+      }
+    },
+    "interpretation": "Engineering health metric only; not evidence for the arbitrary-set theorems."
+  },
+  "input_validation_repairs": [
+    "message counts must be positive non-boolean integers",
+    "list budgets and vertex counts must be nonnegative non-boolean integers",
+    "vertex indices are range-checked before pruning",
+    "missing witness values are distinguished from legal None-valued programs",
+    "explicit empty decoders are rejected rather than replaced by defaults"
+  ],
+  "constructive_checks": {
+    "exhaustive_and_fixed_generated_instances": 320,
+    "positive_witnesses_directly_validated": 46,
+    "negative_instances_retained": 274
+  },
+  "larger_unfiltered_stress": {
+    "instances": 240,
+    "program_counts": [
+      3,
+      4,
+      5
+    ],
+    "general_oracle_agreements": 240,
+    "access_oracle_agreements": 240,
+    "positive_access_instances": 13,
+    "validated_positive_witnesses": 13,
+    "negative_access_instances": 227
+  },
+  "verdict": "PASS"
+}

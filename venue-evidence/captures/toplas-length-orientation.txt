@@ -1,0 +1,5 @@
+The current TOPLAS author-guide page was not fully retrievable in this run. The
+frozen project orientation records no hard page or word cap for full research
+articles and treats likely length above 50 pages as an advance-contact
+threshold. This fact remains PROVISIONAL for submission routing. The internal
+manuscript therefore invents no page cap and records LIMIT_KIND=NONE.

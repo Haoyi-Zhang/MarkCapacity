@@ -1,0 +1,7 @@
+ACM's current general journal-submission page states that accepted manuscripts
+must use the ACM authoring template and that review manuscripts should be
+single-column. Its visible LaTeX instruction names acmart 2.16 and the
+`manuscript` option. The user-supplied bundle is acmart 2.19 and uses an
+`acmsmall,review,screen` journal-review mode. The supplied bundle is preserved;
+the discrepancy is recorded as a submission-policy hold rather than resolved
+by changing class or style files.

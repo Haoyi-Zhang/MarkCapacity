@@ -1,0 +1,16 @@
+{
+  "command": "python3 src/run_all.py",
+  "determinism_contract": {
+    "json_keys_sorted": true,
+    "scientific_outputs_exclude_runtime_metadata": true
+  },
+  "inputs": {
+    "src/run_all.py": "a016d98d22bd0a3456aa96398819e97c1aa6eff5b27b5cd8e9c366e9c3eeb6d8",
+    "src/witness_checks.py": "923dda01c36711f608c9321a24ea5e5cdf65cc610d26db0c133df1221bda947d",
+    "src/woc.py": "6d1c0c2b2ea1912540cf4efb2e00a8ed2afbe280fa02c92f3359ca8c97d50682"
+  },
+  "outputs": {
+    "generated/capacity_table.csv": "ed548924ecec375d87ebc3e45598b35c24e39f36838dba309ddfed5b6be18c7e",
+    "raw/results.json": "6efdc6691facec4f3aa8e28fd04fbd3e46bb356168a3ca9fadae291ebd97abf1"
+  }
+}

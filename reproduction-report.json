@@ -1,0 +1,373 @@
+{
+  "schema": "REPRODUCTION_REPORT",
+  "date": "2026-09-24",
+  "project_id": "TOPLAS-19",
+  "scope": "internal theory manuscript and finite CPU-only checker; no submission or upload performed",
+  "environment": {
+    "python": "3.13.5",
+    "tex": "TeX Live 2025/dev; pdfTeX 1.40.26; BibTeX 0.99d; latexmk 4.86",
+    "runtime_services": "none",
+    "gpu_or_model_dependency": "none"
+  },
+  "commands": {
+    "checker": "cd artifact && ./run-tests.sh",
+    "paper": "cd paper && ./build.sh"
+  },
+  "frozen_counts": {
+    "pages": 48,
+    "sections": 8,
+    "formal_statements": 52,
+    "proofs": 52,
+    "vector_figures": 4,
+    "tables": 9,
+    "bibliography_entries": 68,
+    "citation_commands": 99,
+    "tests": 61,
+    "planned_authors": 6,
+    "named_authors": 3,
+    "reserved_positions": 3
+  },
+  "paper_source": {
+    "main_tex_sha256": "16ae4dd981df37bebf3576fa615582fad3ea88dd03d415ab930c7b3d73858362",
+    "references_bib_sha256": "51fbd08724bfb8ba238001421f3a57d43e2ab752cdaf25216c165e08b4ebf310",
+    "acmart_sha256": "2f949e6e3f2a79f2cdc218b9dcdbaa7dd451adb4ee0be1af6dc7ebe00b318ea7",
+    "bibliography_style_sha256": "8ec002c927068bfc5b3cfe71b66aa4767b9e485530ac3c67ba5c064df4c2e6ac"
+  },
+  "paper_build": {
+    "status": "PASS",
+    "pages": 48,
+    "pdf_sha256": "ad4ac873613ca8d822e7fbd2e525b3ab67380768847fbd9fba8cd5b6765dde21",
+    "pdf_bytes": 782949,
+    "clean_build_1_sha256": "ad4ac873613ca8d822e7fbd2e525b3ab67380768847fbd9fba8cd5b6765dde21",
+    "clean_build_2_sha256": "ad4ac873613ca8d822e7fbd2e525b3ab67380768847fbd9fba8cd5b6765dde21",
+    "byte_identical": true,
+    "overfull_boxes": 0,
+    "undefined_citations_or_references": 0
+  },
+  "unit_and_integrity_tests": {
+    "count": 61,
+    "status": "PASS",
+    "deterministic_scientific_reexecution": "PASS"
+  },
+  "scientific_outputs": {
+    "raw/results.json": {
+      "sha256": "6efdc6691facec4f3aa8e28fd04fbd3e46bb356168a3ca9fadae291ebd97abf1",
+      "bytes": 6560
+    },
+    "raw/run_manifest.json": {
+      "sha256": "bf3dac69d4f40febaee324a940a90ed278e4875f59b63bc7b85e6a5ed2ba527d",
+      "bytes": 667
+    },
+    "generated/capacity_table.csv": {
+      "sha256": "ed548924ecec375d87ebc3e45598b35c24e39f36838dba309ddfed5b6be18c7e",
+      "bytes": 223
+    }
+  },
+  "pdf_preflight": {
+    "schema": "PDF_PREFLIGHT",
+    "date": "2026-09-24",
+    "pdf_sha256": "ad4ac873613ca8d822e7fbd2e525b3ab67380768847fbd9fba8cd5b6765dde21",
+    "pdf_bytes": 782949,
+    "pages": 48,
+    "page_sizes_points": [
+      [
+        612.0,
+        792.0
+      ]
+    ],
+    "uniform_page_size": true,
+    "fonts_listed": 22,
+    "fonts_embedded_subset_and_unicode": true,
+    "raster_image_objects": 0,
+    "encrypted": false,
+    "forms": 0,
+    "attachments": 0,
+    "javascript_xrefs": [],
+    "xfa_xrefs": [],
+    "ghostscript_parse": "PASS",
+    "review_line_numbers_present": true,
+    "detected_line_number_spans": 2619,
+    "xmp_creators": [
+      "Haoyi Zhang",
+      "Huaijin Ran",
+      "Xunzhu Tang"
+    ],
+    "rendered_pages": 48,
+    "overfull_boxes": 0,
+    "undefined_citations_or_references": 0,
+    "two_clean_builds_byte_identical": true,
+    "verdict": "PASS"
+  },
+  "visual_qa": {
+    "schema": "VISUAL_QA",
+    "date": "2026-09-24",
+    "pdf_sha256": "ad4ac873613ca8d822e7fbd2e525b3ab67380768847fbd9fba8cd5b6765dde21",
+    "inspection": {
+      "primary_renderer": "Poppler at 200 DPI",
+      "primary_pages": 48,
+      "contact_sheets": 4,
+      "full_resolution_pages": [
+        1,
+        2,
+        14,
+        25,
+        42,
+        48
+      ],
+      "secondary_renderer": "PDFium at 100 DPI",
+      "secondary_pages": 48,
+      "max_normalized_content_boundary_difference": 0.0011764705882352927,
+      "worst_boundary_page": 1
+    },
+    "checks": {
+      "review_line_numbers_present": true,
+      "text_overlap_observed": false,
+      "line_text_overlap_observed": false,
+      "connector_overlap_observed": false,
+      "module_overlap_observed": false,
+      "table_overflow_observed": false,
+      "float_collision_observed": false,
+      "clipping_observed": false,
+      "broken_glyph_observed": false,
+      "abnormal_blank_page_observed": false,
+      "author_block_collision_observed": false
+    },
+    "figure_findings": [
+      {
+        "figure": 1,
+        "page": 2,
+        "finding": "Program boxes, rewrite arrows, detector cells, normalization arrow, and caption are separated; no overlap."
+      },
+      {
+        "figure": 2,
+        "page": 14,
+        "finding": "Triangle labels, nodes, product grid, highlighted rectangle, and explanatory text are separated."
+      },
+      {
+        "figure": 3,
+        "page": 25,
+        "finding": "Three quantifier panels and labels are separated; no line/text collision."
+      },
+      {
+        "figure": 4,
+        "page": 42,
+        "finding": "Partition boundaries, labels, arrows, and capacity annotations are separated."
+      }
+    ],
+    "page_48": "Reference 68 ends within the normal text block, with one ordinary bibliography baseline remaining before the footer.",
+    "verdict": "PASS"
+  },
+  "page_fit": {
+    "schema": "PAGE_FIT_AUDIT",
+    "date": "2026-09-24",
+    "manuscript_sha256": "16ae4dd981df37bebf3576fa615582fad3ea88dd03d415ab930c7b3d73858362",
+    "bibliography_sha256": "51fbd08724bfb8ba238001421f3a57d43e2ab752cdaf25216c165e08b4ebf310",
+    "pdf_sha256": "ad4ac873613ca8d822e7fbd2e525b3ab67380768847fbd9fba8cd5b6765dde21",
+    "pdf_bytes": 782949,
+    "total_pages": 48,
+    "page_size_points": [
+      612.0,
+      792.0
+    ],
+    "reference_start_page": 45,
+    "last_substantive_line_top_pt": 656.364,
+    "last_substantive_block_bottom_pt": 662.342,
+    "last_substantive_text": "2496",
+    "ordinary_bibliography_baseline_spacing_pt": 9.963,
+    "next_unused_baseline_pt": 662.516,
+    "normal_text_bottom_pt": 672.513,
+    "unused_ordinary_baselines": 1,
+    "main_top_level_sections": 8,
+    "forced_pagebreak_present": false,
+    "deterministic_build": {
+      "build_1_sha256": "ad4ac873613ca8d822e7fbd2e525b3ab67380768847fbd9fba8cd5b6765dde21",
+      "build_2_sha256": "ad4ac873613ca8d822e7fbd2e525b3ab67380768847fbd9fba8cd5b6765dde21",
+      "byte_identical": true,
+      "isolated_clean_builds": true
+    },
+    "verdict": "PASS"
+  },
+  "citation_shape": {
+    "schema": "CITATION_SHAPE_AUDIT",
+    "date": "2026-09-24",
+    "manuscript_sha256": "16ae4dd981df37bebf3576fa615582fad3ea88dd03d415ab930c7b3d73858362",
+    "bibliography_sha256": "51fbd08724bfb8ba238001421f3a57d43e2ab752cdaf25216c165e08b4ebf310",
+    "bibliography_entries": 68,
+    "citation_commands": 99,
+    "unique_citation_keys": 68,
+    "multi_key_commands": [],
+    "adjacent_citation_piles": 0,
+    "numeric_range_or_semicolon_piles": 0,
+    "sentence_level_multiple_citation_instances": 0,
+    "sentence_level_findings": [],
+    "missing_bibliography_keys": [],
+    "unused_bibliography_keys": [],
+    "exact_entry_hash_ledger_rows": 68,
+    "integrity_verdict": "PASS"
+  },
+  "content_hygiene": {
+    "schema": "CONTENT_HYGIENE_AUDIT",
+    "date": "2026-09-24",
+    "manuscript_sha256": "16ae4dd981df37bebf3576fa615582fad3ea88dd03d415ab930c7b3d73858362",
+    "pdf_sha256": "ad4ac873613ca8d822e7fbd2e525b3ab67380768847fbd9fba8cd5b6765dde21",
+    "checks": {
+      "local_paths": 0,
+      "source_filenames": 0,
+      "hash_literals": 0,
+      "process_terms": 0,
+      "inline_appendix": 0
+    },
+    "engineering_identifier_findings": {
+      "local_paths": [],
+      "source_filenames": [],
+      "hash_literals": [],
+      "process_terms": [],
+      "inline_appendix": []
+    },
+    "review_line_numbers_present": true,
+    "author_state": "three known author records and three blank title-block line heights; no fictitious authors in ACM/PDF metadata",
+    "verdict": "PASS"
+  },
+  "code_quality": {
+    "schema": "CODE_QUALITY_AUDIT",
+    "date": "2026-09-24",
+    "python_compileall": "PASS",
+    "unit_and_integrity_tests": 61,
+    "deterministic_scientific_reexecution": "PASS",
+    "coverage": {
+      "scope": "scientific unit tests plus run_all; package-integrity tests excluded from this engineering metric",
+      "overall_statement_coverage_percent": 89.42,
+      "files": {
+        "run_all.py": {
+          "covered_lines": 122,
+          "num_statements": 126,
+          "percent_covered": 96.82539682539682,
+          "percent_covered_display": "97",
+          "missing_lines": 4,
+          "excluded_lines": 0,
+          "percent_statements_covered": 96.82539682539682,
+          "percent_statements_covered_display": "97"
+        },
+        "witness_checks.py": {
+          "covered_lines": 67,
+          "num_statements": 72,
+          "percent_covered": 93.05555555555556,
+          "percent_covered_display": "93",
+          "missing_lines": 5,
+          "excluded_lines": 0,
+          "percent_statements_covered": 93.05555555555556,
+          "percent_statements_covered_display": "93"
+        },
+        "woc.py": {
+          "covered_lines": 648,
+          "num_statements": 738,
+          "percent_covered": 87.8048780487805,
+          "percent_covered_display": "88",
+          "missing_lines": 90,
+          "excluded_lines": 0,
+          "percent_statements_covered": 87.8048780487805,
+          "percent_statements_covered_display": "88"
+        }
+      },
+      "interpretation": "Engineering health metric only; not evidence for the arbitrary-set theorems."
+    },
+    "input_validation_repairs": [
+      "message counts must be positive non-boolean integers",
+      "list budgets and vertex counts must be nonnegative non-boolean integers",
+      "vertex indices are range-checked before pruning",
+      "missing witness values are distinguished from legal None-valued programs",
+      "explicit empty decoders are rejected rather than replaced by defaults"
+    ],
+    "constructive_checks": {
+      "exhaustive_and_fixed_generated_instances": 320,
+      "positive_witnesses_directly_validated": 46,
+      "negative_instances_retained": 274
+    },
+    "larger_unfiltered_stress": {
+      "instances": 240,
+      "program_counts": [
+        3,
+        4,
+        5
+      ],
+      "general_oracle_agreements": 240,
+      "access_oracle_agreements": 240,
+      "positive_access_instances": 13,
+      "validated_positive_witnesses": 13,
+      "negative_access_instances": 227
+    },
+    "verdict": "PASS"
+  },
+  "anti_overfitting": {
+    "schema": "ANTI_OVERFITTING_AUDIT",
+    "date": "2026-09-24",
+    "full_test_count": 61,
+    "manuscript_sha256": "16ae4dd981df37bebf3576fa615582fad3ea88dd03d415ab930c7b3d73858362",
+    "checker_source_sha256": "6d1c0c2b2ea1912540cf4efb2e00a8ed2afbe280fa02c92f3359ca8c97d50682",
+    "run_all_sha256": "a016d98d22bd0a3456aa96398819e97c1aa6eff5b27b5cd8e9c366e9c3eeb6d8",
+    "witness_checker_sha256": "923dda01c36711f608c9321a24ea5e5cdf65cc610d26db0c133df1221bda947d",
+    "test_hashes": {
+      "test_woc.py": "e3191a9cf4db7525442e711d330793e2aef71c6ad634d06692c0d41d8ca83f2e",
+      "test_witness_boundaries.py": "dcbcb6e5bd323ab4fd002265f9053ab88363efcd62e3e7ee1aec4fb60b65d554",
+      "test_package_integrity.py": "820d156d62b92feb67fc6c174c0b9893c3337731cc2e1941466a11d9d86eeb99"
+    },
+    "representation_invariances": [
+      "program renaming",
+      "duplicate representatives",
+      "disjoint union",
+      "component decomposition"
+    ],
+    "independent_routes": [
+      "quotient solver versus direct program-label oracle",
+      "access solver versus direct source/output oracle",
+      "list optimizer versus direct source/output enumeration",
+      "shared-random triangle primal witness versus dual certificate",
+      "semantic product versus explicit hypergraph product"
+    ],
+    "unscreened_cases": {
+      "fixed_holdout_cases": true,
+      "larger_stress_instances": 240,
+      "filtered_by_outcome": false,
+      "positive_access_instances": 13,
+      "negative_access_instances": 227
+    },
+    "limits": "All finite checks share the declared semantic inputs. They do not prove contextual equivalence, validate a real compiler relation, or replace the arbitrary-set proofs.",
+    "verdict": "PASS"
+  },
+  "reference_audit": {
+    "rows": 68,
+    "formal_publications": 65,
+    "status_labelled_preprints": 3,
+    "citation_commands": 99,
+    "local_integrity": "PASS",
+    "external_scope": "dated source records with verification scope recorded per row"
+  },
+  "project_manifest": {
+    "status": "PASS",
+    "root_entries": [
+      "paper",
+      "artifact",
+      "research-plan.md",
+      "CURRENT-STATE.md"
+    ],
+    "hash_size_mode_verification": "PASS"
+  },
+  "clean_package_validation": {
+    "status": "PASS",
+    "root_contract": [
+      "paper",
+      "artifact",
+      "research-plan.md",
+      "CURRENT-STATE.md"
+    ],
+    "tests": "61 tests; deterministic scientific reexecution PASS",
+    "rebuild_pages": 48,
+    "rebuild_byte_identical_to_delivery": true
+  },
+  "review_and_submission": {
+    "author_list_complete": false,
+    "submission_policy_status": "HOLD",
+    "submission_performed": false,
+    "independent_review": "STATELESS_REVIEW_UNAVAILABLE"
+  }
+}

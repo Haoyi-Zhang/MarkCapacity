@@ -1,0 +1,12 @@
+Source: ACM TOPLAS Submission Instructions
+URL: https://compilers.cs.ucla.edu/toplas/submissions.html
+Retrieved/rechecked: 2026-07-25 UTC, read-only public web search capture
+
+Faithful paraphrase of the accessible page:
+- Submit using ACM Manuscript Central.
+- Submit a full paper with appropriate citations.
+- The submission must include a cover letter documenting any prior thesis, workshop, conference, or journal version of the material.
+- Prepare the manuscript in ACM LaTeX or Word style.
+- Implementations, test programs, and source data may be included as supplemental material in the ACM Digital Library if the submission is accepted.
+
+The accessible page did not establish the current TOPLAS anonymity procedure or every live portal field. Those details remain a pre-submission recheck item.

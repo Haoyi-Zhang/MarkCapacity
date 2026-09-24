@@ -1,0 +1,13 @@
+project: TOPLAS-19
+subject: observational recognizability and exact semantic capacity
+execution_class: pure_theory
+planned_authors: 6
+named_authors: 3
+reserved_author_positions: [4, 5, 6]
+pages_required_by_client: 48
+inline_appendix: false
+concrete_embedder_claimed: false
+cryptographic_security_claimed: false
+kernel_mechanization_claimed: false
+independent_stateless_review: unavailable
+submission_action_performed: false

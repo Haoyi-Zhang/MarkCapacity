@@ -1,0 +1,4 @@
+Direct TOPLAS author-guide and publisher PDF access was incomplete from the
+available read-only public interface. Inaccessible or conflicting facts are
+marked PROVISIONAL or UNCLEAR and cause SUBMISSION_POLICY_HOLD; they do not alter
+the internal scientific results.
