@@ -11,9 +11,12 @@ from witness_checks import run_larger_stress_checks
 from woc import (normalize_partition, validate_scheme, construct_decoder, construct_embedder,
                  construct_access_scheme, validate_access_scheme,
                  find_polychromatic_coloring, access_exact_feasible,
+                 access_hypergraph, access_message_capacity,
                  direct_access_exact_feasible, general_exact_feasible,
-                 direct_general_exact_feasible, directed_access_exact_feasible,
-                 direct_directed_access_exact_feasible, max_average_list_cover,
+                 direct_general_exact_feasible, directed_access_hypergraph,
+                 directed_access_exact_feasible,
+                 direct_directed_access_exact_feasible, exact_message_capacity,
+                 guaranteed_bit_capacity, max_average_list_cover,
                  direct_average_list_cover, deterministic_worst_source_value,
                  shared_recovery_dual_bound, set_partitions)
 
@@ -157,6 +160,146 @@ class WitnessBoundaryTests(unittest.TestCase):
             else:
                 with self.assertRaises(ValueError):
                     construct_access_scheme(b, j, access, messages)
+
+
+    def test_access_rows_distinguish_missing_empty_and_identity(self):
+        empty = normalize_partition([])
+        for operation in (
+            lambda: exact_message_capacity(empty, empty),
+            lambda: general_exact_feasible(empty, empty, 1),
+            lambda: direct_general_exact_feasible(empty, empty, 1),
+        ):
+            with self.assertRaisesRegex(ValueError, "nonempty program universe"):
+                operation()
+
+        behavior = normalize_partition([{0}])
+        indistinguishability = normalize_partition([{0}])
+        decoder = {0: 0}
+        embedder = {(0, 0): 0}
+
+        for operation in (
+            lambda: access_hypergraph(behavior, indistinguishability, {}),
+            lambda: access_exact_feasible(behavior, indistinguishability, {}, 1),
+            lambda: direct_access_exact_feasible(behavior, indistinguishability, {}, 1),
+            lambda: construct_access_scheme(behavior, indistinguishability, {}, 1),
+            lambda: direct_average_list_cover(
+                behavior, indistinguishability, {}, 1, (1,), {(0, 0): 1}
+            ),
+        ):
+            with self.assertRaisesRegex(ValueError, "missing source row"):
+                operation()
+        valid, reasons = validate_access_scheme(
+            behavior, indistinguishability, {}, 1, decoder, embedder
+        )
+        self.assertFalse(valid)
+        self.assertTrue(any("missing source row" in reason for reason in reasons))
+
+        explicit_empty = {0: set()}
+        self.assertEqual(
+            access_hypergraph(behavior, indistinguishability, explicit_empty),
+            ((),),
+        )
+        self.assertFalse(
+            access_exact_feasible(behavior, indistinguishability, explicit_empty, 1)
+        )
+        self.assertFalse(
+            direct_access_exact_feasible(
+                behavior, indistinguishability, explicit_empty, 1
+            )
+        )
+        self.assertEqual(
+            access_message_capacity(behavior, indistinguishability, explicit_empty),
+            0,
+        )
+        with self.assertRaisesRegex(ValueError, "nonempty after behavior filtering"):
+            direct_average_list_cover(
+                behavior,
+                indistinguishability,
+                explicit_empty,
+                1,
+                (1,),
+                {(0, 0): 1},
+            )
+
+        identity = {0: {0}}
+        self.assertTrue(
+            access_exact_feasible(behavior, indistinguishability, identity, 1)
+        )
+        self.assertTrue(
+            direct_access_exact_feasible(behavior, indistinguishability, identity, 1)
+        )
+        self.assertEqual(
+            access_message_capacity(behavior, indistinguishability, identity), 1
+        )
+        self.assertEqual(guaranteed_bit_capacity(behavior, indistinguishability), 0)
+        witness_decoder, witness_embedder = construct_access_scheme(
+            behavior, indistinguishability, identity, 1
+        )
+        self.assertEqual(
+            validate_access_scheme(
+                behavior,
+                indistinguishability,
+                identity,
+                1,
+                witness_decoder,
+                witness_embedder,
+            ),
+            (True, []),
+        )
+
+    def test_directed_rows_distinguish_missing_from_explicit_empty(self):
+        sources = ("source",)
+        targets = normalize_partition([{0}])
+        preservation = {"source": {0}}
+        access = {"source": {0}}
+
+        for operation in (
+            lambda: directed_access_hypergraph(sources, targets, {}, access),
+            lambda: directed_access_exact_feasible(sources, targets, {}, access, 1),
+            lambda: direct_directed_access_exact_feasible(
+                sources, targets, {}, access, 1
+            ),
+        ):
+            with self.assertRaisesRegex(ValueError, "preservation relation is missing"):
+                operation()
+        for operation in (
+            lambda: directed_access_hypergraph(sources, targets, preservation, {}),
+            lambda: directed_access_exact_feasible(
+                sources, targets, preservation, {}, 1
+            ),
+            lambda: direct_directed_access_exact_feasible(
+                sources, targets, preservation, {}, 1
+            ),
+        ):
+            with self.assertRaisesRegex(ValueError, "access relation is missing"):
+                operation()
+
+        self.assertEqual(
+            directed_access_hypergraph(
+                sources, targets, {"source": set()}, access
+            ),
+            ((),),
+        )
+        self.assertFalse(
+            directed_access_exact_feasible(
+                sources, targets, {"source": set()}, access, 1
+            )
+        )
+        self.assertFalse(
+            direct_directed_access_exact_feasible(
+                sources, targets, {"source": set()}, access, 1
+            )
+        )
+        self.assertTrue(
+            directed_access_exact_feasible(
+                sources, targets, preservation, access, 1
+            )
+        )
+        self.assertTrue(
+            direct_directed_access_exact_feasible(
+                sources, targets, preservation, access, 1
+            )
+        )
 
     def test_single_use_access_iterators_are_supported(self):
         b = normalize_partition([{None, 'x'}]); j = normalize_partition([{None}, {'x'}])

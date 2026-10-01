@@ -1,0 +1,35 @@
+{
+  "schema": "ARTIFACT_REVIEW_STATUS_V3",
+  "date": "2026-09-26",
+  "gate": "FINAL_REPAIRED_INTERNAL_PACKAGE_WITH_AUTHOR_COMPLETION_AND_EXTERNAL_REVIEW_PENDING",
+  "scientific_status": "PASS_INTERNAL",
+  "package_status": "PASS_INTERNAL_RELEASE",
+  "independent_review": "STATELESS_REVIEW_UNAVAILABLE",
+  "verified": [
+    "52 formal statements and 52 explicit proofs in the main paper",
+    "56 self-contained scientific tests with deterministic output-hash verification",
+    "8 full-project package-integrity tests with declared Poppler and project-root dependencies",
+    "standalone artifact copy passes the scientific entry and explicitly rejects the package entry when parent assets are absent",
+    "missing required rows are rejected while explicit empty rows remain valid infeasible constraints",
+    "crossing four-cycle feasible and triangle infeasible regression cases",
+    "68 bibliography records and 99 single-key sentence-local citations",
+    "two isolated byte-identical 48-page PDF builds and a byte-identical clean-extraction rebuild",
+    "unchanged vector figure designs with all-page visual QA"
+  ],
+  "blocking_items": [
+    "three planned author positions have no names or metadata",
+    "Xunzhu Tang city/campus and ORCID are not supplied",
+    "all-author approval, conflicts, prior versions, cover letter, and live portal compliance are external actions",
+    "no genuinely independent no-history artifact review exists"
+  ],
+  "claim_calibration": "No acceptance, award, practical-embedder, efficiency, stealth, or cryptographic-security claim is made.",
+  "generated_at": "2026-09-26T00:00:00Z",
+  "material_repairs_completed": [
+    "Split the independent scientific runner from the full-project integrity runner and documented Poppler/project-root dependencies.",
+    "Rejected missing access/preservation rows before solving while preserving explicit empty rows as valid infeasible constraints.",
+    "Corrected the design consequence to use global source-wise color coverage; retained local quotient counting only under refinement and class-complete access.",
+    "Added nonempty-support and empty-access capacity boundaries, distinguishing no scheme from one message with zero selected bits."
+  ],
+  "objective_gate": "REPAIRED_INTERNAL_RELEASE",
+  "claim_calibration_verdict": "PASS_INTERNAL_ARTIFACT_ONLY_SELF_CHECK"
+}

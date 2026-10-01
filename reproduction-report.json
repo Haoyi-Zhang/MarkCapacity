@@ -1,6 +1,6 @@
 {
-  "schema": "REPRODUCTION_REPORT",
-  "date": "2026-09-24",
+  "schema": "REPRODUCTION_REPORT_V2",
+  "date": "2026-09-26",
   "project_id": "TOPLAS-19",
   "scope": "internal theory manuscript and finite CPU-only checker; no submission or upload performed",
   "environment": {
@@ -10,7 +10,9 @@
     "gpu_or_model_dependency": "none"
   },
   "commands": {
-    "checker": "cd artifact && ./run-tests.sh",
+    "scientific": "cd artifact && ./run-tests.sh",
+    "package": "cd artifact && ./run-package-checks.sh",
+    "all": "cd artifact && ./run-all-checks.sh",
     "paper": "cd paper && ./build.sh"
   },
   "frozen_counts": {
@@ -22,13 +24,15 @@
     "tables": 9,
     "bibliography_entries": 68,
     "citation_commands": 99,
-    "tests": 61,
+    "tests": 64,
     "planned_authors": 6,
     "named_authors": 3,
-    "reserved_positions": 3
+    "reserved_positions": 3,
+    "scientific_tests": 56,
+    "package_integrity_tests": 8
   },
   "paper_source": {
-    "main_tex_sha256": "16ae4dd981df37bebf3576fa615582fad3ea88dd03d415ab930c7b3d73858362",
+    "main_tex_sha256": "65e28a4c7c2913e0a7c196b944045348557445cb97dc483c7c8f2d53c0617776",
     "references_bib_sha256": "51fbd08724bfb8ba238001421f3a57d43e2ab752cdaf25216c165e08b4ebf310",
     "acmart_sha256": "2f949e6e3f2a79f2cdc218b9dcdbaa7dd451adb4ee0be1af6dc7ebe00b318ea7",
     "bibliography_style_sha256": "8ec002c927068bfc5b3cfe71b66aa4767b9e485530ac3c67ba5c064df4c2e6ac"
@@ -36,17 +40,20 @@
   "paper_build": {
     "status": "PASS",
     "pages": 48,
-    "pdf_sha256": "ad4ac873613ca8d822e7fbd2e525b3ab67380768847fbd9fba8cd5b6765dde21",
-    "pdf_bytes": 782949,
-    "clean_build_1_sha256": "ad4ac873613ca8d822e7fbd2e525b3ab67380768847fbd9fba8cd5b6765dde21",
-    "clean_build_2_sha256": "ad4ac873613ca8d822e7fbd2e525b3ab67380768847fbd9fba8cd5b6765dde21",
+    "pdf_sha256": "28610e3cb2e2d17af8cafb21f7640fcb86a632c566740a6f0b6ab15526c14456",
+    "pdf_bytes": 783410,
+    "clean_build_1_sha256": "28610e3cb2e2d17af8cafb21f7640fcb86a632c566740a6f0b6ab15526c14456",
+    "clean_build_2_sha256": "28610e3cb2e2d17af8cafb21f7640fcb86a632c566740a6f0b6ab15526c14456",
     "byte_identical": true,
     "overfull_boxes": 0,
     "undefined_citations_or_references": 0
   },
   "unit_and_integrity_tests": {
-    "count": 61,
-    "status": "PASS",
+    "scientific_count": 56,
+    "package_integrity_count": 8,
+    "combined_count": 64,
+    "scientific_status": "PASS",
+    "package_status": "PASS",
     "deterministic_scientific_reexecution": "PASS"
   },
   "scientific_outputs": {
@@ -55,7 +62,7 @@
       "bytes": 6560
     },
     "raw/run_manifest.json": {
-      "sha256": "bf3dac69d4f40febaee324a940a90ed278e4875f59b63bc7b85e6a5ed2ba527d",
+      "sha256": "986fa21dad276293d81ab768daf4a077fbd326e26a9bf163ee063041e853f04a",
       "bytes": 667
     },
     "generated/capacity_table.csv": {
@@ -64,10 +71,10 @@
     }
   },
   "pdf_preflight": {
-    "schema": "PDF_PREFLIGHT",
-    "date": "2026-09-24",
-    "pdf_sha256": "ad4ac873613ca8d822e7fbd2e525b3ab67380768847fbd9fba8cd5b6765dde21",
-    "pdf_bytes": 782949,
+    "schema": "PDF_PREFLIGHT_V2",
+    "date": "2026-09-26",
+    "pdf_sha256": "28610e3cb2e2d17af8cafb21f7640fcb86a632c566740a6f0b6ab15526c14456",
+    "pdf_bytes": 783410,
     "pages": 48,
     "page_sizes_points": [
       [
@@ -86,7 +93,7 @@
     "xfa_xrefs": [],
     "ghostscript_parse": "PASS",
     "review_line_numbers_present": true,
-    "detected_line_number_spans": 2619,
+    "detected_line_number_spans": 1917,
     "xmp_creators": [
       "Haoyi Zhang",
       "Huaijin Ran",
@@ -99,25 +106,37 @@
     "verdict": "PASS"
   },
   "visual_qa": {
-    "schema": "VISUAL_QA",
-    "date": "2026-09-24",
-    "pdf_sha256": "ad4ac873613ca8d822e7fbd2e525b3ab67380768847fbd9fba8cd5b6765dde21",
+    "schema": "VISUAL_QA_V2",
+    "date": "2026-09-26",
+    "pdf_sha256": "28610e3cb2e2d17af8cafb21f7640fcb86a632c566740a6f0b6ab15526c14456",
     "inspection": {
-      "primary_renderer": "Poppler at 200 DPI",
+      "primary_renderer": "Poppler at 100 DPI for all 48 pages",
       "primary_pages": 48,
       "contact_sheets": 4,
-      "full_resolution_pages": [
+      "full_resolution_200_dpi_pages": [
         1,
         2,
+        3,
+        13,
         14,
-        25,
+        15,
+        16,
+        18,
+        19,
+        20,
+        21,
+        40,
+        41,
         42,
+        43,
+        44,
+        45,
+        46,
+        47,
         48
       ],
-      "secondary_renderer": "PDFium at 100 DPI",
-      "secondary_pages": 48,
-      "max_normalized_content_boundary_difference": 0.0011764705882352927,
-      "worst_boundary_page": 1
+      "secondary_evidence": "unchanged vector figures plus Ghostscript/PyMuPDF/Poppler preflight",
+      "notes": "All-page contact sheets and critical full-resolution pages were inspected after the input-contract and prose repairs."
     },
     "checks": {
       "review_line_numbers_present": true,
@@ -136,61 +155,61 @@
       {
         "figure": 1,
         "page": 2,
-        "finding": "Program boxes, rewrite arrows, detector cells, normalization arrow, and caption are separated; no overlap."
+        "finding": "Program boxes, rewrite arrows, detector cells, normalization arrow, and caption remain separated; no redraw or overlap."
       },
       {
         "figure": 2,
         "page": 14,
-        "finding": "Triangle labels, nodes, product grid, highlighted rectangle, and explanatory text are separated."
+        "finding": "Triangle nodes, edge labels, product grid, and explanatory text remain separated."
       },
       {
         "figure": 3,
         "page": 25,
-        "finding": "Three quantifier panels and labels are separated; no line/text collision."
+        "finding": "Three randomization panels and labels remain separated."
       },
       {
         "figure": 4,
         "page": 42,
-        "finding": "Partition boundaries, labels, arrows, and capacity annotations are separated."
+        "finding": "Partition boundaries, labels, arrows, and capacity annotations remain separated."
       }
     ],
-    "page_48": "Reference 68 ends within the normal text block, with one ordinary bibliography baseline remaining before the footer.",
+    "page_48": "Reference 68 ends in the normal bibliography text block; review line numbers and footer remain separate.",
     "verdict": "PASS"
   },
   "page_fit": {
-    "schema": "PAGE_FIT_AUDIT",
-    "date": "2026-09-24",
-    "manuscript_sha256": "16ae4dd981df37bebf3576fa615582fad3ea88dd03d415ab930c7b3d73858362",
+    "schema": "PAGE_FIT_AUDIT_V2",
+    "date": "2026-09-26",
+    "manuscript_sha256": "65e28a4c7c2913e0a7c196b944045348557445cb97dc483c7c8f2d53c0617776",
     "bibliography_sha256": "51fbd08724bfb8ba238001421f3a57d43e2ab752cdaf25216c165e08b4ebf310",
-    "pdf_sha256": "ad4ac873613ca8d822e7fbd2e525b3ab67380768847fbd9fba8cd5b6765dde21",
-    "pdf_bytes": 782949,
+    "pdf_sha256": "28610e3cb2e2d17af8cafb21f7640fcb86a632c566740a6f0b6ab15526c14456",
+    "pdf_bytes": 783410,
     "total_pages": 48,
     "page_size_points": [
       612.0,
       792.0
     ],
-    "reference_start_page": 45,
-    "last_substantive_line_top_pt": 656.364,
-    "last_substantive_block_bottom_pt": 662.342,
-    "last_substantive_text": "2496",
+    "reference_start_page": 46,
+    "last_substantive_line_top_pt": 636.043,
+    "last_substantive_block_bottom_pt": 644.741,
+    "last_substantive_text": "in Theory and Practice. arXiv preprint arXiv:2507.05512 (2025). Version 2, revised 30 August 2026. doi:10.48550/arXiv.2507.05512",
     "ordinary_bibliography_baseline_spacing_pt": 9.963,
-    "next_unused_baseline_pt": 662.516,
+    "next_unused_baseline_pt": 654.704,
     "normal_text_bottom_pt": 672.513,
-    "unused_ordinary_baselines": 1,
+    "unused_ordinary_baselines": 2,
     "main_top_level_sections": 8,
     "forced_pagebreak_present": false,
     "deterministic_build": {
-      "build_1_sha256": "ad4ac873613ca8d822e7fbd2e525b3ab67380768847fbd9fba8cd5b6765dde21",
-      "build_2_sha256": "ad4ac873613ca8d822e7fbd2e525b3ab67380768847fbd9fba8cd5b6765dde21",
+      "build_1_sha256": "28610e3cb2e2d17af8cafb21f7640fcb86a632c566740a6f0b6ab15526c14456",
+      "build_2_sha256": "28610e3cb2e2d17af8cafb21f7640fcb86a632c566740a6f0b6ab15526c14456",
       "byte_identical": true,
       "isolated_clean_builds": true
     },
     "verdict": "PASS"
   },
   "citation_shape": {
-    "schema": "CITATION_SHAPE_AUDIT",
-    "date": "2026-09-24",
-    "manuscript_sha256": "16ae4dd981df37bebf3576fa615582fad3ea88dd03d415ab930c7b3d73858362",
+    "schema": "CITATION_SHAPE_AUDIT_V2",
+    "date": "2026-09-26",
+    "manuscript_sha256": "65e28a4c7c2913e0a7c196b944045348557445cb97dc483c7c8f2d53c0617776",
     "bibliography_sha256": "51fbd08724bfb8ba238001421f3a57d43e2ab752cdaf25216c165e08b4ebf310",
     "bibliography_entries": 68,
     "citation_commands": 99,
@@ -206,10 +225,10 @@
     "integrity_verdict": "PASS"
   },
   "content_hygiene": {
-    "schema": "CONTENT_HYGIENE_AUDIT",
-    "date": "2026-09-24",
-    "manuscript_sha256": "16ae4dd981df37bebf3576fa615582fad3ea88dd03d415ab930c7b3d73858362",
-    "pdf_sha256": "ad4ac873613ca8d822e7fbd2e525b3ab67380768847fbd9fba8cd5b6765dde21",
+    "schema": "CONTENT_HYGIENE_AUDIT_V2",
+    "date": "2026-09-26",
+    "manuscript_sha256": "65e28a4c7c2913e0a7c196b944045348557445cb97dc483c7c8f2d53c0617776",
+    "pdf_sha256": "28610e3cb2e2d17af8cafb21f7640fcb86a632c566740a6f0b6ab15526c14456",
     "checks": {
       "local_paths": 0,
       "source_filenames": 0,
@@ -229,14 +248,13 @@
     "verdict": "PASS"
   },
   "code_quality": {
-    "schema": "CODE_QUALITY_AUDIT",
-    "date": "2026-09-24",
+    "schema": "CODE_QUALITY_AUDIT_V2",
+    "date": "2026-09-26",
     "python_compileall": "PASS",
-    "unit_and_integrity_tests": 61,
     "deterministic_scientific_reexecution": "PASS",
     "coverage": {
       "scope": "scientific unit tests plus run_all; package-integrity tests excluded from this engineering metric",
-      "overall_statement_coverage_percent": 89.42,
+      "overall_statement_coverage_percent": 90.6183368869936,
       "files": {
         "run_all.py": {
           "covered_lines": 122,
@@ -259,14 +277,14 @@
           "percent_statements_covered_display": "93"
         },
         "woc.py": {
-          "covered_lines": 648,
-          "num_statements": 738,
-          "percent_covered": 87.8048780487805,
-          "percent_covered_display": "88",
-          "missing_lines": 90,
+          "covered_lines": 661,
+          "num_statements": 740,
+          "percent_covered": 89.32432432432432,
+          "percent_covered_display": "89",
+          "missing_lines": 79,
           "excluded_lines": 0,
-          "percent_statements_covered": 87.8048780487805,
-          "percent_statements_covered_display": "88"
+          "percent_statements_covered": 89.32432432432432,
+          "percent_statements_covered_display": "89"
         }
       },
       "interpretation": "Engineering health metric only; not evidence for the arbitrary-set theorems."
@@ -276,7 +294,11 @@
       "list budgets and vertex counts must be nonnegative non-boolean integers",
       "vertex indices are range-checked before pruning",
       "missing witness values are distinguished from legal None-valued programs",
-      "explicit empty decoders are rejected rather than replaced by defaults"
+      "explicit empty decoders are rejected rather than replaced by defaults",
+      "nonempty program/support universes are required by capacity interfaces",
+      "missing required source rows are rejected rather than synthesized as empty rows",
+      "explicit empty rows remain valid infeasible constraints and are distinguished from missing rows",
+      "directed preservation and access relations require complete source-row domains"
     ],
     "constructive_checks": {
       "exhaustive_and_fixed_generated_instances": 320,
@@ -296,26 +318,30 @@
       "validated_positive_witnesses": 13,
       "negative_access_instances": 227
     },
-    "verdict": "PASS"
+    "verdict": "PASS",
+    "scientific_tests": 56,
+    "package_integrity_tests": 8,
+    "combined_checks": 64
   },
   "anti_overfitting": {
-    "schema": "ANTI_OVERFITTING_AUDIT",
-    "date": "2026-09-24",
-    "full_test_count": 61,
-    "manuscript_sha256": "16ae4dd981df37bebf3576fa615582fad3ea88dd03d415ab930c7b3d73858362",
-    "checker_source_sha256": "6d1c0c2b2ea1912540cf4efb2e00a8ed2afbe280fa02c92f3359ca8c97d50682",
+    "schema": "ANTI_OVERFITTING_AUDIT_V2",
+    "date": "2026-09-26",
+    "full_test_count": 64,
+    "manuscript_sha256": "65e28a4c7c2913e0a7c196b944045348557445cb97dc483c7c8f2d53c0617776",
+    "checker_source_sha256": "05940feb15aa478f9bc36f8050eab9291130b2fac0f58783a0d8cc489192ed88",
     "run_all_sha256": "a016d98d22bd0a3456aa96398819e97c1aa6eff5b27b5cd8e9c366e9c3eeb6d8",
     "witness_checker_sha256": "923dda01c36711f608c9321a24ea5e5cdf65cc610d26db0c133df1221bda947d",
     "test_hashes": {
-      "test_woc.py": "e3191a9cf4db7525442e711d330793e2aef71c6ad634d06692c0d41d8ca83f2e",
-      "test_witness_boundaries.py": "dcbcb6e5bd323ab4fd002265f9053ab88363efcd62e3e7ee1aec4fb60b65d554",
-      "test_package_integrity.py": "820d156d62b92feb67fc6c174c0b9893c3337731cc2e1941466a11d9d86eeb99"
+      "test_woc.py": "920e2a3b1fcd42e1eabcd09dff7017473f2b3d11c256b2eaa3224929f293737a",
+      "test_witness_boundaries.py": "e139984e1c127e79c3c771e16c18062c690a15a7d1af039bcbfbc016688da3ff",
+      "test_package_integrity.py": "1fdea6630c0f97f7318aa8b2c70ee4ecbed62c0d6bd15e9cc7f10b67001bc06b"
     },
     "representation_invariances": [
       "program renaming",
       "duplicate representatives",
       "disjoint union",
-      "component decomposition"
+      "component decomposition",
+      "missing required row versus explicit empty row"
     ],
     "independent_routes": [
       "quotient solver versus direct program-label oracle",
@@ -332,7 +358,10 @@
       "negative_access_instances": 227
     },
     "limits": "All finite checks share the declared semantic inputs. They do not prove contextual equivalence, validate a real compiler relation, or replace the arbitrary-set proofs.",
-    "verdict": "PASS"
+    "verdict": "PASS",
+    "scientific_test_count": 56,
+    "package_integrity_test_count": 8,
+    "combined_check_count": 64
   },
   "reference_audit": {
     "rows": 68,
@@ -354,20 +383,47 @@
   },
   "clean_package_validation": {
     "status": "PASS",
+    "candidate_archive_sha256": "937258d9fb84cc8292b5422a326056181e06cb160e1376b26203936360c775e7",
     "root_contract": [
       "paper",
       "artifact",
       "research-plan.md",
       "CURRENT-STATE.md"
     ],
-    "tests": "61 tests; deterministic scientific reexecution PASS",
-    "rebuild_pages": 48,
-    "rebuild_byte_identical_to_delivery": true
+    "manifest_bound_files": 66,
+    "manifest_hash_size_mode_verification": "PASS",
+    "standalone_scientific_entry": "56 tests; deterministic reexecution PASS; scientific outputs byte-identical to full tree",
+    "standalone_package_entry": "explicit exit 2 with enumerated missing assets; no silent skip",
+    "full_project_package_entry": "8 package-integrity tests PASS",
+    "clean_extraction_scientific_entry": "56 tests PASS; frozen scientific outputs remained manifest-identical",
+    "clean_extraction_package_entry": "8 tests PASS",
+    "clean_source_rebuild": {
+      "pages": 48,
+      "sha256": "28610e3cb2e2d17af8cafb21f7640fcb86a632c566740a6f0b6ab15526c14456",
+      "bytes": 783410,
+      "byte_identical_to_delivered_pdf": true,
+      "overfull_boxes": 0,
+      "undefined_citations_or_references": 0
+    }
   },
   "review_and_submission": {
     "author_list_complete": false,
     "submission_policy_status": "HOLD",
     "submission_performed": false,
     "independent_review": "STATELESS_REVIEW_UNAVAILABLE"
+  },
+  "entry_points": {
+    "scientific": "cd artifact && ./run-tests.sh",
+    "package": "cd artifact && ./run-package-checks.sh",
+    "all": "cd artifact && ./run-all-checks.sh"
+  },
+  "scientific_tests": 56,
+  "package_integrity_tests": 8,
+  "combined_checks": 64,
+  "input_contract": {
+    "missing_required_row": "malformed input; ValueError before solving",
+    "explicit_empty_row": "well-formed empty edge; no nonempty alphabet feasible",
+    "capacity_zero": "sentinel for no scheme, not an empty-alphabet implementation",
+    "capacity_one": "one-message scheme; zero owner-selected bits"
   }
 }

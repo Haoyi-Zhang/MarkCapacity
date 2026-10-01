@@ -69,6 +69,33 @@ class WatermarkObservationalCalculusTests(unittest.TestCase):
         indist = normalize_partition([{"a0", "c1"}, {"a1", "b0"}, {"b1", "c0"}])
         self.assertFalse(general_exact_feasible(behavior, indist, 2))
 
+
+    def test_crossing_four_cycle_is_feasible(self):
+        behavior = normalize_partition([{"a0", "a1"}, {"b0", "b1"}])
+        indistinguishability = normalize_partition(
+            [{"a0", "b0"}, {"a1", "b1"}]
+        )
+        self.assertFalse(is_refinement(indistinguishability, behavior))
+        self.assertFalse(is_refinement(behavior, indistinguishability))
+        self.assertEqual(
+            quotient_hypergraph(behavior, indistinguishability),
+            ((0, 1), (0, 1)),
+        )
+        self.assertTrue(
+            general_exact_feasible(behavior, indistinguishability, 2)
+        )
+        class_complete_access = {
+            "a0": {"a0", "a1"},
+            "a1": {"a0", "a1"},
+            "b0": {"b0", "b1"},
+            "b1": {"b0", "b1"},
+        }
+        self.assertTrue(
+            access_exact_feasible(
+                behavior, indistinguishability, class_complete_access, 2
+            )
+        )
+
     def test_crossing_operational_coarsening_can_destroy_a_bit(self):
         behavior = normalize_partition([{"a0", "a1"}, {"b0", "b1"}, {"c0", "c1"}])
         fine = normalize_partition([{x} for x in {"a0", "a1", "b0", "b1", "c0", "c1"}])

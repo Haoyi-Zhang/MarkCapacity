@@ -9,12 +9,16 @@ behavior-preserving outputs a declared mechanism can reach from each source.
 With class-complete access and `≈J` refining `≈B`, exact universal capacity is
 the minimum number of operational cells in a behavior class. Without refinement,
 operational cells are vertices and behavior classes induce hyperedges; exact
-feasibility is polychromatic coloring. With source-dependent access, each source
-induces the hyperedge of reachable behavior-preserving operational cells. The
-same coloring condition is exact. Both finite incidence forms realize arbitrary
-nonempty-edge hypergraphs inside one fixed deterministic terminating tagged host
-language. Binary feasibility is NP-complete at three cells per constraint and is
-graph bipartiteness at two.
+feasibility is polychromatic coloring. Refinement is not a general necessity: a
+crossing four-cycle can carry a bit when one global coloring covers both behavior
+edges. With source-dependent access, each source induces the hyperedge of
+reachable behavior-preserving operational cells, and the same global coloring
+condition is exact. A required source row must be present in the finite input;
+an explicitly empty row is a valid empty constraint and makes every nonempty
+alphabet infeasible. Both finite incidence forms realize arbitrary nonempty-edge
+hypergraphs inside one fixed deterministic terminating tagged host language.
+Binary feasibility is NP-complete at three cells per constraint and is graph
+bipartiteness at two.
 
 For partial recovery, each operational cell may output a bounded list. Under an
 arbitrary correlated source-message law, heterogeneous list budgets, randomized

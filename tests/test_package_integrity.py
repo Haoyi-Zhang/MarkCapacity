@@ -19,8 +19,8 @@ CITATION_LEDGER = ROOT / "artifact" / "citation_support.csv"
 CORRECTNESS_LEDGER = ROOT / "artifact" / "correctness_correspondence.csv"
 CLAIM_LEDGER = ROOT / "artifact" / "claim_evidence_ledger.csv"
 REFERENCE_CALIBRATION = ROOT / "artifact" / "venue-evidence" / "recent-toplas-reference-calibration.json"
-CURRENT_STATE = ROOT / "CURRENT-STATE.md"
-RESEARCH_PLAN = ROOT / "research-plan.md"
+CURRENT_STATE = ROOT / "paper" / "provenance" / "CURRENT-STATE.md"
+RESEARCH_PLAN = ROOT / "paper" / "provenance" / "research-plan.md"
 PAPER_README = ROOT / "paper" / "README.md"
 VISUAL_QA = ROOT / "paper" / "visual_qa.json"
 PROJECT_MANIFEST = ROOT / "artifact" / "project-manifest.json"
@@ -29,6 +29,12 @@ REFERENCE_AUDIT = ROOT / "artifact" / "reference-audit-final.csv"
 SUBMISSION_MAP = ROOT / "artifact" / "submission-materials-map.json"
 TEMPLATE_AUDIT = ROOT / "paper" / "template_audit.json"
 AUTHOR_PLAN = ROOT / "paper" / "author-plan.json"
+ARTIFACT_README = ROOT / "artifact" / "README.md"
+SCIENTIFIC_RUNNER = ROOT / "artifact" / "run-tests.sh"
+PACKAGE_RUNNER = ROOT / "artifact" / "run-package-checks.sh"
+ALL_RUNNER = ROOT / "artifact" / "run-all-checks.sh"
+CODE_QUALITY_AUDIT = ROOT / "artifact" / "code-quality-audit.json"
+REPRODUCTION_REPORT = ROOT / "artifact" / "reproduction-report.json"
 
 
 FORMAL_ENVIRONMENTS = {"theorem", "lemma", "proposition", "corollary"}
@@ -401,7 +407,8 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         self.assertEqual(manuscript.count(r"\orcid{"), 2)
         self.assertIn(r"\hypersetup{pdfauthor={Haoyi Zhang, Huaijin Ran, Xunzhu Tang}}", manuscript)
         self.assertNotRegex(manuscript, r"\\author\{Author [A-F]\}")
-        self.assertIn("Independent mathematical and integrity tests & 61", manuscript)
+        self.assertIn("Self-contained scientific tests & 56", manuscript)
+        self.assertIn("Full-project integrity tests & 8", manuscript)
 
         current_state = CURRENT_STATE.read_text(encoding="utf-8")
         research_plan = RESEARCH_PLAN.read_text(encoding="utf-8")
@@ -412,13 +419,15 @@ class PublicPackageIntegrityTests(unittest.TestCase):
             self.assertRegex(text, r"(?:nine|9) tables")
             self.assertRegex(text, r"68 (?:verified )?scholarly")
             self.assertRegex(text, r"99 single-key")
-            self.assertRegex(text, r"61 passing")
+            self.assertRegex(text, r"56 (?:passing )?scientific")
+            self.assertRegex(text, r"8 (?:passing )?package(?:-integrity)?")
+            self.assertRegex(text, r"64 (?:checks|total)")
 
         with CLAIM_LEDGER.open(newline="", encoding="utf-8") as handle:
             claims = {row["claim_id"]: row for row in csv.DictReader(handle)}
         self.assertIn("99 single-key", claims["C25"]["claim_text"])
         self.assertIn("citation_commands=99", claims["C25"]["raw_result"])
-        self.assertIn("61_TEST_SUITE", claims["C25"]["independent_recheck_status"])
+        self.assertIn("64_CHECK_SUITE", claims["C25"]["independent_recheck_status"])
 
         visual = json.loads(VISUAL_QA.read_text(encoding="utf-8"))
         self.assertTrue(visual["checks"]["review_line_numbers_present"])
@@ -426,6 +435,45 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         main_rows = [row for row in submission_map["rows"] if row.get("material") == "main review PDF"]
         self.assertEqual(len(main_rows), 1)
         self.assertIn("FINAL", main_rows[0]["status"])
+
+        # The independent scientific entry is genuinely self-contained.  Full
+        # package checks are separate and declare both their project-root and
+        # Poppler dependencies.
+        scientific_runner = SCIENTIFIC_RUNNER.read_text(encoding="utf-8")
+        package_runner = PACKAGE_RUNNER.read_text(encoding="utf-8")
+        all_runner = ALL_RUNNER.read_text(encoding="utf-8")
+        artifact_readme = ARTIFACT_README.read_text(encoding="utf-8")
+        self.assertNotIn("test_package_integrity", scientific_runner)
+        self.assertNotIn("pdfinfo", scientific_runner)
+        self.assertNotIn("pdftotext", scientific_runner)
+        self.assertIn("tests.test_woc tests.test_witness_boundaries", scientific_runner)
+        self.assertIn("tests.test_package_integrity", package_runner)
+        self.assertIn("TOPLAS19_PROJECT_ROOT", package_runner)
+        self.assertIn("pdfinfo pdftotext", package_runner)
+        self.assertIn("PACKAGE_CHECK_INPUT_ERROR", package_runner)
+        self.assertIn("PACKAGE_CHECK_DEPENDENCY_ERROR", package_runner)
+        self.assertIn("./run-tests.sh", all_runner)
+        self.assertIn("./run-package-checks.sh", all_runner)
+        self.assertIn("56 scientific + 8 package-integrity = 64", all_runner)
+        self.assertIn("Self-contained scientific reproduction", artifact_readme)
+        self.assertIn("Full-project integrity checks", artifact_readme)
+        self.assertIn("56 scientific", artifact_readme)
+        self.assertIn("8 package-integrity", artifact_readme)
+        self.assertIn("64 checks", artifact_readme)
+        self.assertIn("pdfinfo", artifact_readme)
+        self.assertIn("pdftotext", artifact_readme)
+
+        quality = json.loads(CODE_QUALITY_AUDIT.read_text(encoding="utf-8"))
+        self.assertEqual(quality["scientific_tests"], 56)
+        self.assertEqual(quality["package_integrity_tests"], 8)
+        self.assertEqual(quality["combined_checks"], 64)
+        self.assertIn("missing required source rows are rejected rather than synthesized as empty rows", quality["input_validation_repairs"])
+        report = json.loads(REPRODUCTION_REPORT.read_text(encoding="utf-8"))
+        self.assertEqual(report["scientific_tests"], 56)
+        self.assertEqual(report["package_integrity_tests"], 8)
+        self.assertEqual(report["combined_checks"], 64)
+        self.assertEqual(report["entry_points"]["scientific"], "cd artifact && ./run-tests.sh")
+        self.assertEqual(report["entry_points"]["package"], "cd artifact && ./run-package-checks.sh")
 
     def test_running_figure_is_narratively_placed_and_notation_light(self):
         manuscript = strip_tex_comments(MANUSCRIPT.read_text(encoding="utf-8"))

@@ -1,21 +1,22 @@
 {
-  "schema": "ANTI_OVERFITTING_AUDIT",
-  "date": "2026-09-24",
-  "full_test_count": 61,
-  "manuscript_sha256": "16ae4dd981df37bebf3576fa615582fad3ea88dd03d415ab930c7b3d73858362",
-  "checker_source_sha256": "6d1c0c2b2ea1912540cf4efb2e00a8ed2afbe280fa02c92f3359ca8c97d50682",
+  "schema": "ANTI_OVERFITTING_AUDIT_V2",
+  "date": "2026-09-26",
+  "full_test_count": 64,
+  "manuscript_sha256": "65e28a4c7c2913e0a7c196b944045348557445cb97dc483c7c8f2d53c0617776",
+  "checker_source_sha256": "05940feb15aa478f9bc36f8050eab9291130b2fac0f58783a0d8cc489192ed88",
   "run_all_sha256": "a016d98d22bd0a3456aa96398819e97c1aa6eff5b27b5cd8e9c366e9c3eeb6d8",
   "witness_checker_sha256": "923dda01c36711f608c9321a24ea5e5cdf65cc610d26db0c133df1221bda947d",
   "test_hashes": {
-    "test_woc.py": "e3191a9cf4db7525442e711d330793e2aef71c6ad634d06692c0d41d8ca83f2e",
-    "test_witness_boundaries.py": "dcbcb6e5bd323ab4fd002265f9053ab88363efcd62e3e7ee1aec4fb60b65d554",
-    "test_package_integrity.py": "820d156d62b92feb67fc6c174c0b9893c3337731cc2e1941466a11d9d86eeb99"
+    "test_woc.py": "920e2a3b1fcd42e1eabcd09dff7017473f2b3d11c256b2eaa3224929f293737a",
+    "test_witness_boundaries.py": "e139984e1c127e79c3c771e16c18062c690a15a7d1af039bcbfbc016688da3ff",
+    "test_package_integrity.py": "1fdea6630c0f97f7318aa8b2c70ee4ecbed62c0d6bd15e9cc7f10b67001bc06b"
   },
   "representation_invariances": [
     "program renaming",
     "duplicate representatives",
     "disjoint union",
-    "component decomposition"
+    "component decomposition",
+    "missing required row versus explicit empty row"
   ],
   "independent_routes": [
     "quotient solver versus direct program-label oracle",
@@ -32,5 +33,8 @@
     "negative_access_instances": 227
   },
   "limits": "All finite checks share the declared semantic inputs. They do not prove contextual equivalence, validate a real compiler relation, or replace the arbitrary-set proofs.",
-  "verdict": "PASS"
+  "verdict": "PASS",
+  "scientific_test_count": 56,
+  "package_integrity_test_count": 8,
+  "combined_check_count": 64
 }

@@ -1,12 +1,11 @@
 {
-  "schema": "CODE_QUALITY_AUDIT",
-  "date": "2026-09-24",
+  "schema": "CODE_QUALITY_AUDIT_V2",
+  "date": "2026-09-26",
   "python_compileall": "PASS",
-  "unit_and_integrity_tests": 61,
   "deterministic_scientific_reexecution": "PASS",
   "coverage": {
     "scope": "scientific unit tests plus run_all; package-integrity tests excluded from this engineering metric",
-    "overall_statement_coverage_percent": 89.42,
+    "overall_statement_coverage_percent": 90.6183368869936,
     "files": {
       "run_all.py": {
         "covered_lines": 122,
@@ -29,14 +28,14 @@
         "percent_statements_covered_display": "93"
       },
       "woc.py": {
-        "covered_lines": 648,
-        "num_statements": 738,
-        "percent_covered": 87.8048780487805,
-        "percent_covered_display": "88",
-        "missing_lines": 90,
+        "covered_lines": 661,
+        "num_statements": 740,
+        "percent_covered": 89.32432432432432,
+        "percent_covered_display": "89",
+        "missing_lines": 79,
         "excluded_lines": 0,
-        "percent_statements_covered": 87.8048780487805,
-        "percent_statements_covered_display": "88"
+        "percent_statements_covered": 89.32432432432432,
+        "percent_statements_covered_display": "89"
       }
     },
     "interpretation": "Engineering health metric only; not evidence for the arbitrary-set theorems."
@@ -46,7 +45,11 @@
     "list budgets and vertex counts must be nonnegative non-boolean integers",
     "vertex indices are range-checked before pruning",
     "missing witness values are distinguished from legal None-valued programs",
-    "explicit empty decoders are rejected rather than replaced by defaults"
+    "explicit empty decoders are rejected rather than replaced by defaults",
+    "nonempty program/support universes are required by capacity interfaces",
+    "missing required source rows are rejected rather than synthesized as empty rows",
+    "explicit empty rows remain valid infeasible constraints and are distinguished from missing rows",
+    "directed preservation and access relations require complete source-row domains"
   ],
   "constructive_checks": {
     "exhaustive_and_fixed_generated_instances": 320,
@@ -66,5 +69,8 @@
     "validated_positive_witnesses": 13,
     "negative_access_instances": 227
   },
-  "verdict": "PASS"
+  "verdict": "PASS",
+  "scientific_tests": 56,
+  "package_integrity_tests": 8,
+  "combined_checks": 64
 }

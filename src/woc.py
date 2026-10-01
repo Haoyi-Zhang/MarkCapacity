@@ -41,6 +41,57 @@ def block_index(partition: Partition) -> dict[Element, int]:
     return {element: i for i, block in enumerate(partition) for element in block}
 
 
+def _same_nonempty_universe(
+    first: Partition,
+    second: Partition,
+) -> frozenset[Element]:
+    """Validate that two partitions describe one nonempty program universe."""
+    first_universe = universe(first)
+    if not first_universe:
+        raise ValueError("a nonempty program universe is required")
+    if first_universe != universe(second):
+        raise ValueError("partitions must have the same universe")
+    return first_universe
+
+
+def _materialize_required_rows(
+    relation: Mapping[Element, Iterable[Element]],
+    sources: Iterable[Element],
+    target_universe: frozenset[Element],
+    relation_name: str,
+) -> dict[Element, frozenset[Element]]:
+    """Materialize every required source row without inventing missing rows.
+
+    An explicitly supplied empty row is a legitimate row.  A missing row is an
+    incomplete input contract and raises ``ValueError`` rather than being
+    reinterpreted as an empty mathematical constraint.
+    """
+    source_items = tuple(sorted(set(sources), key=_key))
+    missing = [source for source in source_items if source not in relation]
+    if missing:
+        raise ValueError(
+            f"{relation_name} is missing source row(s): "
+            f"{sorted(missing, key=_key)!r}"
+        )
+
+    rows: dict[Element, frozenset[Element]] = {}
+    for source in source_items:
+        try:
+            row = frozenset(relation[source])
+        except (KeyError, TypeError) as exc:
+            raise ValueError(
+                f"invalid {relation_name} row for {source!r}"
+            ) from exc
+        outside = row.difference(target_universe)
+        if outside:
+            raise ValueError(
+                f"{relation_name} row for {source!r} contains elements outside "
+                f"the target universe: {outside!r}"
+            )
+        rows[source] = row
+    return rows
+
+
 def is_refinement(fine: Partition, coarse: Partition) -> bool:
     """Return whether every fine block lies within one coarse block."""
     if universe(fine) != universe(coarse):
@@ -83,8 +134,10 @@ def join_partitions(*partitions: Partition) -> Partition:
 def quotient_cells(behavior: Partition, indistinguishability: Partition) -> tuple[tuple[Block, ...], ...]:
     """List indistinguishability cells contained in each behavior class.
 
-    Requires the indistinguishability partition to refine behavior.
+    Requires a nonempty common universe and the indistinguishability partition
+    to refine behavior.
     """
+    _same_nonempty_universe(behavior, indistinguishability)
     if not is_refinement(indistinguishability, behavior):
         raise ValueError("indistinguishability must refine behavior")
     j_index = block_index(indistinguishability)
@@ -95,10 +148,8 @@ def quotient_cells(behavior: Partition, indistinguishability: Partition) -> tupl
 
 
 def exact_message_capacity(behavior: Partition, indistinguishability: Partition) -> int:
-    """Worst-case exact message alphabet size: min_C |C / J|."""
+    """Worst-case exact alphabet size on a nonempty supported universe."""
     cells = quotient_cells(behavior, indistinguishability)
-    if not cells:
-        return 0
     return min(len(x) for x in cells)
 
 
@@ -236,18 +287,19 @@ def validate_access_scheme(
     This validator never constructs or solves a quotient hypergraph; it checks
     the proposed program-level witness directly.
     """
-    valid, failures = validate_scheme(behavior, indistinguishability, messages, decoder, embedder)
+    try:
+        u = _same_nonempty_universe(behavior, indistinguishability)
+        access_rows = _materialize_required_rows(access, u, u, "access relation")
+    except ValueError as exc:
+        return False, [str(exc)]
+
+    valid, failures = validate_scheme(
+        behavior, indistinguishability, messages, decoder, embedder
+    )
     if not valid:
         return False, failures
-    u = universe(behavior)
     for source in sorted(u, key=_key):
-        try:
-            outputs = frozenset(access.get(source, ()))
-        except TypeError:
-            failures.append(f"invalid access row for {source!r}")
-            continue
-        if not outputs <= u:
-            failures.append(f"access row leaves the program universe for {source!r}")
+        outputs = access_rows[source]
         for message in range(messages):
             if embedder[(source, message)] not in outputs:
                 failures.append(f"output is not reachable for {(source, message)!r}")
@@ -261,10 +313,9 @@ def construct_access_scheme(
     messages: int,
 ) -> tuple[dict[Element, int], dict[tuple[Element, int], Element]]:
     """Extract program-level decoder/embedding witnesses from an access coloring."""
-    if not universe(behavior):
-        raise ValueError("a nonempty program universe is required")
+    u = _same_nonempty_universe(behavior, indistinguishability)
     # Materialize once: callers may supply single-use iterators as access rows.
-    access_rows = {p: frozenset(access.get(p, ())) for p in universe(behavior)}
+    access_rows = _materialize_required_rows(access, u, u, "access relation")
     edges = access_hypergraph(behavior, indistinguishability, access_rows)
     coloring = find_polychromatic_coloring(edges, len(indistinguishability), messages)
     if coloring is None:
@@ -272,7 +323,7 @@ def construct_access_scheme(
     decoder = {p: coloring[i] for i, block in enumerate(indistinguishability) for p in block}
     b_index = block_index(behavior)
     embedder: dict[tuple[Element, int], Element] = {}
-    for source in sorted(universe(behavior), key=_key):
+    for source in sorted(u, key=_key):
         candidates = sorted((q for q in access_rows[source] if b_index[source] == b_index[q]), key=_key)
         for message in range(messages):
             embedder[(source, message)] = next(q for q in candidates if decoder[q] == message)
@@ -281,8 +332,7 @@ def construct_access_scheme(
 
 def quotient_hypergraph(behavior: Partition, indistinguishability: Partition) -> tuple[tuple[int, ...], ...]:
     """Behavior classes as hyperedges over global J-cells."""
-    if universe(behavior) != universe(indistinguishability):
-        raise ValueError("partitions must have the same universe")
+    _same_nonempty_universe(behavior, indistinguishability)
     j_index = block_index(indistinguishability)
     return tuple(tuple(sorted({j_index[x] for x in block})) for block in behavior)
 
@@ -297,19 +347,17 @@ def access_hypergraph(
     ``access[p]`` lists outputs the embedding mechanism is allowed to choose from
     input ``p`` before behavior preservation is imposed.  The returned edge for
     ``p`` therefore contains exactly the J-cells meeting both ``access[p]`` and
-    the behavior class of ``p``.  Missing rows are interpreted as empty.
+    the behavior class of ``p``.  Every source row must be present; an explicitly
+    supplied empty row remains a valid empty edge and makes positive-message
+    feasibility fail.
     """
-    u = universe(behavior)
-    if u != universe(indistinguishability):
-        raise ValueError("partitions must have the same universe")
+    u = _same_nonempty_universe(behavior, indistinguishability)
+    access_rows = _materialize_required_rows(access, u, u, "access relation")
     b_index = block_index(behavior)
     j_index = block_index(indistinguishability)
     edges: list[tuple[int, ...]] = []
     for p in sorted(u, key=_key):
-        candidates = set(access.get(p, ()))
-        outside = candidates.difference(u)
-        if outside:
-            raise ValueError(f"access row for {p!r} contains elements outside the universe: {outside!r}")
+        candidates = access_rows[p]
         allowed_cells = {
             j_index[q]
             for q in candidates
@@ -330,6 +378,23 @@ def access_exact_feasible(
     return find_polychromatic_coloring(edges, len(indistinguishability), messages) is not None
 
 
+def access_message_capacity(
+    behavior: Partition,
+    indistinguishability: Partition,
+    access: Mapping[Element, Iterable[Element]],
+) -> int:
+    """Largest feasible positive alphabet, or zero when an access edge is empty.
+
+    Zero is a sentinel for the absence of any exact scheme with a nonempty
+    message alphabet.  It is not an implementable empty-message scheme.  A
+    one-message result, by contrast, is feasible and carries zero selected bits.
+    """
+    edges = access_hypergraph(behavior, indistinguishability, access)
+    if any(not edge for edge in edges):
+        return 0
+    return polychromatic_number(edges, len(indistinguishability))
+
+
 def direct_access_exact_feasible(
     behavior: Partition,
     indistinguishability: Partition,
@@ -339,18 +404,14 @@ def direct_access_exact_feasible(
     """Independent program-level oracle for constrained exact feasibility."""
     if not isinstance(messages, int) or isinstance(messages, bool) or messages < 1:
         raise ValueError("messages must be a positive integer")
-    u = universe(behavior)
-    if u != universe(indistinguishability):
-        raise ValueError("partitions must have the same universe")
+    u = _same_nonempty_universe(behavior, indistinguishability)
     items = tuple(sorted(u, key=_key))
     b_index = block_index(behavior)
-    normalized_access: dict[Element, frozenset[Element]] = {}
-    for p in items:
-        candidates = frozenset(access.get(p, ()))
-        outside = candidates.difference(u)
-        if outside:
-            raise ValueError(f"access row for {p!r} contains elements outside the universe: {outside!r}")
-        normalized_access[p] = frozenset(q for q in candidates if b_index[q] == b_index[p])
+    access_rows = _materialize_required_rows(access, items, u, "access relation")
+    normalized_access: dict[Element, frozenset[Element]] = {
+        p: frozenset(q for q in access_rows[p] if b_index[q] == b_index[p])
+        for p in items
+    }
 
     target = set(range(messages))
     for values in product(range(messages), repeat=len(items)):
@@ -374,21 +435,26 @@ def directed_access_hypergraph(
     ``sources`` and target programs may be disjoint.  ``targets`` is the
     operational partition on the target side; each source edge contains the
     target blocks that meet both its directed preservation row and its access
-    row.  Missing rows are empty.
+    row.  Both mappings must contain every declared source row; explicit empty
+    rows remain valid and induce an empty source constraint.
     """
     source_items = tuple(sorted(set(sources), key=_key))
     target_universe = universe(targets)
+    if not target_universe:
+        raise ValueError("a nonempty target universe is required")
+    preservation_rows = _materialize_required_rows(
+        preservation, source_items, target_universe, "preservation relation"
+    )
+    access_rows = _materialize_required_rows(
+        access, source_items, target_universe, "access relation"
+    )
     target_index = block_index(targets)
     edges: list[tuple[int, ...]] = []
     for source in source_items:
-        preserved = set(preservation.get(source, ()))
-        reachable = set(access.get(source, ()))
-        outside = (preserved | reachable).difference(target_universe)
-        if outside:
-            raise ValueError(
-                f"directed row for {source!r} contains targets outside the target universe: {outside!r}"
-            )
-        cells = {target_index[q] for q in preserved.intersection(reachable)}
+        cells = {
+            target_index[q]
+            for q in preservation_rows[source].intersection(access_rows[source])
+        }
         edges.append(tuple(sorted(cells)))
     return tuple(edges)
 
@@ -417,17 +483,19 @@ def direct_directed_access_exact_feasible(
         raise ValueError("messages must be a positive integer")
     source_items = tuple(sorted(set(sources), key=_key))
     target_items = tuple(sorted(universe(targets), key=_key))
-    target_universe = set(target_items)
-    admissible: dict[Element, frozenset[Element]] = {}
-    for source in source_items:
-        preserved = set(preservation.get(source, ()))
-        reachable = set(access.get(source, ()))
-        outside = (preserved | reachable).difference(target_universe)
-        if outside:
-            raise ValueError(
-                f"directed row for {source!r} contains targets outside the target universe: {outside!r}"
-            )
-        admissible[source] = frozenset(preserved.intersection(reachable))
+    target_universe = frozenset(target_items)
+    if not target_universe:
+        raise ValueError("a nonempty target universe is required")
+    preservation_rows = _materialize_required_rows(
+        preservation, source_items, target_universe, "preservation relation"
+    )
+    access_rows = _materialize_required_rows(
+        access, source_items, target_universe, "access relation"
+    )
+    admissible = {
+        source: preservation_rows[source].intersection(access_rows[source])
+        for source in source_items
+    }
 
     required = set(range(messages))
     for values in product(range(messages), repeat=len(target_items)):
@@ -522,9 +590,7 @@ def direct_average_list_cover(
     """
     if not isinstance(messages, int) or isinstance(messages, bool) or messages < 1:
         raise ValueError("messages must be a positive integer")
-    u = universe(behavior)
-    if u != universe(indistinguishability):
-        raise ValueError("partitions must have the same universe")
+    u = _same_nonempty_universe(behavior, indistinguishability)
     if len(budgets) != len(indistinguishability):
         raise ValueError("one list budget is required per operational block")
     if any(not isinstance(budget, int) or isinstance(budget, bool) or budget < 0 for budget in budgets):
@@ -532,15 +598,12 @@ def direct_average_list_cover(
     items = tuple(sorted(u, key=_key))
     b_index = block_index(behavior)
     j_index = block_index(indistinguishability)
+    access_rows = _materialize_required_rows(access, items, u, "access relation")
     normalized_access: dict[Element, frozenset[Element]] = {}
     for source in items:
-        candidates = frozenset(access.get(source, ()))
-        outside = candidates.difference(u)
-        if outside:
-            raise ValueError(
-                f"access row for {source!r} contains elements outside the universe: {outside!r}"
-            )
-        allowed = frozenset(q for q in candidates if b_index[q] == b_index[source])
+        allowed = frozenset(
+            q for q in access_rows[source] if b_index[q] == b_index[source]
+        )
         if not allowed:
             raise ValueError("source access edges must be nonempty after behavior filtering")
         normalized_access[source] = allowed
@@ -912,9 +975,8 @@ def direct_general_exact_feasible(
     """
     if not isinstance(messages, int) or isinstance(messages, bool) or messages < 1:
         raise ValueError("messages must be a positive integer")
-    if universe(behavior) != universe(indistinguishability):
-        raise ValueError("partitions must have the same universe")
-    items = tuple(sorted(universe(behavior), key=_key))
+    u = _same_nonempty_universe(behavior, indistinguishability)
+    items = tuple(sorted(u, key=_key))
     target = set(range(messages))
     for values in product(range(messages), repeat=len(items)):
         decoder = dict(zip(items, values, strict=True))
