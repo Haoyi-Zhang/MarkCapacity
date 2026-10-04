@@ -22,7 +22,7 @@ From this `artifact/` directory in a complete project checkout, run:
 ./run-package-checks.sh
 ```
 
-This entry point runs 8 package-integrity tests. It requires the sibling `paper/` tree, `CURRENT-STATE.md`, `research-plan.md`, and the project manifest. It also requires Poppler's `pdfinfo` and `pdftotext`; the script checks and reports these dependencies before running any tests. Missing assets or commands cause an explicit input/dependency error and are never converted into a scientific infeasibility result.
+This entry point runs 8 package-integrity tests. It requires the sibling `paper/` tree, its retained `paper/provenance/` records, and `artifact/project-manifest.json`. It also requires Poppler's `pdfinfo` and `pdftotext`; the script checks and reports these dependencies before running any tests. Missing assets or commands cause an explicit input/dependency error and are never converted into a scientific infeasibility result.
 
 To run both entry points in a complete checkout:
 
