@@ -436,9 +436,12 @@ def directed_access_hypergraph(
     operational partition on the target side; each source edge contains the
     target blocks that meet both its directed preservation row and its access
     row.  Both mappings must contain every declared source row; explicit empty
-    rows remain valid and induce an empty source constraint.
+    rows remain valid and induce an empty source constraint. The declared
+    source support itself must be nonempty.
     """
     source_items = tuple(sorted(set(sources), key=_key))
+    if not source_items:
+        raise ValueError("a nonempty source support is required")
     target_universe = universe(targets)
     if not target_universe:
         raise ValueError("a nonempty target universe is required")
@@ -482,6 +485,8 @@ def direct_directed_access_exact_feasible(
     if not isinstance(messages, int) or isinstance(messages, bool) or messages < 1:
         raise ValueError("messages must be a positive integer")
     source_items = tuple(sorted(set(sources), key=_key))
+    if not source_items:
+        raise ValueError("a nonempty source support is required")
     target_items = tuple(sorted(universe(targets), key=_key))
     target_universe = frozenset(target_items)
     if not target_universe:
@@ -1260,4 +1265,3 @@ def exhaustive_access_check(max_universe_size: int = 3) -> AccessExhaustiveSumma
         access_inclusion_pairs=inclusion_pair_count,
         access_monotonicity_checks=monotonicity_count,
     )
-
