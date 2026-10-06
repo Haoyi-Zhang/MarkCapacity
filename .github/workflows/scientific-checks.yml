@@ -1,0 +1,41 @@
+name: Finite scientific checks
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  finite-checks:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONUTF8: '1'
+      MIN_EXPECTED_PYTHON_SOURCES: '6'
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - name: Check syntax and reproduce the frozen finite evidence
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/woc-checks"
+          export WOC_CHECK_OUTPUT="$RUNNER_TEMP/woc-checks"
+          ulimit -v 2097152
+          ulimit -t 600
+          python -B .github/scripts/check_repository.py > "$WOC_CHECK_OUTPUT/materials.json" 2>&1
+          timeout --kill-after=10s 600s bash run-tests.sh > "$WOC_CHECK_OUTPUT/scientific.log" 2>&1
+          cat "$WOC_CHECK_OUTPUT/materials.json"
+          cat "$WOC_CHECK_OUTPUT/scientific.log"
+      - name: Retain raw outputs, including failed attempts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: finite-scientific-outputs
+          path: ${{ runner.temp }}/woc-checks/
+          if-no-files-found: warn
+          retention-days: 14

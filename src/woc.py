@@ -527,6 +527,17 @@ def _bounded_subsets(messages: int, budget: int) -> tuple[frozenset[int], ...]:
     )
 
 
+def _integer_edges(edges: Sequence[Sequence[int]], vertices: int) -> tuple[tuple[int, ...], ...]:
+    """Validate supplied indices before equal values can disappear in a set."""
+    if not isinstance(vertices, int) or isinstance(vertices, bool) or vertices < 0:
+        raise ValueError("vertex count must be a nonnegative integer")
+    supplied = tuple(tuple(edge) for edge in edges)
+    if any(any(not isinstance(v, int) or isinstance(v, bool) or not 0 <= v < vertices
+               for v in edge) for edge in supplied):
+        raise ValueError("vertices must be integer indices inside the declared universe")
+    return tuple(tuple(dict.fromkeys(edge)) for edge in supplied)
+
+
 def max_average_list_cover(
     edges: Sequence[Sequence[int]],
     vertices: int,
@@ -544,7 +555,7 @@ def max_average_list_cover(
         raise ValueError("vertex count must be a nonnegative integer")
     if not isinstance(messages, int) or isinstance(messages, bool) or messages < 1:
         raise ValueError("messages must be a positive integer")
-    normalized = tuple(tuple(dict.fromkeys(edge)) for edge in edges)
+    normalized = _integer_edges(edges, vertices)
     if len(budgets) != vertices:
         raise ValueError("one list budget is required per vertex")
     if any(not isinstance(budget, int) or isinstance(budget, bool) or budget < 0 for budget in budgets):
@@ -553,8 +564,6 @@ def max_average_list_cover(
         raise ValueError("one weight row is required per source edge")
     if any(len(row) != messages for row in weights):
         raise ValueError("each weight row must have one entry per message")
-    if any(any(not isinstance(v, int) or isinstance(v, bool) or not 0 <= v < vertices for v in edge) for edge in normalized):
-        raise ValueError("vertices must be integer indices inside the declared universe")
     if any(not edge for edge in normalized):
         raise ValueError("source access edges must be nonempty")
 
@@ -651,11 +660,9 @@ def deterministic_worst_source_value(
     messages = len(prior)
     if messages < 1:
         raise ValueError("the message prior must be nonempty")
-    normalized = tuple(tuple(dict.fromkeys(edge)) for edge in edges)
+    normalized = _integer_edges(edges, vertices)
     if not normalized or any(not edge for edge in normalized):
         raise ValueError("a nonempty family of nonempty edges is required")
-    if any(any(not isinstance(v, int) or isinstance(v, bool) or not 0 <= v < vertices for v in edge) for edge in normalized):
-        raise ValueError("vertices must be integer indices inside the declared universe")
     mu = tuple(Fraction(value) for value in prior)
     if any(value < 0 for value in mu) or sum(mu) != 1:
         raise ValueError("the prior must be a probability distribution")
@@ -684,11 +691,9 @@ def private_recovery_value(
     q = tuple(tuple(Fraction(value) for value in row) for row in vertex_distributions)
     if any(len(row) != messages or any(value < 0 for value in row) or sum(row) != 1 for row in q):
         raise ValueError("every vertex row must be a message distribution")
-    normalized = tuple(tuple(dict.fromkeys(edge)) for edge in edges)
+    normalized = _integer_edges(edges, len(q))
     if not normalized or any(not edge for edge in normalized):
         raise ValueError("a nonempty family of nonempty edges is required")
-    if any(any(not 0 <= v < len(q) for v in edge) for edge in normalized):
-        raise ValueError("vertex out of range")
     return min(
         sum(mu[m] * max(q[v][m] for v in edge) for m in range(messages))
         for edge in normalized
@@ -713,13 +718,11 @@ def shared_recovery_value(
     vertices = len(next(iter(distribution)))
     if any(len(coloring) != vertices for coloring in distribution):
         raise ValueError("all colorings must have the same length")
-    if any(any(not 0 <= color < messages for color in coloring) for coloring in distribution):
-        raise ValueError("color out of range")
-    normalized = tuple(tuple(dict.fromkeys(edge)) for edge in edges)
+    if any(any(not isinstance(color, int) or isinstance(color, bool) or not 0 <= color < messages for color in coloring) for coloring in distribution):
+        raise ValueError("colors must be integer indices inside the message alphabet")
+    normalized = _integer_edges(edges, vertices)
     if not normalized or any(not edge for edge in normalized):
         raise ValueError("a nonempty family of nonempty edges is required")
-    if any(any(not 0 <= v < vertices for v in edge) for edge in normalized):
-        raise ValueError("vertex out of range")
     edge_values = []
     for edge in normalized:
         value = Fraction(0)
@@ -746,11 +749,9 @@ def shared_recovery_dual_bound(
     messages = len(prior)
     mu = tuple(Fraction(value) for value in prior)
     alpha = tuple(Fraction(value) for value in edge_weights)
-    normalized = tuple(tuple(dict.fromkeys(edge)) for edge in edges)
+    normalized = _integer_edges(edges, vertices)
     if not normalized or any(not edge for edge in normalized):
         raise ValueError("a nonempty family of nonempty edges is required")
-    if any(any(not isinstance(v, int) or isinstance(v, bool) or not 0 <= v < vertices for v in edge) for edge in normalized):
-        raise ValueError("vertices must be integer indices inside the declared universe")
     if len(alpha) != len(normalized) or any(value < 0 for value in alpha) or sum(alpha) != 1:
         raise ValueError("edge weights must be a probability distribution")
     if any(value < 0 for value in mu) or sum(mu) != 1:
@@ -844,16 +845,16 @@ def coordinate_product_edges(
     second_vertices: int,
 ) -> tuple[tuple[int, ...], ...]:
     """Coordinate product of two finite hypergraphs with integer vertices."""
-    if first_vertices < 0 or second_vertices < 0:
-        raise ValueError("vertex counts must be nonnegative")
-    normalized_first = tuple(tuple(dict.fromkeys(edge)) for edge in first_edges)
-    normalized_second = tuple(tuple(dict.fromkeys(edge)) for edge in second_edges)
+    if any(not isinstance(n, int) or isinstance(n, bool) or n < 0 for n in (first_vertices, second_vertices)):
+        raise ValueError("vertex counts must be nonnegative integers")
+    normalized_first = _integer_edges(first_edges, first_vertices)
+    normalized_second = _integer_edges(second_edges, second_vertices)
     for edge in normalized_first:
-        if not edge or any(not 0 <= v < first_vertices for v in edge):
-            raise ValueError("first hypergraph has an empty or invalid edge")
+        if not edge:
+            raise ValueError("first hypergraph has an empty edge")
     for edge in normalized_second:
-        if not edge or any(not 0 <= v < second_vertices for v in edge):
-            raise ValueError("second hypergraph has an empty or invalid edge")
+        if not edge:
+            raise ValueError("second hypergraph has an empty edge")
     return tuple(
         tuple(v * second_vertices + w for v in edge_h for w in edge_k)
         for edge_h in normalized_first
@@ -868,28 +869,18 @@ def disjoint_union_edges(
     second_vertices: int,
 ) -> tuple[tuple[int, ...], ...]:
     """Disjoint union of finite integer-vertex hypergraphs."""
-    if first_vertices < 0 or second_vertices < 0:
-        raise ValueError("vertex counts must be nonnegative")
-    first = tuple(tuple(dict.fromkeys(edge)) for edge in first_edges)
-    second = tuple(
-        tuple(first_vertices + v for v in dict.fromkeys(edge))
-        for edge in second_edges
-    )
+    if any(not isinstance(n, int) or isinstance(n, bool) or n < 0 for n in (first_vertices, second_vertices)):
+        raise ValueError("vertex counts must be nonnegative integers")
+    first = _integer_edges(first_edges, first_vertices)
+    second = _integer_edges(second_edges, second_vertices)
     if any(not edge for edge in first + second):
         raise ValueError("hyperedges must be nonempty")
-    if any(any(not 0 <= v < first_vertices for v in edge) for edge in first):
-        raise ValueError("first hypergraph has an invalid vertex")
-    if any(
-        any(not first_vertices <= v < first_vertices + second_vertices for v in edge)
-        for edge in second
-    ):
-        raise ValueError("second hypergraph has an invalid vertex")
-    return first + second
+    return first + tuple(tuple(first_vertices + v for v in edge) for edge in second)
 
 
 def polychromatic_number(edges: Sequence[Sequence[int]], vertices: int) -> int:
     """Exact polychromatic number of a small finite nonempty-edge hypergraph."""
-    normalized = tuple(tuple(dict.fromkeys(edge)) for edge in edges)
+    normalized = _integer_edges(edges, vertices)
     if not normalized or any(not edge for edge in normalized):
         raise ValueError("a nonempty family of nonempty edges is required")
     upper = min(len(edge) for edge in normalized)
@@ -901,12 +892,12 @@ def polychromatic_number(edges: Sequence[Sequence[int]], vertices: int) -> int:
 
 def transversal_number(edges: Sequence[Sequence[int]], vertices: int) -> int:
     """Exact minimum transversal size for a small finite hypergraph."""
-    normalized = tuple(frozenset(edge) for edge in edges)
+    if not isinstance(vertices, int) or isinstance(vertices, bool) or vertices < 0:
+        raise ValueError("vertex count must be a nonnegative integer")
+    normalized = tuple(frozenset(edge) for edge in _integer_edges(edges, vertices))
     if not normalized or any(not edge for edge in normalized):
         raise ValueError("a nonempty family of nonempty edges is required")
     vertex_set = tuple(range(vertices))
-    if any(any(not 0 <= v < vertices for v in edge) for edge in normalized):
-        raise ValueError("vertex out of range")
     for size in range(vertices + 1):
         for candidate in combinations(vertex_set, size):
             selected = set(candidate)
@@ -925,9 +916,7 @@ def find_polychromatic_coloring(edges: Sequence[Sequence[int]], vertices: int, m
         raise ValueError("vertex count must be a nonnegative integer")
     if not isinstance(messages, int) or isinstance(messages, bool) or messages < 1:
         raise ValueError("messages must be a positive integer")
-    edges = tuple(tuple(dict.fromkeys(edge)) for edge in edges)
-    if any(any(not isinstance(v, int) or isinstance(v, bool) or not 0 <= v < vertices for v in edge) for edge in edges):
-        raise ValueError("vertices must be integer indices inside the declared universe")
+    edges = _integer_edges(edges, vertices)
     if any(len(edge) < messages for edge in edges):
         return None
     incident: list[list[int]] = [[] for _ in range(vertices)]

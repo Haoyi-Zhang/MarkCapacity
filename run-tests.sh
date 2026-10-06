@@ -3,11 +3,22 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 export PYTHONDONTWRITEBYTECODE=1
+export PYTHONUTF8=1
 
-tmp="$(mktemp -d)"
-trap 'rm -rf "$tmp"' EXIT
+# Keep attempted runs separate from the retained scientific records. The caller
+# may select a parent for raw attempts; no project file is rewritten or deleted.
+if [[ -n "${WOC_CHECK_OUTPUT:-}" ]]; then
+  mkdir -p "$WOC_CHECK_OUTPUT"
+  tmp="$(mktemp -d "$WOC_CHECK_OUTPUT/run.XXXXXX")"
+else
+  tmp="$(mktemp -d)"
+fi
+printf 'Scientific run records: %s\n' "$tmp"
+sha256sum -c raw/SHA256SUMS
 
-if ! python3 -m unittest tests.test_woc tests.test_witness_boundaries -v \
+if ! timeout --kill-after=10s 180s python3 -B -m unittest \
+    tests.test_woc tests.test_witness_boundaries tests.test_directed_support \
+    tests.test_index_boundaries tests.test_reproduction -v \
     > "$tmp/tests.stdout" 2> "$tmp/tests.stderr"; then
   cat "$tmp/tests.stdout"
   cat "$tmp/tests.stderr" >&2
@@ -20,21 +31,20 @@ sed -E 's/^Ran ([0-9]+) tests in [0-9.]+s$/Ran \1 tests/' \
 {
   cat "$tmp/tests.normalized.stderr"
   printf '%s\n' 'DETERMINISTIC_SCIENTIFIC_REEXECUTION: PASS'
-} > raw/run_stderr.txt
+} > "$tmp/tests.frozen.stderr"
 
-python3 src/run_all.py > "$tmp/run1.stdout"
-cp raw/results.json "$tmp/results1.json"
-cp raw/run_manifest.json "$tmp/manifest1.json"
-cp generated/capacity_table.csv "$tmp/capacity1.csv"
+timeout --kill-after=10s 180s python3 -B src/run_all.py --out "$tmp/run1" > "$tmp/run1.stdout"
+timeout --kill-after=10s 180s python3 -B src/run_all.py --out "$tmp/run2" > "$tmp/run2.stdout"
 
-python3 src/run_all.py > "$tmp/run2.stdout"
 cmp -s "$tmp/run1.stdout" "$tmp/run2.stdout"
-cmp -s "$tmp/results1.json" raw/results.json
-cmp -s "$tmp/manifest1.json" raw/run_manifest.json
-cmp -s "$tmp/capacity1.csv" generated/capacity_table.csv
-cmp -s "$tmp/run2.stdout" raw/run_stdout.txt
-sha256sum -c raw/SHA256SUMS >/dev/null
+for path in raw/results.json raw/run_manifest.json generated/capacity_table.csv; do
+  cmp "$tmp/run1/$path" "$tmp/run2/$path"
+  cmp "$path" "$tmp/run1/$path"
+done
+cmp "$tmp/run1.stdout" raw/run_stdout.txt
+cmp "$tmp/tests.frozen.stderr" raw/run_stderr.txt
+sha256sum -c raw/SHA256SUMS
 
 cat "$tmp/tests.stdout"
 cat "$tmp/run2.stdout"
-cat raw/run_stderr.txt >&2
+cat "$tmp/tests.frozen.stderr" >&2

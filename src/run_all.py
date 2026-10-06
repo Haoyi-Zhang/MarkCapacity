@@ -3,9 +3,11 @@
 from __future__ import annotations
 
 import csv
+import argparse
 import hashlib
 import json
 import random
+import sys
 from dataclasses import asdict
 from fractions import Fraction
 from pathlib import Path
@@ -39,8 +41,6 @@ from woc import (
 )
 
 ROOT = Path(__file__).resolve().parents[1]
-RAW = ROOT / "raw"
-GEN = ROOT / "generated"
 
 
 def sha256(path: Path) -> str:
@@ -51,9 +51,12 @@ def sha256(path: Path) -> str:
     return h.hexdigest()
 
 
-def main() -> int:
-    RAW.mkdir(exist_ok=True)
-    GEN.mkdir(exist_ok=True)
+def main(output_root: Path = ROOT) -> int:
+    """Regenerate evidence separately from the retained records when requested."""
+    RAW = output_root / "raw"
+    GEN = output_root / "generated"
+    RAW.mkdir(parents=True, exist_ok=True)
+    GEN.mkdir(parents=True, exist_ok=True)
 
     exhaustive = exhaustive_refinement_check(max_universe_size=5)
     general_exhaustive = exhaustive_general_check(max_universe_size=5)
@@ -362,7 +365,7 @@ def main() -> int:
         "joint_contract_composition": composition,
     }
     result_path = RAW / "results.json"
-    result_path.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    result_path.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
 
     manifest = {
         "command": "python3 src/run_all.py",
@@ -381,21 +384,25 @@ def main() -> int:
         },
     }
     (RAW / "run_manifest.json").write_text(
-        json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+        json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="\n"
     )
     stdout = json.dumps(result, indent=2, sort_keys=True) + "\n"
-    (RAW / "run_stdout.txt").write_text(stdout, encoding="utf-8")
+    (RAW / "run_stdout.txt").write_text(stdout, encoding="utf-8", newline="\n")
     paths = [result_path, RAW / "run_manifest.json", RAW / "run_stdout.txt", GEN / "capacity_table.csv"]
     # The normalized test transcript is maintained by the release verifier;
     # it is included when present, never silently fabricated by this generator.
     if (RAW / "run_stderr.txt").exists():
         paths.append(RAW / "run_stderr.txt")
     (RAW / "SHA256SUMS").write_text(
-        "".join(f"{sha256(p)}  {p.relative_to(ROOT).as_posix()}\n" for p in paths), encoding="utf-8"
+        "".join(f"{sha256(p)}  {p.relative_to(output_root).as_posix()}\n" for p in paths), encoding="utf-8", newline="\n"
     )
     print(stdout, end="")
     return 0
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    sys.stdout.reconfigure(encoding="utf-8", newline="\n")
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--out", type=Path, default=ROOT,
+                        help="output root (use a separate directory to preserve retained evidence)")
+    raise SystemExit(main(parser.parse_args().out.resolve()))

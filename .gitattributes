@@ -1,0 +1,8 @@
+# Source hashes consume LF bytes; retained evidence must not be recoded by Git.
+src/*.py text eol=lf
+tests/*.py text eol=lf
+*.sh text eol=lf
+.github/**/*.py text eol=lf
+.github/**/*.yml text eol=lf
+raw/* -text
+generated/*.csv -text

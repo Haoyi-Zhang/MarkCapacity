@@ -54,9 +54,18 @@ test_list_and_recovery_inputs_are_type_checked (tests.test_witness_boundaries.Wi
 test_none_is_a_legal_program (tests.test_witness_boundaries.WitnessBoundaryTests.test_none_is_a_legal_program) ... ok
 test_single_use_access_iterators_are_supported (tests.test_witness_boundaries.WitnessBoundaryTests.test_single_use_access_iterators_are_supported) ... ok
 test_unfiltered_generated_witness_cases (tests.test_witness_boundaries.WitnessBoundaryTests.test_unfiltered_generated_witness_cases) ... ok
+test_empty_admissible_row_is_valid_but_infeasible (tests.test_directed_support.DirectedSupportTests.test_empty_admissible_row_is_valid_but_infeasible) ... ok
+test_empty_declared_support_rejected (tests.test_directed_support.DirectedSupportTests.test_empty_declared_support_rejected) ... ok
+test_singleton_identity_one_message (tests.test_directed_support.DirectedSupportTests.test_singleton_identity_one_message) ... ok
+test_indices_are_checked_before_deduplication_and_lookup (tests.test_index_boundaries.IndexBoundaryTests.test_indices_are_checked_before_deduplication_and_lookup) ... ok
+test_product_counts_are_nonboolean_integers (tests.test_index_boundaries.IndexBoundaryTests.test_product_counts_are_nonboolean_integers) ... ok
+test_product_vertices_are_checked_before_offsetting (tests.test_index_boundaries.IndexBoundaryTests.test_product_vertices_are_checked_before_offsetting) ... ok
+test_shared_labels_are_nonboolean_integers (tests.test_index_boundaries.IndexBoundaryTests.test_shared_labels_are_nonboolean_integers) ... ok
+test_transversal_inputs_are_validated_before_enumeration (tests.test_index_boundaries.IndexBoundaryTests.test_transversal_inputs_are_validated_before_enumeration) ... ok
+test_separate_output_is_canonical_and_preserves_retained_records (tests.test_reproduction.ReproductionTests.test_separate_output_is_canonical_and_preserves_retained_records) ... ok
 
 ----------------------------------------------------------------------
-Ran 56 tests
+Ran 65 tests
 
 OK
 DETERMINISTIC_SCIENTIFIC_REEXECUTION: PASS
