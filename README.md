@@ -16,6 +16,11 @@ The scientific tests cover 1,943 refinement instances, 11,423 general partition 
 
 The input contract is explicit. Every declared source must have an access row; directed instances require both a preservation row and an access row. A missing row is malformed input and raises `ValueError`. An explicitly supplied empty row is different: it is a valid empty constraint and makes every nonempty exact message alphabet infeasible. The boundary tests cover empty support, a missing row, a one-source empty row, and a one-source identity row.
 
+The Linux workflow in `results/current/` passes all 65 tests without skips.
+Both complete regenerations match each other and the retained JSON, source
+manifest, capacity table and normalized test transcript byte-for-byte. These
+are finite scientific checks, not new runtime-performance measurements.
+
 ## Full-project integrity checks
 
 From this `artifact/` directory in a complete project checkout, run:

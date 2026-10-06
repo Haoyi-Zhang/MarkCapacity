@@ -1,0 +1,452 @@
+Scientific run records: /home/runner/work/_temp/woc-checks/run.wv1ukj
+raw/results.json: OK
+raw/run_manifest.json: OK
+raw/run_stdout.txt: OK
+generated/capacity_table.csv: OK
+raw/run_stderr.txt: OK
+raw/results.json: OK
+raw/run_manifest.json: OK
+raw/run_stdout.txt: OK
+generated/capacity_table.csv: OK
+raw/run_stderr.txt: OK
+{
+  "access_fano_counterexample": {
+    "access_is_reflexive": true,
+    "behavior_classes": 1,
+    "distinct_access_hyperedges": 7,
+    "each_edge_size": [
+      3
+    ],
+    "name": "fano_plane_access_realization",
+    "operational_classes": 7,
+    "operational_refines_behavior": true,
+    "program_incidences": 21,
+    "two_message_feasible": false
+  },
+  "access_hypergraph_counterexample": {
+    "access_hyperedges": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        0,
+        2
+      ]
+    ],
+    "access_is_reflexive": true,
+    "behavior_classes": 1,
+    "each_edge_size": [
+      2,
+      2,
+      2
+    ],
+    "name": "source_dependent_access_triangle",
+    "operational_classes": 3,
+    "operational_refines_behavior": true,
+    "two_message_coloring": null,
+    "two_message_feasible": false
+  },
+  "capacity_scenarios": [
+    {
+      "exact_messages": 8,
+      "guaranteed_bits": 3,
+      "order": 0,
+      "program_variants": 8,
+      "quotient_cells": 8,
+      "scenario": "no_attack_identifies_variants"
+    },
+    {
+      "exact_messages": 4,
+      "guaranteed_bits": 2,
+      "order": 1,
+      "program_variants": 8,
+      "quotient_cells": 4,
+      "scenario": "paired_attack_orbits"
+    },
+    {
+      "exact_messages": 2,
+      "guaranteed_bits": 1,
+      "order": 2,
+      "program_variants": 8,
+      "quotient_cells": 2,
+      "scenario": "four_way_attack_orbits"
+    },
+    {
+      "exact_messages": 1,
+      "guaranteed_bits": 0,
+      "order": 3,
+      "program_variants": 8,
+      "quotient_cells": 1,
+      "scenario": "complete_semantic_closure"
+    }
+  ],
+  "constructive_witness_checks": {
+    "exhaustive_instances": 128,
+    "generated_instances": 192,
+    "negative_instances": 274,
+    "oracle_agreements": 320,
+    "positive_instances": 46,
+    "valid_constructed_witnesses": 46
+  },
+  "exhaustive_access_theorem": {
+    "access_inclusion_pairs": 492402,
+    "access_monotonicity_checks": 492402,
+    "access_relation_instances": 12866,
+    "agreement_checks": 38564,
+    "behavior_partitions": 8,
+    "feasible_instances": 4363,
+    "infeasible_instances": 34201,
+    "max_universe_size": 3,
+    "message_instances": 38564,
+    "operational_partitions": 8,
+    "partition_pairs": 30
+  },
+  "exhaustive_general_theorem": {
+    "agreement_checks": 11423,
+    "behavior_monotonicity_checks": 19583,
+    "behavior_partitions": 75,
+    "behavior_refinement_pairs": 434,
+    "feasible_instances": 3447,
+    "infeasible_instances": 7976,
+    "max_universe_size": 5,
+    "message_instances": 11423,
+    "operational_monotonicity_checks": 19583,
+    "operational_partitions": 75,
+    "operational_refinement_pairs": 434,
+    "partition_pairs": 2959
+  },
+  "exhaustive_refinement_theorem": {
+    "behavior_partitions": 75,
+    "constructive_passes": 604,
+    "impossibility_checks": 1339,
+    "max_universe_size": 5,
+    "message_instances": 1943,
+    "refinement_pairs": 434
+  },
+  "fano_plane_counterexample": {
+    "behavior_classes": 7,
+    "each_edge_size": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "name": "fano_plane_incidence_realization",
+    "operational_classes": 7,
+    "program_incidences": 21,
+    "two_message_feasible": false
+  },
+  "general_hypergraph_counterexample": {
+    "behavior_partition": [
+      [
+        "a0",
+        "a1"
+      ],
+      [
+        "b0",
+        "b1"
+      ],
+      [
+        "c0",
+        "c1"
+      ]
+    ],
+    "each_edge_size": [
+      2,
+      2,
+      2
+    ],
+    "indistinguishability_partition": [
+      [
+        "a0",
+        "c1"
+      ],
+      [
+        "a1",
+        "b0"
+      ],
+      [
+        "b1",
+        "c0"
+      ]
+    ],
+    "name": "triangle_crossing_indistinguishability",
+    "quotient_hyperedges": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        0,
+        2
+      ]
+    ],
+    "two_message_coloring": null,
+    "two_message_feasible": false
+  },
+  "joint_contract_composition": {
+    "fourth_power": {
+      "constructed_messages": 9,
+      "edges": 81,
+      "vertices": 81,
+      "witness_valid": true
+    },
+    "name": "triangle_coordinate_products",
+    "square": {
+      "cyclic_coloring": [
+        0,
+        1,
+        2,
+        1,
+        2,
+        0,
+        2,
+        0,
+        1
+      ],
+      "edges": 9,
+      "polychromatic_number": 3,
+      "transversal_number": 3,
+      "vertices": 9
+    },
+    "triangle": {
+      "edges": 3,
+      "polychromatic_number": 1,
+      "vertices": 3
+    }
+  },
+  "larger_unfiltered_stress_checks": {
+    "access_oracle_agreements": 240,
+    "general_oracle_agreements": 240,
+    "instances": 240,
+    "negative_access_instances": 227,
+    "positive_access_instances": 13,
+    "validated_positive_witnesses": 13
+  },
+  "randomized_recovery": {
+    "average_unit_list_triangle": {
+      "value": "5/6",
+      "witness": [
+        [
+          0
+        ],
+        [
+          0
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    "correlated_heterogeneous_budget_trials": 54,
+    "name": "bounded_list_and_worst_source_recovery",
+    "program_level_oracle_agreements": 54,
+    "value_fraction_denominators": [
+      3,
+      14,
+      19,
+      29,
+      31,
+      1,
+      19,
+      31,
+      52,
+      46,
+      17,
+      55,
+      7,
+      29,
+      54,
+      31,
+      1,
+      1,
+      47,
+      38,
+      28,
+      33,
+      47,
+      53,
+      27,
+      1,
+      7,
+      8,
+      22,
+      43,
+      23,
+      45,
+      26,
+      1,
+      47,
+      51,
+      1,
+      23,
+      31,
+      11,
+      45,
+      17,
+      16,
+      3,
+      40,
+      39,
+      43,
+      45,
+      47,
+      43,
+      1,
+      23,
+      23,
+      18
+    ],
+    "value_fraction_numerators": [
+      2,
+      13,
+      12,
+      6,
+      18,
+      1,
+      4,
+      9,
+      35,
+      37,
+      11,
+      16,
+      1,
+      4,
+      17,
+      26,
+      0,
+      1,
+      12,
+      21,
+      27,
+      19,
+      12,
+      12,
+      23,
+      0,
+      5,
+      7,
+      5,
+      24,
+      5,
+      23,
+      3,
+      1,
+      5,
+      14,
+      0,
+      17,
+      29,
+      6,
+      43,
+      13,
+      9,
+      2,
+      27,
+      31,
+      31,
+      38,
+      38,
+      21,
+      0,
+      19,
+      9,
+      17
+    ],
+    "worst_source_triangle": {
+      "deterministic": "1/2",
+      "deterministic_witness": [
+        0,
+        0,
+        0
+      ],
+      "private_witness": "3/4",
+      "shared_dual": "5/6",
+      "shared_primal": "5/6"
+    }
+  },
+  "schema": "WOC_FINITE_CHECK_V7"
+}
+test_access_expansion_can_create_but_not_destroy_a_bit (tests.test_woc.WatermarkObservationalCalculusTests.test_access_expansion_can_create_but_not_destroy_a_bit) ... ok
+test_access_underapproximation_can_create_false_impossibility (tests.test_woc.WatermarkObservationalCalculusTests.test_access_underapproximation_can_create_false_impossibility) ... ok
+test_attack_overapproximation_can_create_false_collapse (tests.test_woc.WatermarkObservationalCalculusTests.test_attack_overapproximation_can_create_false_collapse) ... ok
+test_average_unit_list_triangle_value_is_five_sixths (tests.test_woc.WatermarkObservationalCalculusTests.test_average_unit_list_triangle_value_is_five_sixths) ... ok
+test_constructive_scheme (tests.test_woc.WatermarkObservationalCalculusTests.test_constructive_scheme) ... ok
+test_correlated_list_law_agrees_with_program_level_oracle (tests.test_woc.WatermarkObservationalCalculusTests.test_correlated_list_law_agrees_with_program_level_oracle) ... ok
+test_crossing_behavior_refinement_can_destroy_a_bit (tests.test_woc.WatermarkObservationalCalculusTests.test_crossing_behavior_refinement_can_destroy_a_bit) ... ok
+test_crossing_four_cycle_is_feasible (tests.test_woc.WatermarkObservationalCalculusTests.test_crossing_four_cycle_is_feasible) ... ok
+test_crossing_operational_coarsening_can_destroy_a_bit (tests.test_woc.WatermarkObservationalCalculusTests.test_crossing_operational_coarsening_can_destroy_a_bit) ... ok
+test_detector_coarsening_can_create_false_impossibility (tests.test_woc.WatermarkObservationalCalculusTests.test_detector_coarsening_can_create_false_impossibility) ... ok
+test_deterministic_worst_source_triangle_value (tests.test_woc.WatermarkObservationalCalculusTests.test_deterministic_worst_source_triangle_value) ... ok
+test_directed_preservation_compiler_example_matches_direct_oracle (tests.test_woc.WatermarkObservationalCalculusTests.test_directed_preservation_compiler_example_matches_direct_oracle) ... ok
+test_disjoint_alternative_capacity_is_component_minimum (tests.test_woc.WatermarkObservationalCalculusTests.test_disjoint_alternative_capacity_is_component_minimum) ... ok
+test_disjoint_union_feasibility_is_componentwise (tests.test_woc.WatermarkObservationalCalculusTests.test_disjoint_union_feasibility_is_componentwise) ... ok
+test_dual_role_rewrite_never_increases_small_capacity (tests.test_woc.WatermarkObservationalCalculusTests.test_dual_role_rewrite_never_increases_small_capacity) ... ok
+test_duplicate_representatives_do_not_change_general_feasibility (tests.test_woc.WatermarkObservationalCalculusTests.test_duplicate_representatives_do_not_change_general_feasibility) ... ok
+test_fano_plane_crossing_is_infeasible (tests.test_woc.WatermarkObservationalCalculusTests.test_fano_plane_crossing_is_infeasible) ... ok
+test_held_out_correlated_list_instances_agree_with_direct_oracle (tests.test_woc.WatermarkObservationalCalculusTests.test_held_out_correlated_list_instances_agree_with_direct_oracle) ... ok
+test_held_out_random_instances_agree_with_program_level_oracles (tests.test_woc.WatermarkObservationalCalculusTests.test_held_out_random_instances_agree_with_program_level_oracles) ... ok
+test_heterogeneous_local_list_budget_bound_is_tight (tests.test_woc.WatermarkObservationalCalculusTests.test_heterogeneous_local_list_budget_bound_is_tight) ... ok
+test_incidence_access_realization_preserves_hyperedges (tests.test_woc.WatermarkObservationalCalculusTests.test_incidence_access_realization_preserves_hyperedges) ... ok
+test_incidence_realization_preserves_hyperedges (tests.test_woc.WatermarkObservationalCalculusTests.test_incidence_realization_preserves_hyperedges) ... ok
+test_join_and_capacity (tests.test_woc.WatermarkObservationalCalculusTests.test_join_and_capacity) ... ok
+test_joint_capacity_lower_bound_on_small_hypergraphs (tests.test_woc.WatermarkObservationalCalculusTests.test_joint_capacity_lower_bound_on_small_hypergraphs) ... ok
+test_one_source_list_bound_covers_most_likely_messages (tests.test_woc.WatermarkObservationalCalculusTests.test_one_source_list_bound_covers_most_likely_messages) ... ok
+test_prior_aware_refinement_closed_form (tests.test_woc.WatermarkObservationalCalculusTests.test_prior_aware_refinement_closed_form) ... ok
+test_private_triangle_witness_has_value_three_quarters (tests.test_woc.WatermarkObservationalCalculusTests.test_private_triangle_witness_has_value_three_quarters) ... ok
+test_program_level_list_oracle_filters_outputs_by_behavior (tests.test_woc.WatermarkObservationalCalculusTests.test_program_level_list_oracle_filters_outputs_by_behavior) ... ok
+test_refinement_product_capacity_is_exactly_multiplicative (tests.test_woc.WatermarkObservationalCalculusTests.test_refinement_product_capacity_is_exactly_multiplicative) ... ok
+test_relabeling_invariance (tests.test_woc.WatermarkObservationalCalculusTests.test_relabeling_invariance) ... ok
+test_semantic_product_corresponds_to_hypergraph_product (tests.test_woc.WatermarkObservationalCalculusTests.test_semantic_product_corresponds_to_hypergraph_product) ... ok
+test_shared_triangle_dual_certificate_matches_primal (tests.test_woc.WatermarkObservationalCalculusTests.test_shared_triangle_dual_certificate_matches_primal) ... ok
+test_shared_triangle_primal_witness_has_value_five_sixths (tests.test_woc.WatermarkObservationalCalculusTests.test_shared_triangle_primal_witness_has_value_five_sixths) ... ok
+test_small_exhaustive_access_check (tests.test_woc.WatermarkObservationalCalculusTests.test_small_exhaustive_access_check) ... ok
+test_small_exhaustive_general_check (tests.test_woc.WatermarkObservationalCalculusTests.test_small_exhaustive_general_check) ... ok
+test_small_exhaustive_refinement_check (tests.test_woc.WatermarkObservationalCalculusTests.test_small_exhaustive_refinement_check) ... ok
+test_source_dependent_access_triangle_is_infeasible (tests.test_woc.WatermarkObservationalCalculusTests.test_source_dependent_access_triangle_is_infeasible) ... ok
+test_triangle_crossing_is_infeasible (tests.test_woc.WatermarkObservationalCalculusTests.test_triangle_crossing_is_infeasible) ... ok
+test_triangle_fourth_power_has_nine_label_witness (tests.test_woc.WatermarkObservationalCalculusTests.test_triangle_fourth_power_has_nine_label_witness) ... ok
+test_triangle_square_has_exact_capacity_three (tests.test_woc.WatermarkObservationalCalculusTests.test_triangle_square_has_exact_capacity_three) ... ok
+test_unit_list_perfect_recovery_matches_polychromatic_feasibility (tests.test_woc.WatermarkObservationalCalculusTests.test_unit_list_perfect_recovery_matches_polychromatic_feasibility) ... ok
+test_access_certificate_checks_each_source_not_pooled_outputs (tests.test_witness_boundaries.WitnessBoundaryTests.test_access_certificate_checks_each_source_not_pooled_outputs) ... ok
+test_access_rows_distinguish_missing_empty_and_identity (tests.test_witness_boundaries.WitnessBoundaryTests.test_access_rows_distinguish_missing_empty_and_identity) ... ok
+test_bad_witnesses_return_diagnostics (tests.test_witness_boundaries.WitnessBoundaryTests.test_bad_witnesses_return_diagnostics) ... ok
+test_direct_oracles_reject_noninteger_cardinalities (tests.test_witness_boundaries.WitnessBoundaryTests.test_direct_oracles_reject_noninteger_cardinalities) ... ok
+test_directed_rows_distinguish_missing_from_explicit_empty (tests.test_witness_boundaries.WitnessBoundaryTests.test_directed_rows_distinguish_missing_from_explicit_empty) ... ok
+test_dual_certificate_rejects_illegal_vertex_indices (tests.test_witness_boundaries.WitnessBoundaryTests.test_dual_certificate_rejects_illegal_vertex_indices) ... ok
+test_empty_supplied_decoder_is_not_replaced (tests.test_witness_boundaries.WitnessBoundaryTests.test_empty_supplied_decoder_is_not_replaced) ... ok
+test_extracted_witnesses_match_direct_oracle_exhaustively (tests.test_witness_boundaries.WitnessBoundaryTests.test_extracted_witnesses_match_direct_oracle_exhaustively) ... ok
+test_invalid_hypergraph_precedes_cardinality_shortcut (tests.test_witness_boundaries.WitnessBoundaryTests.test_invalid_hypergraph_precedes_cardinality_shortcut) ... ok
+test_invalid_message_cardinality_is_not_a_scheme (tests.test_witness_boundaries.WitnessBoundaryTests.test_invalid_message_cardinality_is_not_a_scheme) ... ok
+test_larger_random_instances_match_independent_oracles (tests.test_witness_boundaries.WitnessBoundaryTests.test_larger_random_instances_match_independent_oracles) ... ok
+test_list_and_recovery_inputs_are_type_checked (tests.test_witness_boundaries.WitnessBoundaryTests.test_list_and_recovery_inputs_are_type_checked) ... ok
+test_none_is_a_legal_program (tests.test_witness_boundaries.WitnessBoundaryTests.test_none_is_a_legal_program) ... ok
+test_single_use_access_iterators_are_supported (tests.test_witness_boundaries.WitnessBoundaryTests.test_single_use_access_iterators_are_supported) ... ok
+test_unfiltered_generated_witness_cases (tests.test_witness_boundaries.WitnessBoundaryTests.test_unfiltered_generated_witness_cases) ... ok
+test_empty_admissible_row_is_valid_but_infeasible (tests.test_directed_support.DirectedSupportTests.test_empty_admissible_row_is_valid_but_infeasible) ... ok
+test_empty_declared_support_rejected (tests.test_directed_support.DirectedSupportTests.test_empty_declared_support_rejected) ... ok
+test_singleton_identity_one_message (tests.test_directed_support.DirectedSupportTests.test_singleton_identity_one_message) ... ok
+test_indices_are_checked_before_deduplication_and_lookup (tests.test_index_boundaries.IndexBoundaryTests.test_indices_are_checked_before_deduplication_and_lookup) ... ok
+test_product_counts_are_nonboolean_integers (tests.test_index_boundaries.IndexBoundaryTests.test_product_counts_are_nonboolean_integers) ... ok
+test_product_vertices_are_checked_before_offsetting (tests.test_index_boundaries.IndexBoundaryTests.test_product_vertices_are_checked_before_offsetting) ... ok
+test_shared_labels_are_nonboolean_integers (tests.test_index_boundaries.IndexBoundaryTests.test_shared_labels_are_nonboolean_integers) ... ok
+test_transversal_inputs_are_validated_before_enumeration (tests.test_index_boundaries.IndexBoundaryTests.test_transversal_inputs_are_validated_before_enumeration) ... ok
+test_separate_output_is_canonical_and_preserves_retained_records (tests.test_reproduction.ReproductionTests.test_separate_output_is_canonical_and_preserves_retained_records) ... ok
+
+----------------------------------------------------------------------
+Ran 65 tests
+
+OK
+DETERMINISTIC_SCIENTIFIC_REEXECUTION: PASS
