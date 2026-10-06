@@ -407,9 +407,11 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         self.assertEqual(manuscript.count(r"\orcid{"), 2)
         self.assertIn(r"\hypersetup{pdfauthor={Haoyi Zhang, Huaijin Ran, Xunzhu Tang}}", manuscript)
         self.assertNotRegex(manuscript, r"\\author\{Author [A-F]\}")
-        self.assertIn("Self-contained scientific tests & 56", manuscript)
+        self.assertIn("Self-contained scientific tests & 65", manuscript)
         self.assertIn("Full-project integrity tests & 8", manuscript)
 
+        # The following records describe the retained historical 56/64 suite;
+        # current-source counts are checked separately below.
         current_state = CURRENT_STATE.read_text(encoding="utf-8")
         research_plan = RESEARCH_PLAN.read_text(encoding="utf-8")
         paper_readme = PAPER_README.read_text(encoding="utf-8")
@@ -454,12 +456,12 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         self.assertIn("PACKAGE_CHECK_DEPENDENCY_ERROR", package_runner)
         self.assertIn("./run-tests.sh", all_runner)
         self.assertIn("./run-package-checks.sh", all_runner)
-        self.assertIn("56 scientific + 8 package-integrity = 64", all_runner)
+        self.assertIn("65 scientific + 8 package-integrity = 73", all_runner)
         self.assertIn("Self-contained scientific reproduction", artifact_readme)
         self.assertIn("Full-project integrity checks", artifact_readme)
-        self.assertIn("56 scientific", artifact_readme)
+        self.assertIn("65 scientific", artifact_readme)
         self.assertIn("8 package-integrity", artifact_readme)
-        self.assertIn("64 checks", artifact_readme)
+        self.assertIn("73 checks", artifact_readme)
         self.assertIn("pdfinfo", artifact_readme)
         self.assertIn("pdftotext", artifact_readme)
 
