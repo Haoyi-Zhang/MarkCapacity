@@ -14,7 +14,7 @@ jobs:
     env:
       PYTHONDONTWRITEBYTECODE: '1'
       PYTHONUTF8: '1'
-      P031_ARCHIVE_SHA256: 1dee479fc94721a23b46c5e4ad4875ebbd6f858cb4602d53d06b77ac19d95057
+      P031_ARCHIVE_SHA256: 76499d9d8657261045a829277bcb705a16a6e985b53855ddd53b97c8f9ce4ffa
     steps:
       - name: Require the approved private repository and exact internal branch
         shell: bash
@@ -32,8 +32,8 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           persist-credentials: false
-          fetch-depth: 5
-      - name: Require exact source lineage and a workflow-only repair
+          fetch-depth: 6
+      - name: Require exact source lineage and only the reviewed LF-export payloads
         shell: bash
         run: |
           set -euo pipefail
@@ -41,11 +41,15 @@ jobs:
           validation=31ca4def298ae5101ce226d00bc0ad36ece73cd5
           repair=c629c871e1568a75219eb77692e93d371506fcbc
           poppler=c47104086d62347d5d21e3116aea4cf510e34d23
+          https=97f8d1f344c14ceeb4c1fbe20b83fcb3908b328f
           workflow=.github/workflows/p031-internal-source-export.yml
-          audit=.github/scripts/P031-private-source-package-audit.py
-          archive=private-distribution/P031-source-export.tar
+          old_audit=.github/scripts/P031-private-source-package-audit.py
+          old_archive=private-distribution/P031-source-export.tar
+          audit=.github/scripts/P031-private-lf-source-package-audit.py
+          archive=private-distribution/P031-source-export-lf.tar
           test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
-          test "$(git rev-list --parents -n 1 HEAD)" = "$GITHUB_SHA $poppler"
+          test "$(git rev-list --parents -n 1 HEAD)" = "$GITHUB_SHA $https"
+          test "$(git rev-list --parents -n 1 "$https")" = "$https $poppler"
           test "$(git rev-list --parents -n 1 "$poppler")" = "$poppler $repair"
           test "$(git rev-list --parents -n 1 "$repair")" = "$repair $validation"
           test "$(git rev-list --parents -n 1 "$validation")" = "$validation $source"
@@ -53,24 +57,30 @@ jobs:
           test "$(git rev-parse "$validation^{tree}")" = 08cbf796a0c7d7d5afb09864c488a30db29af343
           test "$(git rev-parse "$repair^{tree}")" = fab1dd670605a3b65c9397c7ff9c3f980e907a9e
           test "$(git rev-parse "$poppler^{tree}")" = 369941897eb87f94e4480a367235705f1624fb4c
-          expected="$(printf 'A\t%s\nA\t%s\nA\t%s' "$audit" "$workflow" "$archive")"
+          test "$(git rev-parse "$https^{tree}")" = 3eca5bbd4a4e55aad0fc7ef5edb7172fe0ca9788
+          expected="$(printf 'A\t%s\nA\t%s\nA\t%s' "$old_audit" "$workflow" "$old_archive")"
           test "$(git diff-tree --no-commit-id --name-status --no-renames -r "$source" "$validation")" = "$expected"
-          test "$(git ls-tree "$validation" -- "$audit")" = "$(printf '100644 blob %s\t%s' 07c1e1fc9d178bc2fd7b3cd2d05f270ff8eb0a48 "$audit")"
-          test "$(git ls-tree "$validation" -- "$archive")" = "$(printf '100644 blob %s\t%s' f73a98b224336b6ede501cd1535ad25e4fad8542 "$archive")"
+          test "$(git ls-tree "$validation" -- "$old_audit")" = "$(printf '100644 blob %s\t%s' 07c1e1fc9d178bc2fd7b3cd2d05f270ff8eb0a48 "$old_audit")"
+          test "$(git ls-tree "$validation" -- "$old_archive")" = "$(printf '100644 blob %s\t%s' f73a98b224336b6ede501cd1535ad25e4fad8542 "$old_archive")"
           test "$(git ls-tree "$validation" -- "$workflow")" = "$(printf '100644 blob %s\t%s' a9bc652082acfed6a5f14a476972eead21bb6b3f "$workflow")"
           test "$(git ls-tree "$repair" -- "$workflow")" = "$(printf '100644 blob %s\t%s' 942e98a7ea6819cbd000c426051d90659d4664f4 "$workflow")"
           test "$(git diff-tree --no-commit-id --name-status --no-renames -r "$validation" "$repair")" = "$(printf 'M\t%s' "$workflow")"
           test "$(git ls-tree "$poppler" -- "$workflow")" = "$(printf '100644 blob %s\t%s' 63409af5d5e469fe31fbd3f5a73110bf3262d372 "$workflow")"
           test "$(git diff-tree --no-commit-id --name-status --no-renames -r "$repair" "$poppler")" = "$(printf 'M\t%s' "$workflow")"
-          test "$(git diff-tree --no-commit-id --name-status --no-renames -r "$poppler" HEAD)" = "$(printf 'M\t%s' "$workflow")"
-          test "$(git diff-tree --no-commit-id --name-status --no-renames -r "$validation" HEAD)" = "$(printf 'M\t%s' "$workflow")"
+          test "$(git ls-tree "$https" -- "$workflow")" = "$(printf '100644 blob %s\t%s' d9168750f27fd17b17045c0287c5ecd7492d7584 "$workflow")"
+          test "$(git diff-tree --no-commit-id --name-status --no-renames -r "$poppler" "$https")" = "$(printf 'M\t%s' "$workflow")"
+          test "$(git diff-tree --no-commit-id --name-status --no-renames -r "$validation" "$https")" = "$(printf 'M\t%s' "$workflow")"
+          expected="$(printf 'A\t%s\nM\t%s\nA\t%s' "$audit" "$workflow" "$archive")"
+          test "$(git diff-tree --no-commit-id --name-status --no-renames -r "$https" HEAD)" = "$expected"
+          test "$(git ls-tree HEAD -- "$audit")" = "$(printf '100644 blob %s\t%s' 07c1e1fc9d178bc2fd7b3cd2d05f270ff8eb0a48 "$audit")"
+          test "$(git ls-tree HEAD -- "$archive")" = "$(printf '100644 blob %s\t%s' 6ff78b4d6037bac97d05bac77d73eb674382618b "$archive")"
           read -r mode kind object path <<< "$(git ls-tree HEAD -- "$workflow")"
           test "$mode $kind $path" = "100644 blob $workflow"
-          for directory in .github .github/workflows; do
+          for directory in .github .github/scripts .github/workflows private-distribution; do
             read -r mode kind object path <<< "$(git ls-tree HEAD -- "$directory")"
             test "$mode $kind $path" = "040000 tree $directory"
           done
-          protected_inventory() {
+          retained_validation_inventory() {
             local listing record
             listing="$(git ls-tree -r -t "$1")" || return 1
             while IFS= read -r record; do
@@ -80,9 +90,23 @@ jobs:
               esac
             done <<< "$listing"
           }
-          before="$(protected_inventory "$validation")"
+          test "$(retained_validation_inventory "$validation")" = "$(retained_validation_inventory "$https")"
+          protected_inventory() {
+            local listing record
+            listing="$(git ls-tree -r -t "$1")" || return 1
+            while IFS= read -r record; do
+              case "${record#*$'\t'}" in
+                "$workflow"|"$audit"|"$archive"|.github|.github/scripts|.github/workflows|private-distribution) ;;
+                *) printf '%s\n' "$record" ;;
+              esac
+            done <<< "$listing"
+          }
+          test "$(git ls-tree -r -t "$https" | wc -l)" -eq 85
+          test "$(git ls-tree -r -t HEAD | wc -l)" -eq 87
+          before="$(protected_inventory "$https")"
           after="$(protected_inventory HEAD)"
           test "$before" = "$after"
+          test "$(printf '%s\n' "$before" | wc -l)" -eq 80
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
         with:
           python-version: '3.12'
@@ -126,8 +150,8 @@ jobs:
           done
           ulimit -v 2097152
           ulimit -t 600
-          archive="$GITHUB_WORKSPACE/private-distribution/P031-source-export.tar"
-          audit="$GITHUB_WORKSPACE/.github/scripts/P031-private-source-package-audit.py"
+          archive="$GITHUB_WORKSPACE/private-distribution/P031-source-export-lf.tar"
+          audit="$GITHUB_WORKSPACE/.github/scripts/P031-private-lf-source-package-audit.py"
           python3 -B "$audit" --archive "$archive" --expected-sha256 "$P031_ARCHIVE_SHA256" > "$P031_CHECK_LOGS/archive.json"
           fresh="$(mktemp -d "$RUNNER_TEMP/p031-source-export.XXXXXX")"
           tar --extract --file="$archive" --directory="$fresh" --same-permissions --no-same-owner
@@ -144,7 +168,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: p031-private-complete-source-export
+          name: p031-private-complete-source-export-lf
           path: ${{ runner.temp }}/p031-source-package-checks/
           if-no-files-found: warn
           retention-days: 14
