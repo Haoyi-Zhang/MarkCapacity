@@ -32,7 +32,7 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           persist-credentials: false
-          fetch-depth: 4
+          fetch-depth: 5
       - name: Require exact source lineage and a workflow-only repair
         shell: bash
         run: |
@@ -40,16 +40,19 @@ jobs:
           source=b6a66600b376d1b64d5be68e2d8dc7db47619de0
           validation=31ca4def298ae5101ce226d00bc0ad36ece73cd5
           repair=c629c871e1568a75219eb77692e93d371506fcbc
+          poppler=c47104086d62347d5d21e3116aea4cf510e34d23
           workflow=.github/workflows/p031-internal-source-export.yml
           audit=.github/scripts/P031-private-source-package-audit.py
           archive=private-distribution/P031-source-export.tar
           test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
-          test "$(git rev-list --parents -n 1 HEAD)" = "$GITHUB_SHA $repair"
+          test "$(git rev-list --parents -n 1 HEAD)" = "$GITHUB_SHA $poppler"
+          test "$(git rev-list --parents -n 1 "$poppler")" = "$poppler $repair"
           test "$(git rev-list --parents -n 1 "$repair")" = "$repair $validation"
           test "$(git rev-list --parents -n 1 "$validation")" = "$validation $source"
           test "$(git rev-parse "$source^{tree}")" = 877a44d0e8ba2e6ce92f6be3d9d2780050d0de00
           test "$(git rev-parse "$validation^{tree}")" = 08cbf796a0c7d7d5afb09864c488a30db29af343
           test "$(git rev-parse "$repair^{tree}")" = fab1dd670605a3b65c9397c7ff9c3f980e907a9e
+          test "$(git rev-parse "$poppler^{tree}")" = 369941897eb87f94e4480a367235705f1624fb4c
           expected="$(printf 'A\t%s\nA\t%s\nA\t%s' "$audit" "$workflow" "$archive")"
           test "$(git diff-tree --no-commit-id --name-status --no-renames -r "$source" "$validation")" = "$expected"
           test "$(git ls-tree "$validation" -- "$audit")" = "$(printf '100644 blob %s\t%s' 07c1e1fc9d178bc2fd7b3cd2d05f270ff8eb0a48 "$audit")"
@@ -57,7 +60,9 @@ jobs:
           test "$(git ls-tree "$validation" -- "$workflow")" = "$(printf '100644 blob %s\t%s' a9bc652082acfed6a5f14a476972eead21bb6b3f "$workflow")"
           test "$(git ls-tree "$repair" -- "$workflow")" = "$(printf '100644 blob %s\t%s' 942e98a7ea6819cbd000c426051d90659d4664f4 "$workflow")"
           test "$(git diff-tree --no-commit-id --name-status --no-renames -r "$validation" "$repair")" = "$(printf 'M\t%s' "$workflow")"
-          test "$(git diff-tree --no-commit-id --name-status --no-renames -r "$repair" HEAD)" = "$(printf 'M\t%s' "$workflow")"
+          test "$(git ls-tree "$poppler" -- "$workflow")" = "$(printf '100644 blob %s\t%s' 63409af5d5e469fe31fbd3f5a73110bf3262d372 "$workflow")"
+          test "$(git diff-tree --no-commit-id --name-status --no-renames -r "$repair" "$poppler")" = "$(printf 'M\t%s' "$workflow")"
+          test "$(git diff-tree --no-commit-id --name-status --no-renames -r "$poppler" HEAD)" = "$(printf 'M\t%s' "$workflow")"
           test "$(git diff-tree --no-commit-id --name-status --no-renames -r "$validation" HEAD)" = "$(printf 'M\t%s' "$workflow")"
           read -r mode kind object path <<< "$(git ls-tree HEAD -- "$workflow")"
           test "$mode $kind $path" = "100644 blob $workflow"
@@ -83,10 +88,31 @@ jobs:
           python-version: '3.12'
       - name: Install Poppler utilities for the package gate
         shell: bash
+        timeout-minutes: 4
         run: |
           set -euo pipefail
-          sudo apt-get update
-          sudo apt-get install --yes --no-install-recommends poppler-utils
+          test "$(dpkg --print-architecture)" = amd64
+          test -r /usr/share/keyrings/ubuntu-archive-keyring.gpg
+          command -v timeout >/dev/null
+          apt_dir="$(mktemp -d "$RUNNER_TEMP/p031-poppler-apt.XXXXXX")"
+          mkdir "$apt_dir/empty-sources"
+          sources="$apt_dir/ubuntu.list"
+          printf '%s\n' \
+            'deb [arch=amd64 signed-by=/usr/share/keyrings/ubuntu-archive-keyring.gpg] https://archive.ubuntu.com/ubuntu noble main universe' \
+            'deb [arch=amd64 signed-by=/usr/share/keyrings/ubuntu-archive-keyring.gpg] https://archive.ubuntu.com/ubuntu noble-updates main universe' \
+            'deb [arch=amd64 signed-by=/usr/share/keyrings/ubuntu-archive-keyring.gpg] https://security.ubuntu.com/ubuntu noble-security main universe' > "$sources"
+          apt_options=(
+            -o "Dir::Etc::sourcelist=$sources"
+            -o "Dir::Etc::sourceparts=$apt_dir/empty-sources"
+            -o Acquire::Retries=0
+            -o Acquire::http::Timeout=20
+            -o Acquire::https::Timeout=20
+            -o Acquire::https::AllowRedirect=false
+            -o Acquire::Languages=none
+            -o DPkg::Lock::Timeout=0
+          )
+          sudo -n timeout --kill-after=10s 90s env DEBIAN_FRONTEND=noninteractive apt-get "${apt_options[@]}" update --error-on=any
+          sudo -n timeout --kill-after=10s 120s env DEBIAN_FRONTEND=noninteractive apt-get "${apt_options[@]}" install --yes --no-install-recommends poppler-utils
       - name: Check the embedded clean source package
         shell: bash
         env:
