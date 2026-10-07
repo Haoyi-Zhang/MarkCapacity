@@ -928,8 +928,11 @@ def find_polychromatic_coloring(edges: Sequence[Sequence[int]], vertices: int, m
     order = sorted(range(vertices), key=lambda v: (-len(incident[v]), v))
     colors = [-1] * vertices
 
-    def viable() -> bool:
-        for edge in edges:
+    def viable(vertex: int) -> bool:
+        # A viable parent assignment can change only constraints incident to
+        # this vertex. Failed descendants restore their colors before return.
+        for edge_index in incident[vertex]:
+            edge = edges[edge_index]
             used = {colors[v] for v in edge if colors[v] >= 0}
             uncolored = sum(colors[v] < 0 for v in edge)
             if messages - len(used) > uncolored:
@@ -942,7 +945,7 @@ def find_polychromatic_coloring(edges: Sequence[Sequence[int]], vertices: int, m
         v = order[pos]
         for color in range(messages):
             colors[v] = color
-            if viable() and search(pos + 1):
+            if viable(v) and search(pos + 1):
                 return True
         colors[v] = -1
         return False

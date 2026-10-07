@@ -29,6 +29,7 @@ jobs:
           ulimit -t 600
           python -B .github/scripts/check_repository.py > "$WOC_CHECK_OUTPUT/materials.json" 2>&1
           timeout --kill-after=10s 600s bash run-tests.sh > "$WOC_CHECK_OUTPUT/scientific.log" 2>&1
+          timeout --kill-after=10s 60s python -B -m unittest discover -s regressions -p test_current_export.py -v > "$WOC_CHECK_OUTPUT/current-export-regressions.log" 2>&1
           cat "$WOC_CHECK_OUTPUT/materials.json"
           cat "$WOC_CHECK_OUTPUT/scientific.log"
       - name: Retain raw outputs, including failed attempts

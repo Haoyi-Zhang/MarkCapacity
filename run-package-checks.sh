@@ -14,6 +14,9 @@ required_paths=(
   "$PROJECT_ROOT/paper/provenance/CURRENT-STATE.md"
   "$PROJECT_ROOT/paper/provenance/research-plan.md"
   "$PROJECT_ROOT/artifact/project-manifest.json"
+  "$PROJECT_ROOT/artifact/current-project-manifest.json"
+  "$PROJECT_ROOT/artifact/current-package-metadata.json"
+  "$PROJECT_ROOT/paper/current-statement-locations.json"
 )
 missing=()
 for path in "${required_paths[@]}"; do

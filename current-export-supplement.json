@@ -1,0 +1,22 @@
+{
+  "schema": "CURRENT_EXPORT_SUPPLEMENT_V1",
+  "date": "2026-10-08",
+  "scope": "current source-export roles/schedule only; historical campaign unchanged",
+  "current_metadata_sha256": "d3cb388890ddbf4e9c4eaefb0d39c5be58270f8198cf1c9bc949b5167b502874",
+  "publisher_source_paths": [
+    "paper/main.tex",
+    "paper/references.bib",
+    "paper/main.bbl",
+    "paper/acmart.cls",
+    "paper/acmart.dtx",
+    "paper/acmart.ins",
+    "paper/acmart-source-v2.19.tar.gz",
+    "paper/ACM-SOURCE-NOTICE.md"
+  ],
+  "scheduled_checks": {
+    "package": 8,
+    "export_regressions": 6
+  },
+  "scientific_entrypoint": "artifact/run-tests.sh",
+  "current_export_entrypoint": "artifact/run-current-export-checks.sh"
+}

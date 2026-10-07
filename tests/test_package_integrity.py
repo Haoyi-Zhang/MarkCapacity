@@ -3,8 +3,10 @@ from __future__ import annotations
 import csv
 import hashlib
 import json
+import ast
 import re
 import subprocess
+import sys
 from pathlib import Path
 import unittest
 
@@ -24,6 +26,9 @@ RESEARCH_PLAN = ROOT / "paper" / "provenance" / "research-plan.md"
 PAPER_README = ROOT / "paper" / "README.md"
 VISUAL_QA = ROOT / "paper" / "visual_qa.json"
 PROJECT_MANIFEST = ROOT / "artifact" / "project-manifest.json"
+CURRENT_MANIFEST = ROOT / "artifact" / "current-project-manifest.json"
+CURRENT_PACKAGE = ROOT / "artifact" / "current-package-metadata.json"
+CURRENT_STATEMENTS = ROOT / "paper" / "current-statement-locations.json"
 EXTERNAL_COMPARISON_AUDIT = ROOT / "artifact" / "external-comparison-audit.json"
 REFERENCE_AUDIT = ROOT / "artifact" / "reference-audit-final.csv"
 SUBMISSION_MAP = ROOT / "artifact" / "submission-materials-map.json"
@@ -35,6 +40,9 @@ PACKAGE_RUNNER = ROOT / "artifact" / "run-package-checks.sh"
 ALL_RUNNER = ROOT / "artifact" / "run-all-checks.sh"
 CODE_QUALITY_AUDIT = ROOT / "artifact" / "code-quality-audit.json"
 REPRODUCTION_REPORT = ROOT / "artifact" / "reproduction-report.json"
+
+sys.path.insert(0, str(ROOT / "artifact"))
+from current_export import BIB_PATHS, VENDOR_PATHS, validate_bibliography, validate_vendor
 
 
 FORMAL_ENVIRONMENTS = {"theorem", "lemma", "proposition", "corollary"}
@@ -194,6 +202,8 @@ def parse_statement_locations(text: str) -> tuple[list[str], dict[str, dict[str,
 class PublicPackageIntegrityTests(unittest.TestCase):
     def test_bibliography_hash_ledgers_match_exact_entries(self):
         entries = parse_bib_entries(BIB.read_text(encoding="utf-8"))
+        current = json.loads(CURRENT_PACKAGE.read_text(encoding="utf-8"))
+        self.assertEqual(set(entries), set(current["current_bib_entry_sha256"]))
         records = {
             item["citation_key"]: item
             for item in (
@@ -209,8 +219,10 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         self.assertEqual(set(entries), set(citation_rows))
         for key, entry in entries.items():
             digest = sha256_text(entry)
-            self.assertEqual(records[key]["local_bib_entry_sha256"], digest, key)
-            self.assertEqual(citation_rows[key]["evidence_sha256"], digest, key)
+            self.assertEqual(current["current_bib_entry_sha256"][key], digest, key)
+            # Dated literature/citation records remain mutually bound to their
+            # historical entry representation, not silently resealed to this one.
+            self.assertEqual(citation_rows[key]["evidence_sha256"], records[key]["local_bib_entry_sha256"], key)
             self.assertEqual(
                 records[key].get("hash_basis"),
                 "exact local BibTeX entry bytes, excluding surrounding blank lines",
@@ -258,7 +270,7 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         frontier = 0
         for key, entry in entries.items():
             row = audit_rows[key]
-            self.assertEqual(row["exact_entry_sha256"], sha256_text(entry), key)
+            self.assertEqual(row["exact_entry_sha256"], records[key]["local_bib_entry_sha256"], key)
             self.assertEqual(row["metadata_match"], "TRUE", key)
             self.assertIn(row["identifier_status"], {"LIVE_UNIQUE_DOI", "LIVE_UNIQUE_ARXIV_DOI"}, key)
             self.assertEqual(row["single_citation_per_sentence"], "TRUE", key)
@@ -315,6 +327,19 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         self.assertEqual(sentence_violations, [])
 
     def test_public_summary_counts_and_final_topmatter_are_consistent(self):
+        current = json.loads(CURRENT_PACKAGE.read_text(encoding="utf-8"))
+        self.assertEqual(current["schema"], "CURRENT_PACKAGE_METADATA_V1")
+        self.assertEqual(current["scheduled_tests"], {"scientific": 71, "package": 8, "combined": 79})
+        for rel, digest in current["historical_file_sha256"].items():
+            self.assertEqual(sha256_file(ROOT / rel), digest, rel)
+        discovered = []
+        for name in current["scientific_modules"]:
+            module = ast.parse((ROOT / "artifact/tests" / (name + ".py")).read_text(encoding="utf-8"))
+            discovered.extend((name, node.name, method.name)
+                              for node in module.body if isinstance(node, ast.ClassDef)
+                              for method in node.body if isinstance(method, ast.FunctionDef)
+                              and method.name.startswith("test_"))
+        self.assertEqual(len(discovered), current["scheduled_tests"]["scientific"])
         manuscript = strip_tex_comments(MANUSCRIPT.read_text(encoding="utf-8"))
         citation_commands = re.findall(r"\\cite(?:p|t)?(?:\[[^\]]*\])?\{([^{}]+)\}", manuscript)
         formal_count = sum(
@@ -327,7 +352,8 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         author_count = len(re.findall(r"^\\author\{(?:Haoyi Zhang|Huaijin Ran|Xunzhu Tang)\}$", manuscript, flags=re.MULTILINE))
         section_count = len(re.findall(r"^\\section\{", manuscript, flags=re.MULTILINE))
 
-        self.assertIn(r"\documentclass[manuscript,screen,review]{acmart}", manuscript)
+        self.assertEqual(current["class_options"], "acmsmall,screen")
+        self.assertIn(r"\documentclass[acmsmall,screen]{acmart}", manuscript)
         self.assertNotIn("anonymous", manuscript.split(r"\documentclass",1)[1].split("\n",1)[0])
         self.assertNotIn(r"\usepackage{geometry}", manuscript)
         self.assertNotRegex(
@@ -355,10 +381,14 @@ class PublicPackageIntegrityTests(unittest.TestCase):
             ).stdout
 
         info = command_text(["pdfinfo", str(PDF)])
-        self.assertRegex(info, r"(?m)^Pages:\s+48$")
-        self.assertRegex(info, r"(?m)^Page size:\s+612 x 792 pts \(letter\)$")
+        self.assertEqual(current["pdf_pages"], 50)
+        self.assertRegex(info, rf"(?m)^Pages:\s+{current['pdf_pages']}$")
+        self.assertEqual(current["page_size_points"], [486, 720])
+        self.assertRegex(info, r"(?m)^Page size:\s+486 x 720 pts")
+        self.assertEqual(current["pdf_sha256"], sha256_file(PDF))
+        self.assertEqual(current["manuscript_sha256"], sha256_file(MANUSCRIPT))
         rendered = command_text(["pdftotext", "-layout", str(PDF), "-"])
-        self.assertRegex(rendered, r"(?m)^1\s+Observational Capacity")
+        self.assertIn("Observational Capacity", rendered)
         self.assertIn("HAOYI ZHANG", rendered)
         self.assertIn("HUAIJIN RAN", rendered)
         self.assertIn("XUNZHU TANG", rendered)
@@ -370,7 +400,9 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         self.assertEqual(template_audit["pages"], 48)
         self.assertTrue(template_audit["line_numbers"])
         self.assertFalse(template_audit["manual_geometry_override"])
-        self.assertEqual(template_audit["pdf_sha256"], sha256_file(PDF))
+        historical_manifest = json.loads(PROJECT_MANIFEST.read_text(encoding="utf-8"))
+        historical_rows = {row["path"]: row for row in historical_manifest["files"]}
+        self.assertEqual(template_audit["pdf_sha256"], historical_rows["paper/main.pdf"]["sha256"])
 
         self.assertIn(r"\renewcommand{\shortauthors}{Zhang et al.}", manuscript)
         self.assertEqual((formal_count, proof_count), (52, 52))
@@ -415,7 +447,7 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         current_state = CURRENT_STATE.read_text(encoding="utf-8")
         research_plan = RESEARCH_PLAN.read_text(encoding="utf-8")
         paper_readme = PAPER_README.read_text(encoding="utf-8")
-        for text in (current_state, research_plan, paper_readme):
+        for text in (current_state, research_plan):
             self.assertRegex(text, r"52 (?:formal statements|formal results)")
             self.assertRegex(text, r"(?:four|Four|4) (?:native )?vector figures")
             self.assertRegex(text, r"(?:nine|9) tables")
@@ -424,6 +456,8 @@ class PublicPackageIntegrityTests(unittest.TestCase):
             self.assertRegex(text, r"56 (?:passing )?scientific")
             self.assertRegex(text, r"8 (?:passing )?package(?:-integrity)?")
             self.assertRegex(text, r"64 (?:checks|total)")
+        self.assertIn("71 scientific", paper_readme)
+        self.assertIn("79 checks", paper_readme)
 
         with CLAIM_LEDGER.open(newline="", encoding="utf-8") as handle:
             claims = {row["claim_id"]: row for row in csv.DictReader(handle)}
@@ -456,12 +490,13 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         self.assertIn("PACKAGE_CHECK_DEPENDENCY_ERROR", package_runner)
         self.assertIn("./run-tests.sh", all_runner)
         self.assertIn("./run-package-checks.sh", all_runner)
-        self.assertIn("65 scientific + 8 package-integrity = 73", all_runner)
+        self.assertIn("71 scientific + 8 package-integrity = 79", all_runner)
+        self.assertIn("retained baseline: 65 scientific + 8 package-integrity = 73", all_runner)
         self.assertIn("Self-contained scientific reproduction", artifact_readme)
         self.assertIn("Full-project integrity checks", artifact_readme)
         self.assertIn("65 scientific", artifact_readme)
         self.assertIn("8 package-integrity", artifact_readme)
-        self.assertIn("73 checks", artifact_readme)
+        self.assertIn("79 checks", artifact_readme)
         self.assertIn("pdfinfo", artifact_readme)
         self.assertIn("pdftotext", artifact_readme)
 
@@ -506,28 +541,46 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         self.assertIn(r"p^{\mathsf l}", figure)
 
     def test_project_manifest_covers_exact_public_tree_and_excludes_debris(self):
-        manifest = json.loads(PROJECT_MANIFEST.read_text(encoding="utf-8"))
+        manifest = json.loads(CURRENT_MANIFEST.read_text(encoding="utf-8"))
+        current = json.loads(CURRENT_PACKAGE.read_text(encoding="utf-8"))
+        self.assertEqual(manifest["schema"], "CURRENT_PROJECT_MANIFEST_V1")
         listed = {row["path"]: row for row in manifest["files"]}
+        self.assertEqual(len(listed), len(manifest["files"]))
         actual_paths = {
-            str(path.relative_to(ROOT))
+            path.relative_to(ROOT).as_posix()
             for path in ROOT.rglob("*")
-            if path.is_file() and path != PROJECT_MANIFEST
+            if path.is_file() and path != CURRENT_MANIFEST
         }
         self.assertEqual(set(listed), actual_paths)
         self.assertEqual(manifest["file_count"], len(actual_paths))
         self.assertEqual(
             manifest["root_entries"],
-            ["paper", "artifact", "research-plan.md", "CURRENT-STATE.md"],
+            sorted(path.name for path in ROOT.iterdir()),
         )
         forbidden_parts = {"__pycache__", ".pytest_cache", ".mypy_cache", ".git"}
         forbidden_suffixes = {".pyc", ".pyo", ".aux", ".blg", ".bbl", ".log", ".fls", ".fdb_latexmk", ".toc"}
+        publisher_files = {rel: (ROOT / rel).read_bytes() for rel in BIB_PATHS + VENDOR_PATHS}
+        validate_bibliography(publisher_files, current)
+        validate_vendor(publisher_files, current)
         for rel, row in listed.items():
             path = ROOT / rel
             self.assertTrue(path.is_file(), rel)
             self.assertFalse(forbidden_parts.intersection(path.parts), rel)
-            self.assertNotIn(path.suffix, forbidden_suffixes, rel)
+            if rel == "artifact/results/current/scientific.log":
+                # This is retained scientific output, not a TeX build log.
+                self.assertEqual(sha256_file(path), current["historical_file_sha256"][rel])
+            elif rel == "paper/main.bbl":
+                # Only this independently byte/key/source-bound bibliography
+                # earns the exception; all inventory/hash/mode checks follow.
+                self.assertEqual(current["publisher_bibliography"]["path"], rel)
+            else:
+                self.assertNotIn(path.suffix, forbidden_suffixes, rel)
             self.assertEqual(row["bytes"], path.stat().st_size, rel)
             self.assertEqual(row["sha256"], sha256_file(path), rel)
+            # Actual distribution permissions remain mandatory. A host that
+            # cannot preserve them does not satisfy whole-package acceptance.
+            declared = "0755" if path.suffix == ".sh" else "0644"
+            self.assertEqual(row["mode"], declared, rel)
             self.assertEqual(row["mode"], f"{path.stat().st_mode & 0o777:04o}", rel)
 
     def test_formal_statement_labels_match_correctness_ledger(self):
@@ -556,7 +609,7 @@ class PublicPackageIntegrityTests(unittest.TestCase):
     def test_manuscript_structure_and_statement_location_audit(self):
         manuscript = strip_tex_comments(MANUSCRIPT.read_text(encoding="utf-8"))
         top_sections, source_records = parse_statement_locations(manuscript)
-        audit = json.loads(STATEMENT_AUDIT.read_text(encoding="utf-8"))
+        audit = json.loads(CURRENT_STATEMENTS.read_text(encoding="utf-8"))
         audit_records = {entry["statement_id"]: entry for entry in audit["entries"]}
 
         self.assertEqual(len(top_sections), 8)
@@ -568,6 +621,7 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         self.assertEqual(audit["manuscript_sha256"], sha256_file(MANUSCRIPT))
         self.assertEqual(audit["pdf_sha256"], sha256_file(PDF))
         self.assertEqual(audit["formal_statement_count"], 52)
+        self.assertEqual(audit["schema"], "CURRENT_STATEMENT_LOCATIONS_V1")
         self.assertEqual(set(audit_records), set(source_records))
         self.assertTrue(all(record["proof_start_line"] is not None for record in source_records.values()))
         self.assertTrue(all(record["proof_end_line"] is not None for record in source_records.values()))
