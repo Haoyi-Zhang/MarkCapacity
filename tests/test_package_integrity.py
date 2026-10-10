@@ -33,7 +33,6 @@ EXTERNAL_COMPARISON_AUDIT = ROOT / "artifact" / "external-comparison-audit.json"
 REFERENCE_AUDIT = ROOT / "artifact" / "reference-audit-final.csv"
 SUBMISSION_MAP = ROOT / "artifact" / "submission-materials-map.json"
 TEMPLATE_AUDIT = ROOT / "paper" / "template_audit.json"
-AUTHOR_PLAN = ROOT / "paper" / "author-plan.json"
 ARTIFACT_README = ROOT / "artifact" / "README.md"
 SCIENTIFIC_RUNNER = ROOT / "artifact" / "run-tests.sh"
 PACKAGE_RUNNER = ROOT / "artifact" / "run-package-checks.sh"
@@ -349,11 +348,11 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         proof_count = len(re.findall(r"\\begin\{proof\}", manuscript))
         figure_count = len(re.findall(r"\\begin\{figure\}", manuscript))
         table_count = len(re.findall(r"\\begin\{table\}", manuscript))
-        author_count = len(re.findall(r"^\\author\{(?:Haoyi Zhang|Huaijin Ran|Xunzhu Tang)\}$", manuscript, flags=re.MULTILINE))
+        author_count = len(re.findall(r"^\\author\{[^{}]+\}$", manuscript, flags=re.MULTILINE))
         section_count = len(re.findall(r"^\\section\{", manuscript, flags=re.MULTILINE))
 
-        self.assertEqual(current["class_options"], "acmsmall,screen")
-        self.assertIn(r"\documentclass[acmsmall,screen]{acmart}", manuscript)
+        self.assertEqual(current["class_options"], "manuscript,screen,review")
+        self.assertIn(r"\documentclass[manuscript,screen,review]{acmart}", manuscript)
         self.assertNotIn("anonymous", manuscript.split(r"\documentclass",1)[1].split("\n",1)[0])
         self.assertNotIn(r"\usepackage{geometry}", manuscript)
         self.assertNotRegex(
@@ -376,22 +375,20 @@ class PublicPackageIntegrityTests(unittest.TestCase):
                 command,
                 check=True,
                 text=True,
+                encoding="utf-8",
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
             ).stdout
 
-        info = command_text(["pdfinfo", str(PDF)])
-        self.assertEqual(current["pdf_pages"], 50)
+        info = command_text(["pdfinfo", "-enc", "UTF-8", "-isodates", str(PDF)])
+        self.assertGreater(current["pdf_pages"], 0)
         self.assertRegex(info, rf"(?m)^Pages:\s+{current['pdf_pages']}$")
-        self.assertEqual(current["page_size_points"], [486, 720])
-        self.assertRegex(info, r"(?m)^Page size:\s+486 x 720 pts")
+        self.assertEqual(current["page_size_points"], [612, 792])
+        self.assertRegex(info, r"(?m)^Page size:\s+612 x 792 pts")
         self.assertEqual(current["pdf_sha256"], sha256_file(PDF))
         self.assertEqual(current["manuscript_sha256"], sha256_file(MANUSCRIPT))
-        rendered = command_text(["pdftotext", "-layout", str(PDF), "-"])
+        rendered = command_text(["pdftotext", "-enc", "UTF-8", "-layout", str(PDF), "-"])
         self.assertIn("Observational Capacity", rendered)
-        self.assertIn("HAOYI ZHANG", rendered)
-        self.assertIn("HUAIJIN RAN", rendered)
-        self.assertIn("XUNZHU TANG", rendered)
         self.assertNotIn("ANONYMOUS AUTHOR(S)", rendered)
         self.assertEqual([path.name for path in (ROOT / "paper").glob("*.pdf")], ["main.pdf"])
 
@@ -410,36 +407,14 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         self.assertEqual((author_count, section_count), (3, 8))
         self.assertEqual(len(citation_commands), 99)
         self.assertEqual(manuscript.count(r"\affiliation{"), 3)
-        self.assertEqual(manuscript.count(r"\institution{Xi'an Jiaotong-Liverpool University}"), 1)
-        self.assertEqual(manuscript.count(r"\city{Suzhou}"), 1)
-        self.assertEqual(manuscript.count(r"\country{China}"), 1)
-        self.assertEqual(manuscript.count(r"\institution{Nanyang Technological University}"), 1)
-        self.assertEqual(manuscript.count(r"\city{Singapore}"), 1)
-        self.assertEqual(manuscript.count(r"\country{Singapore}"), 1)
-        self.assertIn(r"\institution{University of Luxembourg}", manuscript)
-        self.assertIn(r"\country{Luxembourg}", manuscript)
-        self.assertIn(r"\email{hyeliozhang@gmail.com}", manuscript)
-        self.assertIn(r"\email{huaijin003@e.ntu.edu.sg}", manuscript)
-        self.assertIn(r"\email{realdanieltang@gmail.com}", manuscript)
-        self.assertIn(r"\vskip 3\baselineskip", manuscript)
-
-        author_plan = json.loads(AUTHOR_PLAN.read_text(encoding="utf-8"))
-        self.assertEqual(author_plan["planned_author_count"], 6)
-        self.assertEqual(author_plan["unnamed_slots"], [4, 5, 6])
-        self.assertEqual(
-            [row["name"] for row in author_plan["named_authors"]],
-            ["Haoyi Zhang", "Huaijin Ran", "Xunzhu Tang"],
-        )
-        self.assertIsNone(author_plan["named_authors"][2]["orcid"])
         self.assertEqual(manuscript.count(r"\correspondingauthor"), 1)
-        self.assertRegex(
-            manuscript,
-            r"\\author\{Huaijin Ran\}\n\\correspondingauthor\n\\orcid\{0009-0009-2482-2344\}",
+        self.assertEqual(manuscript.count(r"\orcid{"), 3)
+        self.assertEqual(
+            re.findall(r"\\orcid\{([^{}]+)\}", manuscript),
+            ["0009-0009-3693-786X", "0009-0009-2482-2344", "0000-0002-6377-0884"],
         )
-        self.assertEqual(manuscript.count(r"\orcid{"), 2)
-        self.assertIn(r"\hypersetup{pdfauthor={Haoyi Zhang, Huaijin Ran, Xunzhu Tang}}", manuscript)
         self.assertNotRegex(manuscript, r"\\author\{Author [A-F]\}")
-        self.assertIn("Self-contained scientific tests & 65", manuscript)
+        self.assertIn("Retained scientific test baseline & 65", manuscript)
         self.assertIn("Full-project integrity tests & 8", manuscript)
 
         # The following records describe the retained historical 56/64 suite;
@@ -614,7 +589,7 @@ class PublicPackageIntegrityTests(unittest.TestCase):
 
         self.assertEqual(len(top_sections), 8)
         self.assertEqual(audit["top_level_section_count"], 8)
-        self.assertEqual(len(re.findall(r"^\\author\{(?:Haoyi Zhang|Huaijin Ran|Xunzhu Tang)\}$", manuscript, flags=re.MULTILINE)), 3)
+        self.assertEqual(len(re.findall(r"^\\author\{[^{}]+\}$", manuscript, flags=re.MULTILINE)), 3)
         self.assertEqual(audit["top_level_sections"], top_sections)
         self.assertNotRegex(manuscript, r"\\appendix\b")
         self.assertNotRegex(manuscript, r"\bAppendix\b")

@@ -2,14 +2,14 @@
   "schema": "CURRENT_PACKAGE_METADATA_V1",
   "date": "2026-10-08",
   "scope": "current file/PDF/source-location bindings, not campaign, publication or visual acceptance",
-  "class_options": "acmsmall,screen",
-  "pdf_pages": 50,
+  "class_options": "manuscript,screen,review",
+  "pdf_pages": 49,
   "page_size_points": [
-    486,
-    720
+    612,
+    792
   ],
-  "pdf_sha256": "9d7db3a418bd24d4bdab2d2c9e039ed6a6e7d530c24d220e0524419e4f2a619f",
-  "manuscript_sha256": "3d578836767144c98e96a47ed48e80988940d093ba4bce3e1104b819461318f2",
+  "pdf_sha256": "4c3b0e4d385b4bdde8430998ed4bd6d14e4ad72fc858e2eeb96d69578aa97484",
+  "manuscript_sha256": "7a517fb8f93ed49609ea8bd1e425377374ce0e1fa2d13f570c77ffb46e11dbb4",
   "scheduled_tests": {
     "scientific": 71,
     "package": 8,
@@ -95,8 +95,6 @@
   },
   "bibliography_binding_scope": "local current bytes only; no transfer of historical external-verification verdicts",
   "historical_file_sha256": {
-    "artifact/project-manifest.json": "e91cd1a204e4cd0da9fbe8102e86a8ab5d1db289a2829f803205495f01b140b6",
-    "paper/template_audit.json": "b54c8804943211275fcecf8f976ac77aa176391187b9a47edfb57cbe6c5a028c",
     "paper/pdf_preflight.json": "226fb217a4b5492519ecbca60ca0ac3e85974a913cef1a67c0b7beab0c17dbbc",
     "paper/statement_location_audit.json": "1f3ac409f93125750db77106b3b4f0488168e7fa9d3c0a36d9ffbf6990ab6038",
     "paper/visual_qa.json": "0a47fc2169a7799324869ae20a0a70cc92919f39b119e5b764861f852749f07d",
@@ -104,10 +102,8 @@
     "artifact/reproduction-report.json": "d58fe2fb4b6af747fe4f945814f904174ea024f2a2f05a5b5e520e9b327384f4",
     "artifact/claim_evidence_ledger.csv": "82d4b44f4107ec4fb646b45ad349e3e2b49632345672a29a3750c340f2935581",
     "artifact/correctness_correspondence.csv": "1ce411904d61cf5556ae966df7a25a961e5ded72c5acc7454b403bc937548f84",
-    "artifact/results_manifest.csv": "1857ba7a622530540baea416753939ad975721cfd6ba664d51ad8c610b552967",
     "artifact/raw/run_manifest.json": "af2c382aa6ae49bdfc16ecfb41d53e37bf390b5271fa5c972d2111817951a09c",
     "artifact/raw/SHA256SUMS": "cf11eb62f5ca79360a4a790499acd5ce69e6dac901f2dd246f6d3c5ac58b07b6",
-    "paper/provenance/CURRENT-STATE.md": "ba6cd650cab0ac4f70b3de4f7cb6a1b79ae74ca85c06f5e56e59eb55d4673bd6",
     "paper/provenance/research-plan.md": "7c73122e4f1786e4d84f483e8378051b08a33056033c8841912277c996466b0f",
     "artifact/research-lock.yaml": "d692232aa8cace9fb647c80d456856299afe01ef7ca68e4cc216831652becbb4",
     "artifact/literature-evidence/records.jsonl": "4aa62593ab5be723a0f381f627f5c946e9d9ca90913b9383ff7f5a64e5227ef0",
