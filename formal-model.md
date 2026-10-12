@@ -56,3 +56,30 @@ operational equivalence cross.
 The access relation describes owner-selectable outputs, not merely a set of possible sampler outputs. Two strictly positive distributions on the same finite support induce the same selectable exact capacity but may have different actual recovery probabilities. The paper now gives a 99%/1% two-output example and separates fixed sampling from rejection-based selection and its cost.
 
 The concrete witness validator checks all program-level obligations after output selection. It cannot establish that the input partitions or reachability relation correctly model a real compiler.
+
+## Bounded arithmetic-language translation
+
+`src/arithmetic_language.py` derives one finite instance from pure syntax and
+evaluation rather than accepting a hypergraph as input. A procedure returns a
+tuple of independent additions of its Boolean arguments and literal one. Each
+site admits either operand order and either a direct result or a local
+let-return. All `4^n` procedures have the same returned tuple on every input.
+The detector reads the actual order and naming syntax. Attacks eliminate local
+temporaries and normalize operand order at a declared subset `K`. Their closure
+forgets naming and the order at `K`, leaving `d = n - |K|` order bits.
+
+Embedding composes naming steps but spends at most one commutation across the
+whole insertion. Its projected source rows are therefore the closed
+neighborhoods of the binary `d`-cube, not unrestricted rewrite closure. Exact
+capacity is the known cube domatic number. With `r = floor(log2(d+1))`, standard
+Hamming syndrome columns give `2^r` messages and an explicit zero-or-one-edit
+selector. Every color fiber must dominate the cube, yielding
+`C_d <= floor(2^d / ceil(2^d/(d+1))) <= d+1`; saturation at `d+1` occurs exactly
+when `d+1` is a power of two. In particular `C_2 = 2` despite three reachable
+cells per source, while `C_3 = 4` and `C_7 = 8`.
+
+The language-specific result is the evaluation/closure/access correspondence
+and the legal representatives, not a new cube coloring or code. Pure returned
+values, independent sites, this detector, and this edit budget are essential.
+The general coordinated-product exponent also follows from existing dual
+cover-decomposition bounds; it assumes independent component budgets and access.

@@ -43,6 +43,16 @@ if ! timeout --kill-after=10s 180s python3 -B -m unittest \
   exit 1
 fi
 
+# The concrete arithmetic translation has its own transcript; neither its
+# counts nor its results are substituted into the retained abstract census.
+if ! timeout --kill-after=10s 180s python3 -B -m unittest \
+    tests.test_arithmetic_language -v \
+    > "$tmp/language-tests.stdout" 2> "$tmp/language-tests.stderr"; then
+  cat "$tmp/language-tests.stdout"
+  cat "$tmp/language-tests.stderr" >&2
+  exit 1
+fi
+
 timeout --kill-after=10s 180s python3 -B src/run_all.py --out "$tmp/run1" > "$tmp/run1.stdout"
 timeout --kill-after=10s 180s python3 -B src/run_all.py --out "$tmp/run2" > "$tmp/run2.stdout"
 
@@ -64,3 +74,5 @@ cat "$tmp/run2.stdout"
 cat "$tmp/tests.frozen.stderr" >&2
 cat "$tmp/current-tests.stdout"
 cat "$tmp/current-tests.stderr" >&2
+cat "$tmp/language-tests.stdout"
+cat "$tmp/language-tests.stderr" >&2
