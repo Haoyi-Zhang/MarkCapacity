@@ -1,0 +1,27 @@
+[
+  {
+    "case": "overlap-general",
+    "returned": false,
+    "rejected": false
+  },
+  {
+    "case": "overlap-access",
+    "returned": true,
+    "rejected": false
+  },
+  {
+    "case": "empty-directed",
+    "returned": true,
+    "rejected": false
+  },
+  {
+    "case": "duplicate-directed",
+    "returned": true,
+    "rejected": false
+  },
+  {
+    "case": "invalid-hidden-by-empty-product",
+    "returned": [],
+    "rejected": false
+  }
+]

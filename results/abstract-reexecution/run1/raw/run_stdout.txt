@@ -1,0 +1,370 @@
+{
+  "access_fano_counterexample": {
+    "access_is_reflexive": true,
+    "behavior_classes": 1,
+    "distinct_access_hyperedges": 7,
+    "each_edge_size": [
+      3
+    ],
+    "name": "fano_plane_access_realization",
+    "operational_classes": 7,
+    "operational_refines_behavior": true,
+    "program_incidences": 21,
+    "two_message_feasible": false
+  },
+  "access_hypergraph_counterexample": {
+    "access_hyperedges": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        0,
+        2
+      ]
+    ],
+    "access_is_reflexive": true,
+    "behavior_classes": 1,
+    "each_edge_size": [
+      2,
+      2,
+      2
+    ],
+    "name": "source_dependent_access_triangle",
+    "operational_classes": 3,
+    "operational_refines_behavior": true,
+    "two_message_coloring": null,
+    "two_message_feasible": false
+  },
+  "capacity_scenarios": [
+    {
+      "exact_messages": 8,
+      "guaranteed_bits": 3,
+      "order": 0,
+      "program_variants": 8,
+      "quotient_cells": 8,
+      "scenario": "no_attack_identifies_variants"
+    },
+    {
+      "exact_messages": 4,
+      "guaranteed_bits": 2,
+      "order": 1,
+      "program_variants": 8,
+      "quotient_cells": 4,
+      "scenario": "paired_attack_orbits"
+    },
+    {
+      "exact_messages": 2,
+      "guaranteed_bits": 1,
+      "order": 2,
+      "program_variants": 8,
+      "quotient_cells": 2,
+      "scenario": "four_way_attack_orbits"
+    },
+    {
+      "exact_messages": 1,
+      "guaranteed_bits": 0,
+      "order": 3,
+      "program_variants": 8,
+      "quotient_cells": 1,
+      "scenario": "complete_semantic_closure"
+    }
+  ],
+  "constructive_witness_checks": {
+    "exhaustive_instances": 128,
+    "generated_instances": 192,
+    "negative_instances": 274,
+    "oracle_agreements": 320,
+    "positive_instances": 46,
+    "valid_constructed_witnesses": 46
+  },
+  "exhaustive_access_theorem": {
+    "access_inclusion_pairs": 492402,
+    "access_monotonicity_checks": 492402,
+    "access_relation_instances": 12866,
+    "agreement_checks": 38564,
+    "behavior_partitions": 8,
+    "feasible_instances": 4363,
+    "infeasible_instances": 34201,
+    "max_universe_size": 3,
+    "message_instances": 38564,
+    "operational_partitions": 8,
+    "partition_pairs": 30
+  },
+  "exhaustive_general_theorem": {
+    "agreement_checks": 11423,
+    "behavior_monotonicity_checks": 19583,
+    "behavior_partitions": 75,
+    "behavior_refinement_pairs": 434,
+    "feasible_instances": 3447,
+    "infeasible_instances": 7976,
+    "max_universe_size": 5,
+    "message_instances": 11423,
+    "operational_monotonicity_checks": 19583,
+    "operational_partitions": 75,
+    "operational_refinement_pairs": 434,
+    "partition_pairs": 2959
+  },
+  "exhaustive_refinement_theorem": {
+    "behavior_partitions": 75,
+    "constructive_passes": 604,
+    "impossibility_checks": 1339,
+    "max_universe_size": 5,
+    "message_instances": 1943,
+    "refinement_pairs": 434
+  },
+  "fano_plane_counterexample": {
+    "behavior_classes": 7,
+    "each_edge_size": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "name": "fano_plane_incidence_realization",
+    "operational_classes": 7,
+    "program_incidences": 21,
+    "two_message_feasible": false
+  },
+  "general_hypergraph_counterexample": {
+    "behavior_partition": [
+      [
+        "a0",
+        "a1"
+      ],
+      [
+        "b0",
+        "b1"
+      ],
+      [
+        "c0",
+        "c1"
+      ]
+    ],
+    "each_edge_size": [
+      2,
+      2,
+      2
+    ],
+    "indistinguishability_partition": [
+      [
+        "a0",
+        "c1"
+      ],
+      [
+        "a1",
+        "b0"
+      ],
+      [
+        "b1",
+        "c0"
+      ]
+    ],
+    "name": "triangle_crossing_indistinguishability",
+    "quotient_hyperedges": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        0,
+        2
+      ]
+    ],
+    "two_message_coloring": null,
+    "two_message_feasible": false
+  },
+  "joint_contract_composition": {
+    "fourth_power": {
+      "constructed_messages": 9,
+      "edges": 81,
+      "vertices": 81,
+      "witness_valid": true
+    },
+    "name": "triangle_coordinate_products",
+    "square": {
+      "cyclic_coloring": [
+        0,
+        1,
+        2,
+        1,
+        2,
+        0,
+        2,
+        0,
+        1
+      ],
+      "edges": 9,
+      "polychromatic_number": 3,
+      "transversal_number": 3,
+      "vertices": 9
+    },
+    "triangle": {
+      "edges": 3,
+      "polychromatic_number": 1,
+      "vertices": 3
+    }
+  },
+  "larger_unfiltered_stress_checks": {
+    "access_oracle_agreements": 240,
+    "general_oracle_agreements": 240,
+    "instances": 240,
+    "negative_access_instances": 227,
+    "positive_access_instances": 13,
+    "validated_positive_witnesses": 13
+  },
+  "randomized_recovery": {
+    "average_unit_list_triangle": {
+      "value": "5/6",
+      "witness": [
+        [
+          0
+        ],
+        [
+          0
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    "correlated_heterogeneous_budget_trials": 54,
+    "name": "bounded_list_and_worst_source_recovery",
+    "program_level_oracle_agreements": 54,
+    "value_fraction_denominators": [
+      3,
+      14,
+      19,
+      29,
+      31,
+      1,
+      19,
+      31,
+      52,
+      46,
+      17,
+      55,
+      7,
+      29,
+      54,
+      31,
+      1,
+      1,
+      47,
+      38,
+      28,
+      33,
+      47,
+      53,
+      27,
+      1,
+      7,
+      8,
+      22,
+      43,
+      23,
+      45,
+      26,
+      1,
+      47,
+      51,
+      1,
+      23,
+      31,
+      11,
+      45,
+      17,
+      16,
+      3,
+      40,
+      39,
+      43,
+      45,
+      47,
+      43,
+      1,
+      23,
+      23,
+      18
+    ],
+    "value_fraction_numerators": [
+      2,
+      13,
+      12,
+      6,
+      18,
+      1,
+      4,
+      9,
+      35,
+      37,
+      11,
+      16,
+      1,
+      4,
+      17,
+      26,
+      0,
+      1,
+      12,
+      21,
+      27,
+      19,
+      12,
+      12,
+      23,
+      0,
+      5,
+      7,
+      5,
+      24,
+      5,
+      23,
+      3,
+      1,
+      5,
+      14,
+      0,
+      17,
+      29,
+      6,
+      43,
+      13,
+      9,
+      2,
+      27,
+      31,
+      31,
+      38,
+      38,
+      21,
+      0,
+      19,
+      9,
+      17
+    ],
+    "worst_source_triangle": {
+      "deterministic": "1/2",
+      "deterministic_witness": [
+        0,
+        0,
+        0
+      ],
+      "private_witness": "3/4",
+      "shared_dual": "5/6",
+      "shared_primal": "5/6"
+    }
+  },
+  "schema": "WOC_FINITE_CHECK_V7"
+}

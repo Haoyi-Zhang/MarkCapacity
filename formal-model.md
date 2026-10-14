@@ -83,3 +83,25 @@ and the legal representatives, not a new cube coloring or code. Pure returned
 values, independent sites, this detector, and this edit budget are essential.
 The general coordinated-product exponent also follows from existing dual
 cover-decomposition bounds; it assumes independent component budgets and access.
+
+## Hygienic source realization and finite admission
+
+`src/source_language.py` prints and admits actual ordinary CPython function
+syntax for this fragment. Each named component receives a distinct fresh `v_i`,
+disjoint from the positional `x_i` arguments. A source parser rejects repeated
+bindings, argument capture, cross-component reads and unused assignments.
+Native execution is restricted to exact integer Boolean arguments and the
+whitelisted pure grammar, not general Python or reflective contexts. Actual AST
+commutation and naming steps supply a second bounded reachability path.
+
+The round-trip/evaluation/step correspondence proves that the canonical printed
+support has the same quotient and access hypergraph as the model. It inherits
+known capacity and syndrome results; it does not claim a new coding theorem.
+Reusing `t` for two component-local temporaries in a function-local namespace is
+a concrete negative: input `(0,1)` returns `(2,2)` instead of `(1,2)`.
+
+The finite solver now checks nonempty, disjoint equivalence blocks before
+indexing; common-universe equality alone does not validate a partition. Empty or
+overlapping blocks are input errors, distinct from valid empty access edges.
+Input partitions remain finite reusable block sequences; single-use access-row
+iterators are supported separately. Valid supplied cell order is preserved.

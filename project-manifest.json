@@ -2,7 +2,7 @@
   "schema": "PROJECT_MANIFEST",
   "date": "2026-09-26",
   "status": "PASS_FINAL_RELEASE",
-  "file_count": 66,
+  "file_count": 65,
   "root_entries": [
     "paper",
     "artifact",
@@ -328,12 +328,6 @@
       "path": "paper/acmart.cls",
       "bytes": 121737,
       "sha256": "2f949e6e3f2a79f2cdc218b9dcdbaa7dd451adb4ee0be1af6dc7ebe00b318ea7",
-      "mode": "0644"
-    },
-    {
-      "path": "paper/author-plan.json",
-      "bytes": 1602,
-      "sha256": "8b6b13db424ac5d9a7848affb2f876927de996d7838d482f59afc0a5a690e574",
       "mode": "0644"
     },
     {

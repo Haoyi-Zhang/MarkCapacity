@@ -53,6 +53,22 @@ if ! timeout --kill-after=10s 180s python3 -B -m unittest \
   exit 1
 fi
 
+# Admission and ordinary-source execution have their own current transcript.
+if ! timeout --kill-after=10s 180s python3 -B -m unittest \
+    tests.test_partition_admission tests.test_source_language -v \
+    > "$tmp/source-tests.stdout" 2> "$tmp/source-tests.stderr"; then
+  cat "$tmp/source-tests.stdout"
+  cat "$tmp/source-tests.stderr" >&2
+  exit 1
+fi
+
+timeout --kill-after=10s 180s python3 -B src/run_source.py --out "$tmp/source1" > "$tmp/source1.stdout"
+timeout --kill-after=10s 180s python3 -B src/run_source.py --out "$tmp/source2" > "$tmp/source2.stdout"
+cmp "$tmp/source1/rows.jsonl" "$tmp/source2/rows.jsonl"
+cmp "$tmp/source1/negative.json" "$tmp/source2/negative.json"
+cmp "$tmp/source1/summary.json" "$tmp/source2/summary.json"
+diff -r "$tmp/source1/programs" "$tmp/source2/programs"
+
 timeout --kill-after=10s 180s python3 -B src/run_all.py --out "$tmp/run1" > "$tmp/run1.stdout"
 timeout --kill-after=10s 180s python3 -B src/run_all.py --out "$tmp/run2" > "$tmp/run2.stdout"
 
@@ -76,3 +92,5 @@ cat "$tmp/current-tests.stdout"
 cat "$tmp/current-tests.stderr" >&2
 cat "$tmp/language-tests.stdout"
 cat "$tmp/language-tests.stderr" >&2
+cat "$tmp/source-tests.stdout"
+cat "$tmp/source-tests.stderr" >&2

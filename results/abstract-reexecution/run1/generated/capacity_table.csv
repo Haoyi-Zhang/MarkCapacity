@@ -1,0 +1,5 @@
+order,scenario,program_variants,quotient_cells,exact_messages,guaranteed_bits
+0,no_attack_identifies_variants,8,8,8,3
+1,paired_attack_orbits,8,4,4,2
+2,four_way_attack_orbits,8,2,2,1
+3,complete_semantic_closure,8,1,1,0

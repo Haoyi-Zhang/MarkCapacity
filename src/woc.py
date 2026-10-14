@@ -34,10 +34,28 @@ def normalize_partition(blocks: Iterable[Iterable[Element]]) -> Partition:
 
 
 def universe(partition: Partition) -> frozenset[Element]:
-    return frozenset().union(*partition) if partition else frozenset()
+    """Read a finite partition only after checking its equivalence contract.
+
+    A common union is not sufficient: empty or overlapping blocks do not
+    describe equivalence classes. Preserve supplied block order (and therefore
+    cell indices); do not repair malformed input into a different instance.
+    """
+    seen: set[Element] = set()
+    try:
+        for block in partition:
+            values = frozenset(block)
+            if not values:
+                raise ValueError("partition blocks must be nonempty")
+            if seen.intersection(values):
+                raise ValueError("partition blocks overlap")
+            seen.update(values)
+    except TypeError as exc:
+        raise ValueError("partition blocks must contain hashable programs") from exc
+    return frozenset(seen)
 
 
 def block_index(partition: Partition) -> dict[Element, int]:
+    universe(partition)
     return {element: i for i, block in enumerate(partition) for element in block}
 
 
@@ -829,6 +847,9 @@ def incidence_access_instance(
 
 def product_partition(first: Partition, second: Partition) -> Partition:
     """Cartesian product of two finite partitions."""
+    # Even an empty product must not conceal a malformed other operand.
+    universe(first)
+    universe(second)
     if not first or not second:
         return tuple()
     return normalize_partition(

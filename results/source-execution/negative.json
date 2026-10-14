@@ -1,0 +1,42 @@
+[
+  {
+    "admission_error": "temporary binding must be fresh and unique",
+    "case": "function-local-reuse-is-not-component-local",
+    "input": [
+      0,
+      1
+    ],
+    "native_return": [
+      2,
+      2
+    ],
+    "reference_return": [
+      1,
+      2
+    ],
+    "source_text": "def carrier(x0, x1):\n    t = x0 + 1\n    t = x1 + 1\n    return (t, t)\n"
+  },
+  {
+    "case": "undeclared-operand-normalization",
+    "decoded_after_normalization": 0,
+    "inputs": [
+      [
+        0
+      ],
+      [
+        1
+      ]
+    ],
+    "marked": "a267318c56ad6b6260ad543d719ba7725bc4705cbf7656e34238af40c4285e93",
+    "native_returns": [
+      [
+        1
+      ],
+      [
+        2
+      ]
+    ],
+    "normalized": "2dfdbe1c0cb89732d9a3c90e239c6f8f00c3e018aea7b508705eb33b37c6bdbe",
+    "requested": 1
+  }
+]

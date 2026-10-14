@@ -1,0 +1,2 @@
+def carrier():
+    return ()

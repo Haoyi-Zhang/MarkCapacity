@@ -1,0 +1,32 @@
+[
+  {
+    "case": "overlap-general",
+    "exception": "ValueError",
+    "message": "partition blocks overlap",
+    "rejected": true
+  },
+  {
+    "case": "overlap-access",
+    "exception": "ValueError",
+    "message": "partition blocks overlap",
+    "rejected": true
+  },
+  {
+    "case": "empty-directed",
+    "exception": "ValueError",
+    "message": "partition blocks must be nonempty",
+    "rejected": true
+  },
+  {
+    "case": "duplicate-directed",
+    "exception": "ValueError",
+    "message": "partition blocks overlap",
+    "rejected": true
+  },
+  {
+    "case": "invalid-hidden-by-empty-product",
+    "exception": "ValueError",
+    "message": "partition blocks must be nonempty",
+    "rejected": true
+  }
+]
