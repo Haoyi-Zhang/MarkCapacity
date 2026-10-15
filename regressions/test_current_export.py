@@ -8,6 +8,7 @@ import sys
 import tarfile
 import tempfile
 import unittest
+from unittest.mock import patch
 import zipfile
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -81,10 +82,11 @@ class CurrentExportTests(unittest.TestCase):
             root = Path(temporary)
             # Materialize the fixture, with outer project navigation present.
             # collect_export_records must not require that navigation in ZIPs.
-            for name, (data, _) in records.items():
+            for name, (data, mode) in records.items():
                 path = root / name
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_bytes(data)
+                path.chmod(int(mode, 8))
             (root / 'README.md').write_text('Project navigation only.', encoding='utf-8')
             self.assertEqual(set(validator.collect_export_records(root)), set(records))
             for extra in (None, 'paper/unlisted-research.txt', 'artifact/unlisted-result.json', 'README.md'):
@@ -111,6 +113,69 @@ class CurrentExportTests(unittest.TestCase):
                         self.assertEqual({name.split('/')[0] for name in actual}, {'paper', 'artifact'})
                         self.assertNotIn('README.md', actual)
                         validator.validate_inventory(actual, manifest, current)
+
+            def make_zip(*, changed=None, omitted=None, extra=None, duplicate=None,
+                         bad_mode=None, bad_type=None, dos_file=None):
+                archive = root / 'export.zip'
+                with zipfile.ZipFile(archive, 'w') as output:
+                    for name, (data, mode) in records.items():
+                        if name == omitted:
+                            continue
+                        info = zipfile.ZipInfo(name)
+                        info.create_system = 0 if name == dos_file else 3
+                        unix_mode = int(mode, 8) if name != bad_mode else 0o666
+                        file_type = 0o120000 if name == bad_type else 0o100000
+                        info.external_attr = (file_type | unix_mode) << 16
+                        output.writestr(info, data + b'changed' if name == changed else data)
+                        if name == duplicate:
+                            with self.assertWarnsRegex(UserWarning, 'Duplicate name'):
+                                output.writestr(copy.copy(info), data)
+                    if extra:
+                        info = zipfile.ZipInfo(extra)
+                        info.create_system = 3
+                        info.external_attr = 0o100644 << 16
+                        output.writestr(info, b'owned extra fixture')
+                return archive
+
+            archive = make_zip()
+            supplied = validator.collect_export_records(root, archive)
+            self.assertEqual(supplied, records)
+            validator.validate_inventory(supplied, manifest, current)
+            for arguments in (
+                {'bad_mode': 'paper/main.bbl'},
+                {'bad_mode': validator.MANIFEST},
+                {'bad_type': 'paper/main.bbl'},
+                {'dos_file': 'paper/main.bbl'},
+                {'omitted': 'paper/main.bbl'},
+                {'omitted': validator.MANIFEST},
+                {'extra': 'artifact/unlisted-result.json'},
+                {'extra': 'README.md'},
+                {'changed': 'paper/main.bbl'},
+                {'duplicate': 'paper/main.bbl'},
+            ):
+                with self.subTest(zip_case=arguments):
+                    with self.assertRaises(ValueError):
+                        validator.collect_export_records(root, make_zip(**arguments))
+            archive = make_zip()
+            extra = root/'paper/extra-extracted.txt'
+            extra.write_bytes(b'owned extracted extra')
+            with self.assertRaisesRegex(ValueError, 'archive/extracted exact file inventory'):
+                validator.collect_export_records(root, archive)
+            extra.unlink()
+            original = (root/'paper/main.bbl').read_bytes()
+            (root/'paper/main.bbl').write_bytes(original + b'changed')
+            with self.assertRaisesRegex(ValueError, 'archive/extracted bytes'):
+                validator.collect_export_records(root, archive)
+            (root/'paper/main.bbl').write_bytes(original)
+            bad_physical = dict(records)
+            bad_physical['paper/main.bbl'] = (original, '0666')
+            with patch.object(validator, '_requires_posix_modes', return_value=True), \
+                 patch.object(validator, '_collect_filesystem_records', return_value=bad_physical):
+                with self.assertRaisesRegex(ValueError, 'physical POSIX mode'):
+                    validator.collect_export_records(root, archive)
+            if not validator._requires_posix_modes():
+                with self.assertRaisesRegex(ValueError, 'actual distribution mode'):
+                    validator.validate_inventory(validator.collect_export_records(root), manifest, current)
 
     def test_exact_bibliography_role_and_inputs_unchanged(self):
         records, manifest, current = fixture()

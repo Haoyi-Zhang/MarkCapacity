@@ -74,7 +74,7 @@ From this `artifact/` directory in a complete project checkout, run:
 ./run-package-checks.sh
 ```
 
-This entry point runs 8 package-integrity tests. It requires the sibling `paper/` tree, its retained `paper/provenance/` records, the historical `artifact/project-manifest.json`, and the separate current `current-project-manifest.json`, `current-package-metadata.json`, and `paper/current-statement-locations.json`. The current manifest checks the exact current public file set, bytes, digests and actual distribution modes; it does not overwrite archived experiment bindings. Current source/PDF locations and counts are checked separately from dated audits. A host that cannot preserve the required modes cannot satisfy whole-package acceptance; there is no platform bypass. It also requires Poppler's `pdfinfo` and `pdftotext`; the script checks and reports these dependencies before running any tests. Missing assets or commands cause an explicit input/dependency error and are never converted into a scientific infeasibility result.
+This entry point runs 8 package-integrity tests. It requires the sibling `paper/` tree, its retained `paper/provenance/` records, the historical `artifact/project-manifest.json`, and the separate current `current-project-manifest.json`, `current-package-metadata.json`, and `paper/current-statement-locations.json`. The filesystem path checks the exact file set, bytes, digests and physical distribution modes. The explicit ZIP-backed path below additionally binds every extracted file to an actual archive and checks its stored Unix type and mode. POSIX hosts check physical modes in either path; Windows ZIP-backed acceptance checks transport metadata and extracted bytes, not physical POSIX permissions. Current source/PDF locations and counts remain separate from dated audits and archived experiment bindings. Both paths require Poppler's `pdfinfo` and `pdftotext`. Missing assets or commands produce an input/dependency error, not a scientific infeasibility result.
 
 To run both entry points in a complete checkout:
 
@@ -91,8 +91,8 @@ The prepared `scientific-checks.yml` workflow runs from this directory as a flat
 ## Current source-export checks
 
 For a complete source export, run `./run-current-export-checks.sh`. It validates
-the exact current inventory and actual modes, runs seven portable export regressions,
-and then runs all eight existing package checks with their unchanged Poppler
+the exact current inventory and actual modes, runs all eight existing package checks,
+and then runs seven portable export regressions, with unchanged Poppler
 requirements. Scientific reproduction remains separate; source-export role
 regressions do not replace the scientific or package entry points. Scientific CI also explicitly
 runs the seven export regressions in a separate retained log, without requiring the
@@ -100,9 +100,26 @@ paper tree. That step does not establish full-export acceptance.
 
 The only bibliography exception is `paper/main.bbl`; its exact byte binding,
 active manuscript inclusion/style and key coverage must match the exported bibliography.
-Arbitrary `.bbl`, `.aux`, `.blg`, missing/extra files, incorrect hashes and actual
-mode mismatches remain errors. Windows mode support is an export-environment
-condition, not an algorithm defect or an excuse to waive the gate.
+Arbitrary `.bbl`, `.aux`, `.blg`, missing/extra files, incorrect hashes and
+distribution-mode mismatches remain errors. Windows accepts a ZIP-backed export
+only through explicit stored Unix metadata and exact agreement with the extracted tree.
+
+For a complete ZIP extracted on Windows, run from its `artifact/` directory:
+
+```sh
+python -B current_export.py --root "C:/work/MarkCapacity" --archive "C:/downloads/MarkCapacity_TOPLAS.zip" --run-checks
+python -O -B current_export.py --root "C:/work/MarkCapacity" --archive "C:/downloads/MarkCapacity_TOPLAS.zip" --run-checks
+```
+
+The ZIP is supplied explicitly. The entry rejects duplicate or unsafe names,
+nonregular files, incorrect stored modes, unlisted or missing members, and any
+archive/extracted-byte disagreement before running the same 8 package tests and
+7 export regressions. Ordinary ZIP files require Unix creator/type metadata and
+mode `0644`; shell launchers require `0755`. Optional empty `paper/` and
+`artifact/` directory headers are validated separately from regular-file rows.
+`pdfinfo` and `pdftotext` must be on `PATH`. `TOPLAS19_EXPORT_ARCHIVE` passes
+the explicit archive into the package test process; the shell entry also accepts
+that variable. Omitting an archive retains the physical-mode gate.
 
 `current-export-supplement.json` binds current metadata and identifies the
 8-package/7-regression schedule. The exact current manifest includes this

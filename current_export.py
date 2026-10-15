@@ -5,9 +5,15 @@ import argparse
 import hashlib
 import io
 import json
+import os
 from pathlib import Path, PurePosixPath
 import re
+import shutil
+import stat
+import subprocess
+import sys
 import tarfile
+import zipfile
 
 MANIFEST = "artifact/current-project-manifest.json"
 METADATA = "artifact/current-package-metadata.json"
@@ -18,6 +24,7 @@ VENDOR_PATHS = ("paper/acmart.cls", "paper/acmart.dtx", "paper/acmart.ins",
                 "paper/acmart-source-v2.19.tar.gz", "paper/ACM-SOURCE-NOTICE.md")
 FORBIDDEN = {".pyc", ".pyo", ".aux", ".blg", ".bbl", ".log", ".fls", ".fdb_latexmk", ".toc"}
 FORBIDDEN_PARTS = {"__pycache__", ".pytest_cache", ".mypy_cache", ".git"}
+ARCHIVE_ENV = "TOPLAS19_EXPORT_ARCHIVE"
 
 
 def require(condition, message):
@@ -29,7 +36,7 @@ def digest(data):
     return hashlib.sha256(data).hexdigest()
 
 
-def collect_export_records(root):
+def _collect_filesystem_records(root):
     """Collect every file in the two delivery roots, not project navigation."""
     root = Path(root)
     records = {}
@@ -41,6 +48,66 @@ def collect_export_records(root):
             if path.is_file():
                 records[path.relative_to(root).as_posix()] = (path.read_bytes(), f'{path.stat().st_mode & 0o777:04o}')
     return records
+
+
+def _requires_posix_modes():
+    return os.name == "posix"
+
+
+def collect_archive_records(archive):
+    """Read regular ZIP members with explicit Unix type and permission bits."""
+    records = {}
+    seen = set()
+    portable_names = set()
+    with zipfile.ZipFile(archive) as supplied:
+        for member in supplied.infolist():
+            name = member.filename
+            require(member.orig_filename == name and '\0' not in name,
+                    'ZIP member name was truncated')
+            require(name not in seen and name.casefold() not in portable_names,
+                    'duplicate ZIP member: ' + name)
+            seen.add(name)
+            portable_names.add(name.casefold())
+            require(not member.flag_bits & 1, 'encrypted ZIP member: ' + name)
+            stored = member.external_attr >> 16
+            if member.is_dir():
+                # Existing delivery ZIPs can contain these two empty root
+                # headers. They are not regular-file manifest entries.
+                require(name in {root + '/' for root in EXPORT_ROOTS}
+                        and member.file_size == 0 and supplied.read(member) == b''
+                        and stored in (stat.S_IFDIR | 0o755, stat.S_IFDIR | 0o775),
+                        'invalid ZIP root directory: ' + name)
+                continue
+            path = PurePosixPath(name)
+            require(not path.is_absolute() and len(path.parts) >= 2
+                    and path.parts[0] in EXPORT_ROOTS and '..' not in path.parts
+                    and '\\' not in name and ':' not in name
+                    and path.as_posix() == name and not FORBIDDEN_PARTS.intersection(path.parts),
+                    'unsafe ZIP member: ' + name)
+            expected = 0o755 if path.suffix == '.sh' else 0o644
+            require(member.create_system == 3 and stored == (stat.S_IFREG | expected),
+                    'ZIP Unix type/mode: ' + name)
+            records[name] = (supplied.read(member), f'{expected:04o}')
+    require(bool(records), 'empty ZIP export')
+    return records
+
+
+def collect_export_records(root, archive=None):
+    """Check physical files, optionally bound to an actual distribution ZIP.
+
+    On POSIX both the stored modes and physical modes are mandatory. On
+    Windows ZIP mode checks attest transport metadata, not NTFS POSIX modes.
+    """
+    physical = _collect_filesystem_records(root)
+    if archive is None:
+        return physical
+    stored = collect_archive_records(archive)
+    require(set(stored) == set(physical), 'archive/extracted exact file inventory')
+    for name, (data, mode) in stored.items():
+        require(data == physical[name][0], 'archive/extracted bytes: ' + name)
+        if _requires_posix_modes():
+            require(mode == physical[name][1], 'physical POSIX mode: ' + name)
+    return stored
 
 
 def uncomment(text):
@@ -162,8 +229,14 @@ def validate_inventory(records, manifest, current):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parent.parent)
-    root = parser.parse_args().root.resolve()
-    records = collect_export_records(root)
+    parser.add_argument("--archive", type=Path,
+                        help="Check actual ZIP Unix modes and exact agreement with the extracted --root")
+    parser.add_argument("--run-checks", action="store_true",
+                        help="Also run the eight full-package checks and seven export regressions")
+    args = parser.parse_args()
+    root = args.root.resolve()
+    archive = args.archive.resolve() if args.archive is not None else None
+    records = collect_export_records(root, archive)
     manifest = json.loads(records[MANIFEST][0])
     current = json.loads(records[METADATA][0])
     supplement = json.loads(records[SUPPLEMENT][0])
@@ -175,13 +248,34 @@ def main():
     # The exact manifest includes the supplement, metadata and validator.
     # Only the manifest itself is excluded, just as in the existing gate.
     validate_inventory(records, manifest, current)
+    if args.run_checks:
+        for command in ('pdfinfo', 'pdftotext'):
+            require(shutil.which(command) is not None, 'PACKAGE_CHECK_DEPENDENCY_ERROR: ' + command)
+        environment = dict(os.environ, PYTHONDONTWRITEBYTECODE='1', PYTHONUTF8='1')
+        environment.pop(ARCHIVE_ENV, None)
+        if archive is not None:
+            environment[ARCHIVE_ENV] = str(archive)
+        interpreter = [sys.executable, '-B']
+        if sys.flags.optimize:
+            interpreter.append('-' + 'O' * sys.flags.optimize)
+        for arguments in (
+            ['-m', 'unittest', 'tests.test_package_integrity', '-v'],
+            ['-m', 'unittest', 'discover', '-s', 'regressions', '-p', 'test_current_export.py', '-v'],
+        ):
+            subprocess.run(interpreter + arguments, cwd=root/'artifact', env=environment, check=True)
     print(json.dumps({"scope": "current source inventory/roles only; no scientific or publication guarantee",
                       "current_files": manifest["file_count"],
-                      "bibliography_keys": current["publisher_bibliography"]["key_count"]}))
+                      "bibliography_keys": current["publisher_bibliography"]["key_count"],
+                      "permission_basis": "ZIP Unix metadata and extracted bytes" if archive else "physical filesystem modes",
+                      "physical_POSIX_modes_checked": _requires_posix_modes(),
+                      "archive": str(archive) if archive else None,
+                      "package_and_export_suites_executed": args.run_checks}))
 
 
 if __name__ == "__main__":
     try:
         main()
-    except (ValueError, KeyError, OSError, UnicodeError, tarfile.TarError) as exc:
+    except subprocess.CalledProcessError as exc:
+        raise SystemExit(exc.returncode)
+    except (ValueError, KeyError, OSError, UnicodeError, tarfile.TarError, zipfile.BadZipFile) as exc:
         raise SystemExit("CURRENT_EXPORT_CHECK_FAILED: " + str(exc))

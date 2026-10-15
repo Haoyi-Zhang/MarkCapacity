@@ -3,6 +3,7 @@ from __future__ import annotations
 import csv
 import hashlib
 import json
+import os
 import ast
 import re
 import subprocess
@@ -41,7 +42,7 @@ CODE_QUALITY_AUDIT = ROOT / "artifact" / "code-quality-audit.json"
 REPRODUCTION_REPORT = ROOT / "artifact" / "reproduction-report.json"
 
 sys.path.insert(0, str(ROOT / "artifact"))
-from current_export import (BIB_PATHS, VENDOR_PATHS, EXPORT_ROOTS, collect_export_records,
+from current_export import (BIB_PATHS, VENDOR_PATHS, EXPORT_ROOTS, ARCHIVE_ENV, collect_export_records,
                             validate_bibliography, validate_vendor, bibliography_keys)
 
 
@@ -584,7 +585,8 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         listed = {row["path"]: row for row in manifest["files"]}
         self.assertEqual(len(listed), len(manifest["files"]))
         self.assertEqual(manifest['export_roots'], ['paper', 'artifact'])
-        actual_paths = set(collect_export_records(ROOT)) - {'artifact/current-project-manifest.json'}
+        distribution = collect_export_records(ROOT, os.environ.get(ARCHIVE_ENV))
+        actual_paths = set(distribution) - {'artifact/current-project-manifest.json'}
         self.assertEqual(set(listed), actual_paths)
         self.assertEqual(manifest["file_count"], len(actual_paths))
         self.assertEqual(
@@ -611,11 +613,12 @@ class PublicPackageIntegrityTests(unittest.TestCase):
                 self.assertNotIn(path.suffix, forbidden_suffixes, rel)
             self.assertEqual(row["bytes"], path.stat().st_size, rel)
             self.assertEqual(row["sha256"], sha256_file(path), rel)
-            # Actual distribution permissions remain mandatory. A host that
-            # cannot preserve them does not satisfy whole-package acceptance.
+            # Distribution modes come from the actual ZIP when explicitly
+            # supplied, otherwise the filesystem. The collector also enforces
+            # physical modes on POSIX and exact ZIP/extracted-byte agreement.
             declared = "0755" if path.suffix == ".sh" else "0644"
             self.assertEqual(row["mode"], declared, rel)
-            self.assertEqual(row["mode"], f"{path.stat().st_mode & 0o777:04o}", rel)
+            self.assertEqual(row["mode"], distribution[rel][1], rel)
 
     def test_formal_statement_labels_match_correctness_ledger(self):
         manuscript = strip_tex_comments(MANUSCRIPT.read_text(encoding="utf-8"))
