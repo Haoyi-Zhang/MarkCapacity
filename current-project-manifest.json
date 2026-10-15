@@ -1,7 +1,7 @@
 {
   "schema": "CURRENT_PROJECT_MANIFEST_V1",
   "date": "2026-10-08",
-  "scope": "exact current source-package metadata; no historical receipt resealing",
+  "scope": "Dated 2026-10-08 source-package inventory; only review-status.json and paper/provenance/CURRENT-STATE.md document bindings refreshed on 2026-10-15. Other rows retain their original export identity; this is not acceptance of a subsequent source tree.",
   "root_entries": [
     "README.md",
     "artifact",
@@ -275,8 +275,8 @@
     },
     {
       "path": "artifact/review-status.json",
-      "bytes": 2359,
-      "sha256": "15c53c7727263b653d985163f50fa58b7f626061f0db9c4ba403f0f848a9873b",
+      "bytes": 2975,
+      "sha256": "7956e6895d95a3cdef1d22161956ec05d12c69d6fecb5e7860b83d29feeb1171",
       "mode": "0644"
     },
     {
@@ -545,8 +545,8 @@
     },
     {
       "path": "paper/provenance/CURRENT-STATE.md",
-      "bytes": 2632,
-      "sha256": "c0e987adb4e42adab3372fbee66632cb0838b010de7b740d33741dfd0b39480e",
+      "bytes": 3780,
+      "sha256": "0f662bbc0bc04c497824b290fa06cb62788a5b8680bb0575a04cce3a737d2d10",
       "mode": "0644"
     },
     {
