@@ -2,6 +2,7 @@
 import copy
 import hashlib
 import io
+import json
 from pathlib import Path
 import sys
 import tarfile
@@ -30,7 +31,11 @@ def fixture():
         "paper/ACM-SOURCE-NOTICE.md": b"owned notice fixture",
         "artifact/results/current/scientific.log": b"retained owned output\n",
         "artifact/owned.sh": b"#!/bin/sh\nexit 0\n",
+        "artifact/owned-ledger.csv": b"current owned ledger\n",
     }
+    old_ledger_hash = sha(b'earlier owned ledger\n')
+    files['artifact/project-manifest.json'] = json.dumps({'files': [
+        {'path': 'artifact/owned-ledger.csv', 'sha256': old_ledger_hash}]}).encode()
     buffer = io.BytesIO()
     with tarfile.open(fileobj=buffer, mode="w:gz") as archive:
         for name in ("acmart.dtx", "acmart.ins"):
@@ -42,6 +47,8 @@ def fixture():
     current = dict(manuscript_sha256=sha(files["paper/main.tex"]),
                    current_bib_entry_sha256=dict.fromkeys(keys, "fixture"),
                    historical_file_sha256={"artifact/results/current/scientific.log": sha(files["artifact/results/current/scientific.log"])},
+                   current_file_sha256={'artifact/owned-ledger.csv': sha(files['artifact/owned-ledger.csv'])},
+                   prior_export_file_sha256={'artifact/owned-ledger.csv': old_ledger_hash},
                    publisher_bibliography=dict(path="paper/main.bbl", bytes=len(files["paper/main.bbl"]),
                        sha256=sha(files["paper/main.bbl"]), references_sha256=sha(files["paper/references.bib"]),
                        keys=keys, key_count=68),
@@ -71,6 +78,17 @@ class CurrentExportTests(unittest.TestCase):
         validator.validate_inventory(records, manifest, current)
         self.assertEqual((records, manifest, current), original)
         validator.validate_bibliography({p: records[p][0] for p in validator.BIB_PATHS}, current)
+        # An unused database record is not a rendered reference. Its source
+        # bytes remain bound, but the compiled/cited key count must stay 68.
+        files = {p: records[p][0] for p in validator.BIB_PATHS}
+        files['paper/references.bib'] += b'\n@article{unused, title={owned unused fixture}}\n'
+        current['publisher_bibliography']['references_sha256'] = sha(files['paper/references.bib'])
+        validator.validate_bibliography(files, current)
+        self.assertEqual(current['publisher_bibliography']['key_count'], 68)
+        badmeta = copy.deepcopy(current)
+        badmeta['publisher_bibliography']['key_count'] = 69
+        with self.assertRaisesRegex(ValueError, 'metadata keys'):
+            validator.validate_bibliography(files, badmeta)
 
     def test_extra_bbl_aux_blg_are_rejected_even_if_manifest_is_fresh(self):
         for path in ("paper/extra.bbl", "paper/main.aux", "paper/main.blg", "artifact/main.bbl"):
@@ -120,7 +138,7 @@ class CurrentExportTests(unittest.TestCase):
             badfiles = dict(files, **{"paper/main.bbl": changed})
             badmeta = copy.deepcopy(current)
             badmeta["publisher_bibliography"].update(bytes=len(changed), sha256=sha(changed))
-            with self.assertRaisesRegex(ValueError, "68-key coverage"):
+            with self.assertRaisesRegex(ValueError, "compiled-key coverage"):
                 validator.validate_bibliography(badfiles, badmeta)
         changed = files["paper/main.tex"].replace(b"\\bibliography{references}", b"%\\bibliography{references}")
         badfiles = dict(files, **{"paper/main.tex": changed})
@@ -133,6 +151,14 @@ class CurrentExportTests(unittest.TestCase):
         records["artifact/results/current/scientific.log"] = (b"changed owned output", "0644")
         with self.assertRaisesRegex(ValueError, "retained log binding"):
             validator.validate_inventory(records, manifest_for(records), current)
+        records, _, current = fixture()
+        records['artifact/owned-ledger.csv'] = (b'altered owned current ledger', '0644')
+        with self.assertRaisesRegex(ValueError, 'current byte binding'):
+            validator.validate_inventory(records, manifest_for(records), current)
+        records, manifest, current = fixture()
+        current['prior_export_file_sha256']['artifact/owned-ledger.csv'] = '0' * 64
+        with self.assertRaisesRegex(ValueError, 'prior export identity'):
+            validator.validate_inventory(records, manifest, current)
 
     def test_vendor_source_and_original_notice_bindings_are_required(self):
         records, _, current = fixture()

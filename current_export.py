@@ -32,6 +32,11 @@ def uncomment(text):
     return "\n".join(re.sub(r"(?<!\\)%.*$", "", line) for line in text.splitlines())
 
 
+def bibliography_keys(bbl):
+    """Read actual compiled entries, including ACM's comment-newline layout."""
+    return re.findall(r"\\bibitem(?:\[[\s\S]*?\])?\s*\{([^{}]+)\}", uncomment(bbl))
+
+
 def validate_bibliography(files, current):
     """Only the named, byte-bound bibliography source earns a suffix exception."""
     role = current["publisher_bibliography"]
@@ -47,17 +52,17 @@ def validate_bibliography(files, current):
     require(re.findall(r"\\bibliography\{([^{}]+)\}", tex) == ["references"]
             and re.findall(r"\\bibliographystyle\{([^{}]+)\}", tex) == ["ACM-Reference-Format"],
             "bibliography inclusion/style")
-    keys = re.findall(r"\\bibitem(?:\[[\s\S]*?\])?\s*\{([^{}]+)\}", uncomment(bbl.decode("utf-8")))
+    keys = bibliography_keys(bbl.decode("utf-8"))
     source_keys = re.findall(r"(?m)^\s*@\w+\s*\{\s*([^,\s]+)\s*,", bib.decode("utf-8"))
     cited = set(re.findall(r"\\cite(?:\[[^\]]*\])?\{([^{}]+)\}", tex))
     expected = set(current["current_bib_entry_sha256"])
-    require(len(keys) == len(set(keys)) == len(source_keys) == len(set(source_keys)) == 68
-            and set(keys) == set(source_keys) == cited == expected,
-            "bibliography exact 68-key coverage")
-    require(type(role["key_count"]) is int and role["key_count"] == 68
+    require(len(keys) == len(set(keys)) > 0 and len(source_keys) == len(set(source_keys))
+            and set(keys) == cited == expected and set(keys) <= set(source_keys),
+            "bibliography exact compiled-key coverage")
+    require(type(role["key_count"]) is int and role["key_count"] == len(keys)
             and role["keys"] == sorted(expected), "bibliography metadata keys")
     text = bbl.decode("utf-8")
-    require(text.count(r"\begin{thebibliography}{68}") == 1
+    require(text.count(r"\begin{thebibliography}{" + str(len(keys)) + "}") == 1
             and text.count(r"\end{thebibliography}") == 1
             and "ACM-Reference-Format-Journals [18-Jan-2012]" in text,
             "bibliography generated-source structure")
@@ -125,6 +130,14 @@ def validate_inventory(records, manifest, current):
     files = {path: value[0] for path, value in records.items()}
     for path, expected in current["historical_file_sha256"].items():
         require(digest(files[path]) == expected, "historical byte binding: " + path)
+    for path, expected in current.get("current_file_sha256", {}).items():
+        require(digest(files[path]) == expected, "current byte binding: " + path)
+    # Earlier mutable-ledger identities are checked against the unchanged
+    # historical export manifest, never resealed to today's ledger bytes.
+    archived = json.loads(files['artifact/project-manifest.json'])
+    old_rows = {row['path']: row['sha256'] for row in archived['files']}
+    for path, expected in current.get('prior_export_file_sha256', {}).items():
+        require(old_rows.get(path) == expected, 'prior export identity: ' + path)
     validate_bibliography(files, current)
     validate_vendor(files, current)
 
@@ -150,7 +163,8 @@ def main():
     # Only the manifest itself is excluded, just as in the existing gate.
     validate_inventory(records, manifest, current)
     print(json.dumps({"scope": "current source inventory/roles only; no scientific or publication guarantee",
-                      "current_files": manifest["file_count"], "bibliography_keys": 68}))
+                      "current_files": manifest["file_count"],
+                      "bibliography_keys": current["publisher_bibliography"]["key_count"]}))
 
 
 if __name__ == "__main__":

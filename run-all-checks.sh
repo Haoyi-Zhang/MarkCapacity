@@ -4,4 +4,4 @@ set -euo pipefail
 cd "$(dirname "$0")"
 ./run-tests.sh
 ./run-package-checks.sh
-printf '%s\n' 'ALL_CHECKS: PASS (79 scientific + 8 package-integrity = 87; retained baseline: 65 scientific + 8 package-integrity = 73)'
+printf '%s\n' 'ALL_CHECKS: PASS (88 scientific + 8 package-integrity = 96; retained baseline: 65 scientific + 8 package-integrity = 73)'

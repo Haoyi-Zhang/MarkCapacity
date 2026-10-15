@@ -41,7 +41,7 @@ CODE_QUALITY_AUDIT = ROOT / "artifact" / "code-quality-audit.json"
 REPRODUCTION_REPORT = ROOT / "artifact" / "reproduction-report.json"
 
 sys.path.insert(0, str(ROOT / "artifact"))
-from current_export import BIB_PATHS, VENDOR_PATHS, validate_bibliography, validate_vendor
+from current_export import BIB_PATHS, VENDOR_PATHS, validate_bibliography, validate_vendor, bibliography_keys
 
 
 FORMAL_ENVIRONMENTS = {"theorem", "lemma", "proposition", "corollary"}
@@ -198,9 +198,32 @@ def parse_statement_locations(text: str) -> tuple[list[str], dict[str, dict[str,
     return top_level_sections, records
 
 
+def tex_command_arguments(text, command):
+    """Read balanced literal groups, including nested TeX accents in authors."""
+    values = []
+    for match in re.finditer(r"\\" + command + r"\{", text):
+        start = match.end()
+        depth = 1
+        i = start
+        while i < len(text) and depth:
+            if text[i] == "{":
+                depth += 1
+            elif text[i] == "}":
+                depth -= 1
+            i += 1
+        if depth:
+            raise ValueError("unclosed " + command)
+        values.append(text[start:i - 1])
+    return values
+
+
 class PublicPackageIntegrityTests(unittest.TestCase):
     def test_bibliography_hash_ledgers_match_exact_entries(self):
-        entries = parse_bib_entries(BIB.read_text(encoding="utf-8"))
+        database = parse_bib_entries(BIB.read_text(encoding="utf-8"))
+        rendered_keys = bibliography_keys((ROOT / "paper/main.bbl").read_text(encoding="utf-8"))
+        self.assertEqual(len(rendered_keys), len(set(rendered_keys)))
+        self.assertTrue(set(rendered_keys) <= set(database))
+        entries = {key: database[key] for key in rendered_keys}
         current = json.loads(CURRENT_PACKAGE.read_text(encoding="utf-8"))
         self.assertEqual(set(entries), set(current["current_bib_entry_sha256"]))
         records = {
@@ -237,7 +260,8 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         self.assertEqual(calibration["p75"], counts[8])
         self.assertEqual(calibration["numeric_reference_floor"], 62)
         self.assertGreaterEqual(len(entries), calibration["numeric_reference_floor"])
-        self.assertEqual(len(entries), 68)
+        self.assertEqual(len(entries), 70)
+        self.assertEqual(set(current["historical_bib_entry_sha256"]), set(entries) - {"hamming1950", "francis2021domatic"})
 
         dois = []
         for key, entry in entries.items():
@@ -270,6 +294,26 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         for key, entry in entries.items():
             row = audit_rows[key]
             self.assertEqual(row["exact_entry_sha256"], records[key]["local_bib_entry_sha256"], key)
+            if key in {"hamming1950", "francis2021domatic"}:
+                # These additions carry narrower, explicitly recorded source
+                # review. Do not promote them to the old full-corpus verdict.
+                expected = {
+                    "hamming1950": ("PUBLISHED_JOURNAL_METADATA",
+                        "PRIMARY_PUBLISHER_METADATA_ONLY_FULLTEXT_NOT_READ"),
+                    "francis2021domatic": ("PREPRINT_STATUS_EXPLICIT",
+                        "PRIMARY_RECORD_AND_COROLLARY_4_1_CONTEXT_READ_NOT_WHOLE_ARTICLE"),
+                }[key]
+                self.assertEqual((row["scholarly_status"], row["external_review_level"]), expected)
+                self.assertEqual(row["metadata_match"], "TRUE_AT_PRIMARY_RECORD_LEVEL")
+                self.assertEqual(row["identifier_status"], "PRIMARY_RECORD")
+                self.assertEqual(row["single_citation_per_sentence"], "TRUE_LOCAL_SINGLE_KEY_COMMAND")
+                self.assertEqual(row["verdict"], "BOUNDED_SOURCE_REVIEW_ONLY")
+                self.assertEqual(row["exact_entry_sha256"], sha256_text(entry))
+                self.assertGreaterEqual(int(row["citation_context_count"]), 1)
+                self.assertTrue(row["manuscript_locations"].strip())
+                self.assertTrue(row["claim_support"].strip())
+                self.assertIn("NOT_A_COMPLETE_NOTICE", row["notice_check"])
+                continue
             self.assertEqual(row["metadata_match"], "TRUE", key)
             self.assertIn(row["identifier_status"], {"LIVE_UNIQUE_DOI", "LIVE_UNIQUE_ARXIV_DOI"}, key)
             self.assertEqual(row["single_citation_per_sentence"], "TRUE", key)
@@ -300,8 +344,9 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         self.assertTrue(commands)
         self.assertTrue(all("," not in command and ";" not in command for command in commands))
         cited = {command.strip() for command in commands}
-        self.assertEqual(cited, set(entries))
-        self.assertEqual(len(commands), 99)
+        self.assertEqual(cited, set(bibliography_keys((ROOT / "paper/main.bbl").read_text(encoding="utf-8"))))
+        self.assertTrue(cited <= set(entries))
+        self.assertEqual(len(commands), 104)
 
         # Original-research citation shape: one key per command, no adjacent
         # piles, and at most one citation command in each prose sentence.
@@ -328,9 +373,20 @@ class PublicPackageIntegrityTests(unittest.TestCase):
     def test_public_summary_counts_and_final_topmatter_are_consistent(self):
         current = json.loads(CURRENT_PACKAGE.read_text(encoding="utf-8"))
         self.assertEqual(current["schema"], "CURRENT_PACKAGE_METADATA_V1")
-        self.assertEqual(current["scheduled_tests"], {"scientific": 71, "package": 8, "combined": 79})
+        self.assertEqual(current["scheduled_tests"], {"scientific": 88, "package": 8, "combined": 96})
         for rel, digest in current["historical_file_sha256"].items():
             self.assertEqual(sha256_file(ROOT / rel), digest, rel)
+        for rel, digest in current["current_file_sha256"].items():
+            self.assertEqual(sha256_file(ROOT / rel), digest, rel)
+        mutable_ledgers = {'artifact/claim_evidence_ledger.csv', 'artifact/correctness_correspondence.csv',
+                           'artifact/literature-evidence/records.jsonl', 'artifact/citation_support.csv',
+                           'artifact/reference-audit-final.csv'}
+        self.assertEqual(set(current['current_file_sha256']), mutable_ledgers)
+        self.assertEqual(set(current['prior_export_file_sha256']), mutable_ledgers)
+        old_rows = {row['path']: row['sha256'] for row in
+                    json.loads(PROJECT_MANIFEST.read_text(encoding='utf-8'))['files']}
+        for rel, digest in current['prior_export_file_sha256'].items():
+            self.assertEqual(old_rows[rel], digest, rel)
         discovered = []
         for name in current["scientific_modules"]:
             module = ast.parse((ROOT / "artifact/tests" / (name + ".py")).read_text(encoding="utf-8"))
@@ -348,7 +404,7 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         proof_count = len(re.findall(r"\\begin\{proof\}", manuscript))
         figure_count = len(re.findall(r"\\begin\{figure\}", manuscript))
         table_count = len(re.findall(r"\\begin\{table\}", manuscript))
-        author_count = len(re.findall(r"^\\author\{[^{}]+\}$", manuscript, flags=re.MULTILINE))
+        author_count = len(tex_command_arguments(manuscript, "author"))
         section_count = len(re.findall(r"^\\section\{", manuscript, flags=re.MULTILINE))
 
         self.assertEqual(current["class_options"], "manuscript,screen,review")
@@ -402,17 +458,22 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         self.assertEqual(template_audit["pdf_sha256"], historical_rows["paper/main.pdf"]["sha256"])
 
         self.assertIn(r"\renewcommand{\shortauthors}{Zhang et al.}", manuscript)
-        self.assertEqual((formal_count, proof_count), (52, 52))
+        self.assertEqual((formal_count, proof_count), (55, 55))
         self.assertEqual((figure_count, table_count), (4, 9))
-        self.assertEqual((author_count, section_count), (3, 8))
-        self.assertEqual(len(citation_commands), 99)
-        self.assertEqual(manuscript.count(r"\affiliation{"), 3)
-        self.assertEqual(manuscript.count(r"\correspondingauthor"), 1)
-        self.assertEqual(manuscript.count(r"\orcid{"), 3)
+        self.assertEqual((author_count, section_count), (5, 8))
+        self.assertEqual(len(citation_commands), 104)
+        self.assertEqual(manuscript.count(r"\affiliation{"), 5)
+        self.assertEqual(manuscript.count(r"\authornote{Corresponding author:"), 1)
+        self.assertEqual(manuscript.count(r"\orcid{"), 5)
         self.assertEqual(
             re.findall(r"\\orcid\{([^{}]+)\}", manuscript),
-            ["0009-0009-3693-786X", "0009-0009-2482-2344", "0000-0002-6377-0884"],
+            ["0009-0009-3693-786X", "0009-0009-2482-2344", "0000-0002-6377-0884",
+             "0000-0002-4462-6916", "0000-0001-7270-9869"],
         )
+        self.assertEqual(tex_command_arguments(manuscript, "author"), current["authors_tex"])
+        self.assertEqual(tex_command_arguments(manuscript, "email"), current["author_emails"])
+        self.assertEqual(tex_command_arguments(manuscript, "authornote"),
+                         [current["corresponding_author_note_tex"]])
         self.assertNotRegex(manuscript, r"\\author\{Author [A-F]\}")
         self.assertIn("Retained scientific test baseline & 65", manuscript)
         self.assertIn("Full-project integrity tests & 8", manuscript)
@@ -431,14 +492,14 @@ class PublicPackageIntegrityTests(unittest.TestCase):
             self.assertRegex(text, r"56 (?:passing )?scientific")
             self.assertRegex(text, r"8 (?:passing )?package(?:-integrity)?")
             self.assertRegex(text, r"64 (?:checks|total)")
-        self.assertIn("71 scientific", paper_readme)
-        self.assertIn("79 checks", paper_readme)
+        self.assertIn("88 scientific", paper_readme)
+        self.assertIn("combined schedule is 96", paper_readme)
 
         with CLAIM_LEDGER.open(newline="", encoding="utf-8") as handle:
             claims = {row["claim_id"]: row for row in csv.DictReader(handle)}
-        self.assertIn("99 single-key", claims["C25"]["claim_text"])
-        self.assertIn("citation_commands=99", claims["C25"]["raw_result"])
-        self.assertIn("64_CHECK_SUITE", claims["C25"]["independent_recheck_status"])
+        self.assertIn("104 single-key", claims["C25"]["claim_text"])
+        self.assertIn("citation_commands=104", claims["C25"]["raw_result"])
+        self.assertIn("do not certify all article fulltexts", claims["C25"]["limitations"])
 
         visual = json.loads(VISUAL_QA.read_text(encoding="utf-8"))
         self.assertTrue(visual["checks"]["review_line_numbers_present"])
@@ -465,13 +526,13 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         self.assertIn("PACKAGE_CHECK_DEPENDENCY_ERROR", package_runner)
         self.assertIn("./run-tests.sh", all_runner)
         self.assertIn("./run-package-checks.sh", all_runner)
-        self.assertIn("71 scientific + 8 package-integrity = 79", all_runner)
+        self.assertIn("88 scientific + 8 package-integrity = 96", all_runner)
         self.assertIn("retained baseline: 65 scientific + 8 package-integrity = 73", all_runner)
         self.assertIn("Self-contained scientific reproduction", artifact_readme)
         self.assertIn("Full-project integrity checks", artifact_readme)
         self.assertIn("65 scientific", artifact_readme)
         self.assertIn("8 package-integrity", artifact_readme)
-        self.assertIn("79 checks", artifact_readme)
+        self.assertIn("88 scientific", artifact_readme)
         self.assertIn("pdfinfo", artifact_readme)
         self.assertIn("pdftotext", artifact_readme)
 
@@ -589,13 +650,13 @@ class PublicPackageIntegrityTests(unittest.TestCase):
 
         self.assertEqual(len(top_sections), 8)
         self.assertEqual(audit["top_level_section_count"], 8)
-        self.assertEqual(len(re.findall(r"^\\author\{[^{}]+\}$", manuscript, flags=re.MULTILINE)), 3)
+        self.assertEqual(len(tex_command_arguments(manuscript, "author")), 5)
         self.assertEqual(audit["top_level_sections"], top_sections)
         self.assertNotRegex(manuscript, r"\\appendix\b")
         self.assertNotRegex(manuscript, r"\bAppendix\b")
         self.assertEqual(audit["manuscript_sha256"], sha256_file(MANUSCRIPT))
         self.assertEqual(audit["pdf_sha256"], sha256_file(PDF))
-        self.assertEqual(audit["formal_statement_count"], 52)
+        self.assertEqual(audit["formal_statement_count"], 55)
         self.assertEqual(audit["schema"], "CURRENT_STATEMENT_LOCATIONS_V1")
         self.assertEqual(set(audit_records), set(source_records))
         self.assertTrue(all(record["proof_start_line"] is not None for record in source_records.values()))
@@ -618,7 +679,7 @@ class PublicPackageIntegrityTests(unittest.TestCase):
                 self.assertEqual(audited[field], source_record[field], f"{statement_id}:{field}")
 
     def test_ledgers_match_statement_location_audit(self):
-        audit = json.loads(STATEMENT_AUDIT.read_text(encoding="utf-8"))
+        audit = json.loads(CURRENT_STATEMENTS.read_text(encoding="utf-8"))
         audit_records = {entry["statement_id"]: entry for entry in audit["entries"]}
 
         with CORRECTNESS_LEDGER.open(newline="", encoding="utf-8") as handle:

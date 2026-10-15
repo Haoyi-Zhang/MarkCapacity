@@ -110,6 +110,18 @@ supplement, its metadata and validator; only the manifest itself is excluded
 to avoid self-reference. Historical manifests, experiment receipts and their
 source hashes are retained unchanged.
 
+The current package metadata binds the actual compiled `paper/main.bbl` keys
+(70 rendered references and 104 single-key citation commands), the 55 current
+statement/proof locations, five supplied authors, and the current claim,
+correctness and citation ledgers. Uncited BibTeX database records do not count
+as rendered references. The original identities of superseded mutable ledgers
+are checked against the unchanged historical `project-manifest.json`; current
+ledger bytes have separate required bindings. The dated 48-page, 52-statement,
+68-reference and 56-test reports are not assertions about this source export.
+The full-project tests still require actual POSIX file modes as well as exact
+inventory, hashes, source locations and Poppler output; flat scientific CI does
+not replace those checks.
+
 The matching unmodified ACM 2.19 `.dtx`/`.ins` and complete original source
 snapshot accompany the unchanged class. See `../paper/ACM-SOURCE-NOTICE.md` for
 the CTAN release authority, original copyright/LPPL notices and exact derived
