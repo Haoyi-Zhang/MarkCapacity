@@ -10,7 +10,7 @@
     "artifact",
     "paper"
   ],
-  "file_count": 470,
+  "file_count": 469,
   "files": [
     {
       "path": "artifact/.gitattributes",
@@ -2623,12 +2623,6 @@
       "mode": "0644"
     },
     {
-      "path": "artifact/venue-evidence/captures/acm-authorship-policy.txt",
-      "sha256": "4a629c8285dda7aec9bc9a1c741bf763d8b08ec05f92856687bd8d76d1ddb399",
-      "bytes": 468,
-      "mode": "0644"
-    },
-    {
       "path": "artifact/venue-evidence/captures/acm-general-submissions.txt",
       "sha256": "dc9625e9404b36174463ab3041f0a86b656e78d9a87f0c10e258ec7510f9acd8",
       "bytes": 488,
@@ -2660,8 +2654,8 @@
     },
     {
       "path": "artifact/venue-evidence/official-lock.json",
-      "sha256": "e9b55f97dcd2cb905202702df4cbadb42be680feb27d1482eebf3e06edb335cb",
-      "bytes": 18284,
+      "sha256": "d0e87a8a443a0c78d984161c7109d032d6ac5b2a81181ba86e00da630d9b80e5",
+      "bytes": 17089,
       "mode": "0644"
     },
     {

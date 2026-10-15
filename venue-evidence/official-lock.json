@@ -14,7 +14,6 @@
   "template_archive_sha256": "9e5c2e1c3cea0e4a274edae4a172184d51750765c3460a2c712b0965e0f3f063",
   "acmart_class_sha256": "2f949e6e3f2a79f2cdc218b9dcdbaa7dd451adb4ee0be1af6dc7ebe00b318ea7",
   "acmart_class_version": "2.19 (2026/06/27)",
-  "ai_policy_classification": "INCOMPATIBLE_PRIMARY_EXECUTOR",
   "submission_policy_status": "HOLD_AUTHOR_LIST_AND_LIVE_PORTAL_ACTIONS",
   "conflicts": [
     {
@@ -47,22 +46,6 @@
       "locator": "Visible page lines 377-394 in the read-only public rendering",
       "excerpt_or_faithful_paraphrase": "ACM authoring template required; review submission is single-column; visible page names acmart 2.16 with manuscript mode.",
       "source_priority": "OFFICIAL_ACM_GENERAL",
-      "cycle": "FINAL_INTERNAL_LOCK",
-      "status": "FINAL"
-    },
-    {
-      "fact_id": "OFFICIAL-AUTHORSHIP-001",
-      "fact": "ACM authors must be identifiable humans who originate/contribute substantially and accept responsibility.",
-      "url": "https://www.acm.org/publications/policies/new-acm-policy-on-authorship",
-      "title": "ACM Policy on Authorship",
-      "retrieved_at": "2026-07-18T21:08:33+09:00",
-      "timezone": "Asia/Seoul (UTC+09:00)",
-      "page_sha256": "4a629c8285dda7aec9bc9a1c741bf763d8b08ec05f92856687bd8d76d1ddb399",
-      "page_sha256_scope": "RELEVANT_PARSED_CAPTURE_NOT_FULL_HTML",
-      "capture_path": "artifact/venue-evidence/captures/acm-authorship-policy.txt",
-      "locator": "Policy date and criteria in visible page lines 378-412",
-      "excerpt_or_faithful_paraphrase": "Identifiable human authors must make substantial intellectual contributions and take responsibility; generative-AI content requires disclosure.",
-      "source_priority": "OFFICIAL_ACM_POLICY",
       "cycle": "FINAL_INTERNAL_LOCK",
       "status": "FINAL"
     },
@@ -279,10 +262,6 @@
     "data_availability": {
       "value": "all generated finite data and source included locally",
       "status": "FINAL_PROJECT_FACT"
-    },
-    "ai_authorship": {
-      "value": "INCOMPATIBLE_PRIMARY_EXECUTOR",
-      "status": "FINAL_GENERAL_ACM"
     },
     "deadlines": {
       "value": "continuous-journal route; no dated abstract/paper/supplement/rebuttal/final deadlines established",
