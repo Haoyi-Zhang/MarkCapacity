@@ -6,7 +6,9 @@ import json
 from pathlib import Path
 import sys
 import tarfile
+import tempfile
 import unittest
+import zipfile
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import current_export as validator
@@ -66,12 +68,50 @@ def manifest_for(records):
     # Independent reference: exact set and byte/mode records, not validator helpers.
     names = sorted(set(records) - {validator.MANIFEST})
     return dict(schema="CURRENT_PROJECT_MANIFEST_V1", file_count=len(names),
+                export_roots=['paper', 'artifact'],
                 root_entries=sorted({name.split("/")[0] for name in records}),
                 files=[dict(path=name, bytes=len(records[name][0]), sha256=sha(records[name][0]),
                             mode=records[name][1]) for name in names])
 
 
 class CurrentExportTests(unittest.TestCase):
+    def test_two_root_zip_rejects_unlisted_members(self):
+        records, manifest, current = fixture()
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            # Materialize the fixture, with outer project navigation present.
+            # collect_export_records must not require that navigation in ZIPs.
+            for name, (data, _) in records.items():
+                path = root / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(data)
+            (root / 'README.md').write_text('Project navigation only.', encoding='utf-8')
+            self.assertEqual(set(validator.collect_export_records(root)), set(records))
+            for extra in (None, 'paper/unlisted-research.txt', 'artifact/unlisted-result.json', 'README.md'):
+                with self.subTest(extra=extra):
+                    archive = root / 'export.zip'
+                    with zipfile.ZipFile(archive, 'w') as output:
+                        for name, (data, mode) in records.items():
+                            info = zipfile.ZipInfo(name)
+                            info.create_system = 3
+                            info.external_attr = (0o100000 | int(mode, 8)) << 16
+                            output.writestr(info, data)
+                        if extra:
+                            info = zipfile.ZipInfo(extra)
+                            info.create_system = 3
+                            info.external_attr = 0o100644 << 16
+                            output.writestr(info, b'owned unlisted fixture')
+                    with zipfile.ZipFile(archive) as supplied:
+                        actual = {item.filename: (supplied.read(item), f'{(item.external_attr >> 16) & 0o777:04o}')
+                                  for item in supplied.infolist()}
+                    if extra:
+                        with self.assertRaisesRegex(ValueError, 'exact current file inventory'):
+                            validator.validate_inventory(actual, manifest, current)
+                    else:
+                        self.assertEqual({name.split('/')[0] for name in actual}, {'paper', 'artifact'})
+                        self.assertNotIn('README.md', actual)
+                        validator.validate_inventory(actual, manifest, current)
+
     def test_exact_bibliography_role_and_inputs_unchanged(self):
         records, manifest, current = fixture()
         original = copy.deepcopy((records, manifest, current))

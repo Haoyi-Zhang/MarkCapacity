@@ -8,4 +8,4 @@ export PYTHONDONTWRITEBYTECODE=1
 python3 -B current_export.py --root "$PROJECT_ROOT"
 python3 -B -m unittest discover -s regressions -p test_current_export.py -v
 ./run-package-checks.sh
-printf '%s\n' 'CURRENT_EXPORT_CHECKS: 8 package + 6 role regressions; scientific reproduction is separate'
+printf '%s\n' 'CURRENT_EXPORT_CHECKS: 8 package + 7 export regressions; scientific reproduction is separate'

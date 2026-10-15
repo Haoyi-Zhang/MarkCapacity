@@ -12,6 +12,7 @@ import tarfile
 MANIFEST = "artifact/current-project-manifest.json"
 METADATA = "artifact/current-package-metadata.json"
 SUPPLEMENT = "artifact/current-export-supplement.json"
+EXPORT_ROOTS = ("paper", "artifact")
 BIB_PATHS = ("paper/main.tex", "paper/references.bib", "paper/main.bbl")
 VENDOR_PATHS = ("paper/acmart.cls", "paper/acmart.dtx", "paper/acmart.ins",
                 "paper/acmart-source-v2.19.tar.gz", "paper/ACM-SOURCE-NOTICE.md")
@@ -26,6 +27,20 @@ def require(condition, message):
 
 def digest(data):
     return hashlib.sha256(data).hexdigest()
+
+
+def collect_export_records(root):
+    """Collect every file in the two delivery roots, not project navigation."""
+    root = Path(root)
+    records = {}
+    for name in EXPORT_ROOTS:
+        directory = root / name
+        require(directory.is_dir() and not directory.is_symlink(), 'export root missing or symlink: ' + name)
+        for path in sorted(directory.rglob('*')):
+            require(not path.is_symlink(), 'source export contains a symlink')
+            if path.is_file():
+                records[path.relative_to(root).as_posix()] = (path.read_bytes(), f'{path.stat().st_mode & 0o777:04o}')
+    return records
 
 
 def uncomment(text):
@@ -103,12 +118,14 @@ def validate_vendor(files, current):
 def validate_inventory(records, manifest, current):
     """Exact current inventory and actual permissions remain unconditional."""
     require(manifest["schema"] == "CURRENT_PROJECT_MANIFEST_V1", "current manifest schema")
+    require(manifest['export_roots'] == list(EXPORT_ROOTS), 'export roots contract')
     rows = manifest["files"]
     names = [row["path"] for row in rows]
     actual = set(records) - {MANIFEST}
     require(len(names) == len(set(names)) == manifest["file_count"]
             and set(names) == actual, "exact current file inventory")
-    require(manifest["root_entries"] == sorted({PurePosixPath(path).parts[0] for path in records}),
+    require(manifest["root_entries"] == sorted(EXPORT_ROOTS)
+            == sorted({PurePosixPath(path).parts[0] for path in records}),
             "exact root inventory")
     # Self-exclusion avoids a circular hash, not the actual permission rule.
     require(MANIFEST in records, "current manifest file missing")
@@ -146,18 +163,14 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parent.parent)
     root = parser.parse_args().root.resolve()
-    records = {}
-    for path in sorted(root.rglob("*")):
-        require(not path.is_symlink(), "source export contains a symlink")
-        if path.is_file():
-            records[path.relative_to(root).as_posix()] = (path.read_bytes(), f"{path.stat().st_mode & 0o777:04o}")
+    records = collect_export_records(root)
     manifest = json.loads(records[MANIFEST][0])
     current = json.loads(records[METADATA][0])
     supplement = json.loads(records[SUPPLEMENT][0])
     require(supplement["schema"] == "CURRENT_EXPORT_SUPPLEMENT_V1"
             and supplement["current_metadata_sha256"] == digest(records[METADATA][0])
             and supplement["publisher_source_paths"] == list(BIB_PATHS + VENDOR_PATHS)
-            and supplement["scheduled_checks"] == {"package": 8, "export_regressions": 6},
+            and supplement["scheduled_checks"] == {"package": 8, "export_regressions": 7},
             "export supplement binding")
     # The exact manifest includes the supplement, metadata and validator.
     # Only the manifest itself is excluded, just as in the existing gate.

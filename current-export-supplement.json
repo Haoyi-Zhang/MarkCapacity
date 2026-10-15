@@ -15,7 +15,7 @@
   ],
   "scheduled_checks": {
     "package": 8,
-    "export_regressions": 6
+    "export_regressions": 7
   },
   "scientific_entrypoint": "artifact/run-tests.sh",
   "current_export_entrypoint": "artifact/run-current-export-checks.sh"

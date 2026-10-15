@@ -91,11 +91,11 @@ The prepared `scientific-checks.yml` workflow runs from this directory as a flat
 ## Current source-export checks
 
 For a complete source export, run `./run-current-export-checks.sh`. It validates
-the exact current inventory and actual modes, runs six in-memory role regressions,
+the exact current inventory and actual modes, runs seven portable export regressions,
 and then runs all eight existing package checks with their unchanged Poppler
 requirements. Scientific reproduction remains separate; source-export role
 regressions do not replace the scientific or package entry points. Scientific CI also explicitly
-runs the six role regressions in a separate retained log, without requiring the
+runs the seven export regressions in a separate retained log, without requiring the
 paper tree. That step does not establish full-export acceptance.
 
 The only bibliography exception is `paper/main.bbl`; its exact byte binding,
@@ -105,10 +105,19 @@ mode mismatches remain errors. Windows mode support is an export-environment
 condition, not an algorithm defect or an excuse to waive the gate.
 
 `current-export-supplement.json` binds current metadata and identifies the
-8-package/6-regression schedule. The exact current manifest includes this
+8-package/7-regression schedule. The exact current manifest includes this
 supplement, its metadata and validator; only the manifest itself is excluded
 to avoid self-reference. Historical manifests, experiment receipts and their
 source hashes are retained unchanged.
+
+The delivery ZIP has exactly two export roots: `paper/` and `artifact/`.
+The project-root `README.md` remains navigation outside the ZIP and is not a
+required delivery member. Every file under both export roots is enumerated;
+unlisted research/result files inside either root are still rejected. The
+manifest excludes only its own hash, while the manifest file remains a required
+ZIP member with mode `0644`. Ordinary files, including shebang-bearing `.py`
+files, use `0644`; only `.sh` files use `0755`. The ZIP regression checks the
+actual stored bytes/modes and rejects unlisted members in either delivery root.
 
 The current package metadata binds the actual compiled `paper/main.bbl` keys
 (70 rendered references and 104 single-key citation commands), the 55 current

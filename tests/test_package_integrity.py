@@ -41,7 +41,8 @@ CODE_QUALITY_AUDIT = ROOT / "artifact" / "code-quality-audit.json"
 REPRODUCTION_REPORT = ROOT / "artifact" / "reproduction-report.json"
 
 sys.path.insert(0, str(ROOT / "artifact"))
-from current_export import BIB_PATHS, VENDOR_PATHS, validate_bibliography, validate_vendor, bibliography_keys
+from current_export import (BIB_PATHS, VENDOR_PATHS, EXPORT_ROOTS, collect_export_records,
+                            validate_bibliography, validate_vendor, bibliography_keys)
 
 
 FORMAL_ENVIRONMENTS = {"theorem", "lemma", "proposition", "corollary"}
@@ -582,16 +583,13 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         self.assertEqual(manifest["schema"], "CURRENT_PROJECT_MANIFEST_V1")
         listed = {row["path"]: row for row in manifest["files"]}
         self.assertEqual(len(listed), len(manifest["files"]))
-        actual_paths = {
-            path.relative_to(ROOT).as_posix()
-            for path in ROOT.rglob("*")
-            if path.is_file() and path != CURRENT_MANIFEST
-        }
+        self.assertEqual(manifest['export_roots'], ['paper', 'artifact'])
+        actual_paths = set(collect_export_records(ROOT)) - {'artifact/current-project-manifest.json'}
         self.assertEqual(set(listed), actual_paths)
         self.assertEqual(manifest["file_count"], len(actual_paths))
         self.assertEqual(
             manifest["root_entries"],
-            sorted(path.name for path in ROOT.iterdir()),
+            sorted(EXPORT_ROOTS),
         )
         forbidden_parts = {"__pycache__", ".pytest_cache", ".mypy_cache", ".git"}
         forbidden_suffixes = {".pyc", ".pyo", ".aux", ".blg", ".bbl", ".log", ".fls", ".fdb_latexmk", ".toc"}
