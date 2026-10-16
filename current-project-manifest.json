@@ -80,8 +80,8 @@
     },
     {
       "path": "paper/current-statement-locations.json",
-      "bytes": 25029,
-      "sha256": "1bab2f1015867e9fb1b27a0f9446e242b8de95840e06bc697b93cab1d8a86457",
+      "bytes": 25021,
+      "sha256": "d3f3c0c22205037db50653c31c470de1ad42cca10225b3ee417e14924c5c60b0",
       "mode": "0644"
     },
     {
@@ -116,14 +116,14 @@
     },
     {
       "path": "paper/main.pdf",
-      "bytes": 413595,
-      "sha256": "8469baccd62707009f548b20fd5e1322bc7e88f734777cf488c072a660c9bfd3",
+      "bytes": 414489,
+      "sha256": "b67543cd7c8141848dda8452eb6d07f6033305bb9b8e6279e097b01d0e397821",
       "mode": "0644"
     },
     {
       "path": "paper/main.tex",
-      "bytes": 178746,
-      "sha256": "41449079a160b485b53e50346235367a8b071ed11a677c34cc6d4791486a9d36",
+      "bytes": 178755,
+      "sha256": "6e59390a3d63d16b15e9b9917b430758e13fa1ddbf91f719c50d5770c7c6f33b",
       "mode": "0644"
     },
     {
@@ -230,14 +230,14 @@
     },
     {
       "path": "artifact/citation-contexts.csv",
-      "bytes": 44303,
-      "sha256": "ef3668093681032124687bbf825bcf7065b27d27f4cee41066913e0f7ee12b7f",
+      "bytes": 44476,
+      "sha256": "c2f92a6d66ffa6b71e0c2b64b872c9a0249ebe655614668dd861427876978d3c",
       "mode": "0644"
     },
     {
       "path": "artifact/citation_support.csv",
-      "bytes": 27152,
-      "sha256": "63ac4894a1009f2f60121ca02aa17022329ea7641f12ffe46a6f6ddf3b1de4bc",
+      "bytes": 27245,
+      "sha256": "8372597a0774194e0a8cb871d5c609856a41f44cd2c618ea62c13849a6175d9e",
       "mode": "0644"
     },
     {
@@ -260,14 +260,14 @@
     },
     {
       "path": "artifact/current-export-supplement.json",
-      "bytes": 728,
-      "sha256": "fa4ace77ea9b8f9eca74ed8d2a7e6ffb5fa0f6cc6c6ab84b7d51620600bed436",
+      "bytes": 721,
+      "sha256": "050bf1d72a0f167741adf30d25c520dbe2f10a408ce151cf8a46d1953655efb1",
       "mode": "0644"
     },
     {
       "path": "artifact/current-package-metadata.json",
-      "bytes": 19270,
-      "sha256": "62f60db74091e8107c899b7d984a648a429f03df954de74ea9e8af444c0ac32d",
+      "bytes": 19245,
+      "sha256": "9c82fabeddff1f071353146eda06de4d0feb5891c006e523a5c05a11d5229720",
       "mode": "0644"
     },
     {
@@ -356,8 +356,8 @@
     },
     {
       "path": "artifact/literature-evidence/records.jsonl",
-      "bytes": 54118,
-      "sha256": "f5271a098cd60267759988238ec1e79f8e883504c79708524f18c73424f6f2f6",
+      "bytes": 54436,
+      "sha256": "c2fcabf51d4c4df896d39c1f645218f56ad579754d7b8ad086f92f631f39d0d7",
       "mode": "0644"
     },
     {
@@ -404,8 +404,8 @@
     },
     {
       "path": "artifact/reference-audit-final.csv",
-      "bytes": 55770,
-      "sha256": "62c8c0e0e7b3e0c1c69ef9cf4db324df6461195419f719beb8e3b12753b7c2a8",
+      "bytes": 55856,
+      "sha256": "6bacd26bca769087d532edd6bb3f17b23061527113cafc25ebef1c0e11260c5d",
       "mode": "0644"
     },
     {

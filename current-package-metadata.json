@@ -3,13 +3,13 @@
   "date": "2026-10-16",
   "scope": "Current compiled/source/ledger/export bindings; earlier immutable reports and prior mutable-ledger identities are separate.",
   "class_options": "manuscript,screen,review",
-  "pdf_pages": 52,
+  "pdf_pages": 53,
   "page_size_points": [
-    612.0,
-    792.0
+    612,
+    792
   ],
-  "pdf_sha256": "8469baccd62707009f548b20fd5e1322bc7e88f734777cf488c072a660c9bfd3",
-  "manuscript_sha256": "41449079a160b485b53e50346235367a8b071ed11a677c34cc6d4791486a9d36",
+  "pdf_sha256": "b67543cd7c8141848dda8452eb6d07f6033305bb9b8e6279e097b01d0e397821",
+  "manuscript_sha256": "6e59390a3d63d16b15e9b9917b430758e13fa1ddbf91f719c50d5770c7c6f33b",
   "scheduled_tests": {
     "scientific": 92,
     "package": 8,
@@ -303,8 +303,8 @@
   "current_file_sha256": {
     "artifact/claim_evidence_ledger.csv": "70760e395c5aaac8098ac296748d58cbc3de2cc2301654ae473a007141098fa2",
     "artifact/correctness_correspondence.csv": "dd77fbff0b02bb3a16aa57cb6efa4d7ddc7787dedfea4df20611992b30923836",
-    "artifact/literature-evidence/records.jsonl": "f5271a098cd60267759988238ec1e79f8e883504c79708524f18c73424f6f2f6",
-    "artifact/citation_support.csv": "63ac4894a1009f2f60121ca02aa17022329ea7641f12ffe46a6f6ddf3b1de4bc",
-    "artifact/reference-audit-final.csv": "62c8c0e0e7b3e0c1c69ef9cf4db324df6461195419f719beb8e3b12753b7c2a8"
+    "artifact/literature-evidence/records.jsonl": "c2fcabf51d4c4df896d39c1f645218f56ad579754d7b8ad086f92f631f39d0d7",
+    "artifact/citation_support.csv": "8372597a0774194e0a8cb871d5c609856a41f44cd2c618ea62c13849a6175d9e",
+    "artifact/reference-audit-final.csv": "6bacd26bca769087d532edd6bb3f17b23061527113cafc25ebef1c0e11260c5d"
   }
 }
