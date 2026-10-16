@@ -375,7 +375,7 @@ class PublicPackageIntegrityTests(unittest.TestCase):
     def test_public_summary_counts_and_final_topmatter_are_consistent(self):
         current = json.loads(CURRENT_PACKAGE.read_text(encoding="utf-8"))
         self.assertEqual(current["schema"], "CURRENT_PACKAGE_METADATA_V1")
-        self.assertEqual(current["scheduled_tests"], {"scientific": 88, "package": 8, "combined": 96})
+        self.assertEqual(current["scheduled_tests"], {"scientific": 92, "package": 8, "combined": 100})
         for rel, digest in current["historical_file_sha256"].items():
             self.assertEqual(sha256_file(ROOT / rel), digest, rel)
         for rel, digest in current["current_file_sha256"].items():
@@ -494,8 +494,8 @@ class PublicPackageIntegrityTests(unittest.TestCase):
             self.assertRegex(text, r"56 (?:passing )?scientific")
             self.assertRegex(text, r"8 (?:passing )?package(?:-integrity)?")
             self.assertRegex(text, r"64 (?:checks|total)")
-        self.assertIn("88 scientific", paper_readme)
-        self.assertIn("combined schedule is 96", paper_readme)
+        self.assertIn("92 scientific", paper_readme)
+        self.assertIn("combined schedule is 100", paper_readme)
 
         with CLAIM_LEDGER.open(newline="", encoding="utf-8") as handle:
             claims = {row["claim_id"]: row for row in csv.DictReader(handle)}
@@ -528,13 +528,13 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         self.assertIn("PACKAGE_CHECK_DEPENDENCY_ERROR", package_runner)
         self.assertIn("./run-tests.sh", all_runner)
         self.assertIn("./run-package-checks.sh", all_runner)
-        self.assertIn("88 scientific + 8 package-integrity = 96", all_runner)
+        self.assertIn("92 scientific + 8 package-integrity = 100", all_runner)
         self.assertIn("retained baseline: 65 scientific + 8 package-integrity = 73", all_runner)
         self.assertIn("Self-contained scientific reproduction", artifact_readme)
         self.assertIn("Full-project integrity checks", artifact_readme)
         self.assertIn("65 scientific", artifact_readme)
         self.assertIn("8 package-integrity", artifact_readme)
-        self.assertIn("88 scientific", artifact_readme)
+        self.assertIn("92 scientific", artifact_readme)
         self.assertIn("pdfinfo", artifact_readme)
         self.assertIn("pdftotext", artifact_readme)
 
@@ -570,13 +570,20 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         self.assertNotIn(r"[p]_{\approx}", figure)
         self.assertNotIn(r"J_{\mathsf", figure)
         self.assertNotIn(r"\delta", figure)
-        self.assertIn("left-order cell", figure)
-        self.assertIn("right-order cell", figure)
+        generator = (ROOT / 'artifact/figures/build_figures.py').read_text(encoding='utf-8')
+        self.assertIn(r'\includegraphics[width=.98\linewidth]{figures/running.pdf}', figure)
+        self.assertNotIn(r'\begin{tikzpicture}', manuscript)
+        self.assertIn("left-order cell", generator)
+        self.assertIn("right-order cell", generator)
         self.assertIn("every source reaches both cells", figure)
-        self.assertIn("one fixed message", figure)
+        self.assertIn("one fixed message", generator)
         self.assertIn("pure integer fragment", figure)
-        self.assertIn(r"p^{\mathsf s}", figure)
-        self.assertIn(r"p^{\mathsf l}", figure)
+        self.assertIn('$p^{s}$', generator)
+        self.assertIn('$p^{l}$', generator)
+        for name in ('running', 'triangle-product', 'stochastic-triangle', 'capacity-closure'):
+            self.assertTrue((ROOT / 'paper/figures' / (name + '.pdf')).is_file())
+            self.assertEqual((ROOT / 'paper/figures' / (name + '.pdf')).read_bytes(),
+                             (ROOT / 'artifact/figures' / (name + '.pdf')).read_bytes())
 
     def test_project_manifest_covers_exact_public_tree_and_excludes_debris(self):
         manifest = json.loads(CURRENT_MANIFEST.read_text(encoding="utf-8"))

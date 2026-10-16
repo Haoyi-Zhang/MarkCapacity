@@ -55,7 +55,7 @@ fi
 
 # Admission and ordinary-source execution have their own current transcript.
 if ! timeout --kill-after=10s 180s python3 -B -m unittest \
-    tests.test_partition_admission tests.test_source_language -v \
+    tests.test_partition_admission tests.test_source_language tests.test_source_records -v \
     > "$tmp/source-tests.stdout" 2> "$tmp/source-tests.stderr"; then
   cat "$tmp/source-tests.stdout"
   cat "$tmp/source-tests.stderr" >&2

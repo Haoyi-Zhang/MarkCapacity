@@ -1,19 +1,19 @@
 {
   "schema": "CURRENT_PACKAGE_METADATA_V1",
-  "date": "2026-10-15",
+  "date": "2026-10-16",
   "scope": "Current compiled/source/ledger/export bindings; earlier immutable reports and prior mutable-ledger identities are separate.",
   "class_options": "manuscript,screen,review",
-  "pdf_pages": 51,
+  "pdf_pages": 52,
   "page_size_points": [
     612.0,
     792.0
   ],
-  "pdf_sha256": "d792b34e6d488b8c0f8cea47658dfc04eb83d4c164b0e7fbfcf9a5a5654c6742",
-  "manuscript_sha256": "5b6264460bbbcce48c8afe44e3a6b2c87834d98bbb6801ac9fb5e8da33dde433",
+  "pdf_sha256": "8469baccd62707009f548b20fd5e1322bc7e88f734777cf488c072a660c9bfd3",
+  "manuscript_sha256": "41449079a160b485b53e50346235367a8b071ed11a677c34cc6d4791486a9d36",
   "scheduled_tests": {
-    "scientific": 88,
+    "scientific": 92,
     "package": 8,
-    "combined": 96
+    "combined": 100
   },
   "scientific_modules": [
     "test_woc",
@@ -24,7 +24,8 @@
     "test_incident_pruning",
     "test_arithmetic_language",
     "test_partition_admission",
-    "test_source_language"
+    "test_source_language",
+    "test_source_records"
   ],
   "current_bib_entry_sha256": {
     "abate2021": "64a074644703f5ab9a9e57a90cf0c0c9787556b172195a6359d8130bad79d1e3",
@@ -300,8 +301,8 @@
     "artifact/reference-audit-final.csv": "4ed830e4181cfaa4f778beb587e2bd63f243ca8d1ba93d692447aa97d6ce7a10"
   },
   "current_file_sha256": {
-    "artifact/claim_evidence_ledger.csv": "80ed79a8464c811d36fcf717749e3ee932ca809a2e823244a3b77da8b2ab1563",
-    "artifact/correctness_correspondence.csv": "c754d18fd2dc47d87ccd834b518cce66e325f5d295c95964cdb1edaab3b7b01d",
+    "artifact/claim_evidence_ledger.csv": "70760e395c5aaac8098ac296748d58cbc3de2cc2301654ae473a007141098fa2",
+    "artifact/correctness_correspondence.csv": "dd77fbff0b02bb3a16aa57cb6efa4d7ddc7787dedfea4df20611992b30923836",
     "artifact/literature-evidence/records.jsonl": "f5271a098cd60267759988238ec1e79f8e883504c79708524f18c73424f6f2f6",
     "artifact/citation_support.csv": "63ac4894a1009f2f60121ca02aa17022329ea7641f12ffe46a6f6ddf3b1de4bc",
     "artifact/reference-audit-final.csv": "62c8c0e0e7b3e0c1c69ef9cf4db324df6461195419f719beb8e3b12753b7c2a8"

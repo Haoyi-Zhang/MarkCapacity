@@ -1,5 +1,16 @@
 # Executable artifact
 
+## Vector figures
+
+`python3 -B figures/build_figures.py --outdir /path/to/figures` regenerates the
+four manuscript illustrations directly with Matplotlib 3.11.2, without TeX.
+The closure diagram reads `generated/capacity_table.csv`; the other diagrams
+show the explicitly defined running, triangle-product and stochastic-triangle
+instances. The saved PDFs embed their fonts. Copy the generated PDFs to the
+sibling `paper/figures/` before compiling the complete manuscript; `build.sh`
+does this generation in place. The standard-library scientific entry point
+remains independent of this optional rendering dependency.
+
 ## Self-contained scientific reproduction
 
 Run:
@@ -8,7 +19,7 @@ Run:
 ./run-tests.sh
 ```
 
-This is the independent-code-package entry point. It runs the retained 65 scientific tests, including the directed-source support and finite-index boundary regressions, plus six coloring/source-binding regressions, eight arithmetic-language tests, four partition-admission tests and five source-realization tests in separate mandatory stages (88 scientific tests). It regenerates both the abstract census and the ordinary-source campaign twice in separate directories. Abstract outputs are compared with each other **and with the retained results, table, and 65-test normalized transcript**; fresh source manifests must match the separate `current-source-manifest.json`. Ordinary-source rows, negatives and exact source files are compared between the two new runs. The original `raw/run_manifest.json` remains bound to the archived source. It checks `raw/SHA256SUMS` before and after without rewriting retained evidence. It requires Python 3.10 or newer with only the standard library, Bash, and GNU core utilities (`mktemp`, `sed`, `cmp`, `diff`, `sha256sum`, and `timeout`). Each Python command is limited to 180 seconds. It does **not** read the parent `paper/` directory and does not invoke PDF tools. The POSIX launcher was not executed in the recorded Windows run; Python 3.10/3.11 compatibility remains unexecuted.
+This is the independent-code-package entry point. It runs the retained 65 scientific tests, including the directed-source support and finite-index boundary regressions, plus six coloring/source-binding regressions, eight arithmetic-language tests, four partition-admission tests, five source-realization tests and four source-record regressions in separate mandatory stages (92 scientific tests). It regenerates both the abstract census and the ordinary-source campaign twice in separate directories. Abstract outputs are compared with each other **and with the retained results, table, and 65-test normalized transcript**; fresh source manifests must match the separate `current-source-manifest.json`. Ordinary-source rows, negatives and exact source files are compared between the two new runs. The original `raw/run_manifest.json` remains bound to the archived source. It checks `raw/SHA256SUMS` before and after without rewriting retained evidence. It requires Python 3.10 or newer with only the standard library, Bash, and GNU core utilities (`mktemp`, `sed`, `cmp`, `diff`, `sha256sum`, and `timeout`). Each Python command is limited to 180 seconds. It does **not** read the parent `paper/` directory and does not invoke PDF tools. The POSIX launcher was not executed in the recorded Windows run; Python 3.10/3.11 compatibility remains unexecuted.
 
 Raw attempts are retained in temporary directories, whose paths are printed. Set `WOC_CHECK_OUTPUT` to choose their parent. To regenerate outputs directly without replacing the archive, use `python3 -B src/run_all.py --out /path/to/separate-output`. JSON, text records, and checksum manifests use UTF-8 with LF newlines on all hosts; the CSV writer uses its explicit standard CSV line endings. The source manifest binds the three scientific driver files, not a runtime or performance measurement.
 
@@ -82,7 +93,7 @@ To run both entry points in a complete checkout:
 ./run-all-checks.sh
 ```
 
-The combined entry point schedules 96 checks: 88 scientific and 8 package-integrity checks. The earlier 87-check schedule, 79-check schedule and historical 73-check baseline describe their respective source exports. The two suites are reported separately because only the scientific suite is self-contained. Full-project acceptance additionally requires packaging metadata, inventory, bibliography, source/PDF locations and actual modes to match the exported tree; scientific test success does not satisfy these gates. Retained project/export inventories and source/PDF-location records identify their earlier exports; they are not certification of a subsequently changed tree and were not rewritten to manufacture acceptance.
+The combined entry point schedules 100 checks: 92 scientific and 8 package-integrity checks. The earlier 87-check schedule, 79-check schedule and historical 73-check baseline describe their respective source exports. The two suites are reported separately because only the scientific suite is self-contained. Full-project acceptance additionally requires packaging metadata, inventory, bibliography, source/PDF locations and actual modes to match the exported tree; scientific test success does not satisfy these gates. Retained project/export inventories and source/PDF-location records identify their earlier exports; they are not certification of a subsequently changed tree and were not rewritten to manufacture acceptance.
 
 `reference-audit-final.csv`, `citation_support.csv`, and `literature-evidence/` record bibliography status, exact entry hashes, local citation contexts, and the scope of external verification. `code-quality-audit.json`, `anti-overfitting-audit.json`, `results_manifest.csv`, and `reproduction-report.json` retain the earlier host/build measurements and source bindings (including the 56-test scientific suite and dated 2026-09-26 audits); they are historical records, not measurements of the current source. The retained finite results and archived source binding are `raw/results.json` and `raw/run_manifest.json`; the expected current source binding is `current-source-manifest.json`. The checker does not prove contextual equivalence, infer a real compiler's exact image, or replace the paper's arbitrary-set proofs.
 

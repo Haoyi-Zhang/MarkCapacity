@@ -32,6 +32,11 @@ jobs:
           timeout --kill-after=10s 60s python -B -m unittest discover -s regressions -p test_current_export.py -v > "$WOC_CHECK_OUTPUT/current-export-regressions.log" 2>&1
           cat "$WOC_CHECK_OUTPUT/materials.json"
           cat "$WOC_CHECK_OUTPUT/scientific.log"
+      - name: Regenerate direct vector illustrations
+        shell: bash
+        run: |
+          python -m pip install matplotlib==3.11.2
+          python -B figures/build_figures.py --outdir "$RUNNER_TEMP/woc-checks/figures"
       - name: Retain raw outputs, including failed attempts
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
