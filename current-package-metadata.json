@@ -8,8 +8,8 @@
     612,
     792
   ],
-  "pdf_sha256": "b67543cd7c8141848dda8452eb6d07f6033305bb9b8e6279e097b01d0e397821",
-  "manuscript_sha256": "6e59390a3d63d16b15e9b9917b430758e13fa1ddbf91f719c50d5770c7c6f33b",
+  "pdf_sha256": "bc3175e6983c175b6497ff6e2f83b59bbc5a900334d961a751692b4426c8b151",
+  "manuscript_sha256": "ca23f649a4fae52afb000ec78dfbf1a43b1ca990838bc677fdfafc8207fa4c05",
   "scheduled_tests": {
     "scientific": 92,
     "package": 8,
