@@ -147,7 +147,7 @@
     {
       "path": "paper/provenance/CURRENT-STATE.md",
       "bytes": 3780,
-      "sha256": "0f662bbc0bc04c497824b290fa06cb62788a5b8680bb0575a04cce3a737d2d10",
+      "sha256": "82d26acbd57c7c9893b78a6561963bca3586b0ae17f62ee522880b09fdae1f16",
       "mode": "0644"
     },
     {
@@ -2679,7 +2679,7 @@
     {
       "path": "artifact/review-status.json",
       "bytes": 2975,
-      "sha256": "7956e6895d95a3cdef1d22161956ec05d12c69d6fecb5e7860b83d29feeb1171",
+      "sha256": "0e3009a7d1ce26b4df86bb55b381d6d9c1d75800c432d1efbe2d335d0e0bd52f",
       "mode": "0644"
     },
     {
