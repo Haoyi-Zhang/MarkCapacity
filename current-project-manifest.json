@@ -80,8 +80,8 @@
     },
     {
       "path": "paper/current-statement-locations.json",
-      "bytes": 25029,
-      "sha256": "8f4be2c7c1f2d0202a5e6bfd6e1fe2f7aaf3f56cd1768ff4844f2b62c6969213",
+      "bytes": 25113,
+      "sha256": "eda5bb299c66c64ae117174059ed405d06ba713aef252f2204a74626df225d6f",
       "mode": "0644"
     },
     {
@@ -116,14 +116,14 @@
     },
     {
       "path": "paper/main.pdf",
-      "bytes": 414496,
-      "sha256": "bc3175e6983c175b6497ff6e2f83b59bbc5a900334d961a751692b4426c8b151",
+      "bytes": 412429,
+      "sha256": "b9b39b30ee27ccb1b3fdec2f0c4e77970d53aacb645bb34335ace6fc1d2f7379",
       "mode": "0644"
     },
     {
       "path": "paper/main.tex",
-      "bytes": 178760,
-      "sha256": "ca23f649a4fae52afb000ec78dfbf1a43b1ca990838bc677fdfafc8207fa4c05",
+      "bytes": 177987,
+      "sha256": "cafa8e6b9b9825e9d0c712ca3be9bffde9faabc79d788ea26ea70edd96755557",
       "mode": "0644"
     },
     {
@@ -158,8 +158,8 @@
     },
     {
       "path": "paper/README.md",
-      "bytes": 2938,
-      "sha256": "6f9248f5f9c424c796c433f901fda7492ec0a96080b234981c5338da9cafbcdc",
+      "bytes": 2983,
+      "sha256": "4835f68c369df3e8c2c67e2e6fe14ea4b870c5d96b71722a1efcdb2424a5b1ba",
       "mode": "0644"
     },
     {
@@ -242,8 +242,8 @@
     },
     {
       "path": "artifact/claim_evidence_ledger.csv",
-      "bytes": 25655,
-      "sha256": "70760e395c5aaac8098ac296748d58cbc3de2cc2301654ae473a007141098fa2",
+      "bytes": 25656,
+      "sha256": "ccd724d68af0560297272f29250bc11cd4af18f875c54b364d710ae3ac8d09c9",
       "mode": "0644"
     },
     {
@@ -254,20 +254,20 @@
     },
     {
       "path": "artifact/correctness_correspondence.csv",
-      "bytes": 24848,
-      "sha256": "dd77fbff0b02bb3a16aa57cb6efa4d7ddc7787dedfea4df20611992b30923836",
+      "bytes": 24849,
+      "sha256": "d12e6716ae5bdc706955eccc61f63cb0ee37b9b5a0f0a763773abe72b4c81450",
       "mode": "0644"
     },
     {
       "path": "artifact/current-export-supplement.json",
       "bytes": 728,
-      "sha256": "ea4adaf33a4507e2fd7bbe098c4cf40212a801f2ebbbd8ae4e043f2e3d750a00",
+      "sha256": "baa92f4838574b5f4fb84d82ca183e295027900a084711ebead4afceffcd7f53",
       "mode": "0644"
     },
     {
       "path": "artifact/current-package-metadata.json",
-      "bytes": 19266,
-      "sha256": "3c63750e5026f52981cc9a020be6a5e35a1318d3fc6e1c85457c6e24c5d8d1a5",
+      "bytes": 19307,
+      "sha256": "d16d4be212cdf1b88d5adf235e06c927e7e08c819d2ebb8faa3b8b4701f63d02",
       "mode": "0644"
     },
     {
@@ -2886,5 +2886,6 @@
       "sha256": "8231290ade90c213c84cdbfbfe024177def494aad288ef10e2aebeca6f2f0cac",
       "mode": "0644"
     }
-  ]
+  ],
+  "current_binding_date": "2026-10-18"
 }
