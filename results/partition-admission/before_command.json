@@ -1,10 +1,10 @@
 {
   "argv": [
-    "C:\\Users\\Administrator\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "<PYTHON_ROOT>\\python.exe",
     "-B",
-    "D:\\CodexProjects\\2026-07-13\\new-chat-4\\completion_workspace\\library_review\\private\\substantive_library_completion\\P031\\partition_probe.py"
+    "<PROJECTS_ROOT>\\2026-07-13\\new-chat-4\\completion_workspace\\library_review\\private\\substantive_library_completion\\P031\\partition_probe.py"
   ],
-  "cwd": "D:\\CodexProjects\\wg-check\\substantive-library\\P031\\artifact",
+  "cwd": "<PROJECTS_ROOT>\\wg-check\\substantive-library\\P031\\artifact",
   "exit_code": 0,
   "wall_seconds": 0.048992800002451986,
   "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
@@ -19,9 +19,9 @@
   "environment": {
     "PYTHONDONTWRITEBYTECODE": "1",
     "PYTHONUTF8": "1",
-    "TMP": "D:\\CodexProjects\\2026-07-13\\new-chat-4\\completion_workspace\\library_review\\private\\substantive_library_completion\\P031\\before-admission\\temp",
-    "TEMP": "D:\\CodexProjects\\2026-07-13\\new-chat-4\\completion_workspace\\library_review\\private\\substantive_library_completion\\P031\\before-admission\\temp",
-    "WOC_CHECK_OUTPUT": "D:\\CodexProjects\\2026-07-13\\new-chat-4\\completion_workspace\\library_review\\private\\substantive_library_completion\\P031\\before-admission\\work",
-    "PYTHONPATH": "D:\\CodexProjects\\wg-check\\substantive-library\\P031\\artifact\\src;D:\\CodexProjects\\wg-check\\substantive-library\\P031\\artifact"
+    "TMP": "<PROJECTS_ROOT>\\2026-07-13\\new-chat-4\\completion_workspace\\library_review\\private\\substantive_library_completion\\P031\\before-admission\\temp",
+    "TEMP": "<PROJECTS_ROOT>\\2026-07-13\\new-chat-4\\completion_workspace\\library_review\\private\\substantive_library_completion\\P031\\before-admission\\temp",
+    "WOC_CHECK_OUTPUT": "<PROJECTS_ROOT>\\2026-07-13\\new-chat-4\\completion_workspace\\library_review\\private\\substantive_library_completion\\P031\\before-admission\\work",
+    "PYTHONPATH": "<PROJECTS_ROOT>\\wg-check\\substantive-library\\P031\\artifact\\src;<PROJECTS_ROOT>\\wg-check\\substantive-library\\P031\\artifact"
   }
 }

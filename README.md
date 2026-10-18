@@ -164,3 +164,7 @@ snapshot accompany the unchanged class. See `../paper/ACM-SOURCE-NOTICE.md` for
 the CTAN release authority, original copyright/LPPL notices and exact derived
 class comparison. This source packaging does not assert current portal policy
 or decide whether the scientific artifact or full paper should be published.
+
+## Portable path notation
+
+Published execution records use `<PYTHON_ROOT>`, `<NODE_ROOT>`, `<RUNTIME_ROOT>` and `<PROJECTS_ROOT>` for machine-local installation and workspace prefixes. These are path aliases, not literal directories; substitute the corresponding local roots when replaying a command. Recorded interpreter and dependency versions, inputs, measurements and outcomes are unchanged. File inventories bind the published portable serializations; any `recorded_` identity denotes the pre-normalization bytes.
