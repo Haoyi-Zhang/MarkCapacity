@@ -8,7 +8,7 @@
     612,
     792
   ],
-  "pdf_sha256": "b9b39b30ee27ccb1b3fdec2f0c4e77970d53aacb645bb34335ace6fc1d2f7379",
+  "pdf_sha256": "fa8ae6abebc3e0df7a2f735c0d2cf323b38518007dfb151b3c4167be4ff4b8b1",
   "manuscript_sha256": "cafa8e6b9b9825e9d0c712ca3be9bffde9faabc79d788ea26ea70edd96755557",
   "scheduled_tests": {
     "scientific": 92,
@@ -196,7 +196,7 @@
     "extraction_scope": "isolated xetex docstrip, exact class bytes; no pages of output",
     "ctan_release_notice": "https://ctan.org/ctan-ann/id/f991b965e3dbf134@hogwart",
     "file_sha256": {
-      "paper/ACM-SOURCE-NOTICE.md": "78fba498a5ae127b4d4998a63b9d5b6375ba13fedb171f3ce77d6a948e9a8a7c",
+      "paper/ACM-SOURCE-NOTICE.md": "e336feb851a29c4b3824d570de57d256c239de76ec42f542854a878d5177cc87",
       "paper/acmart.dtx": "4e2fd29fc8a45c3d02facb616ed29954d7932891883185460bf374303036f3e1",
       "paper/acmart-source-v2.19.tar.gz": "f53c0125da8b37a61f2eabdfde15ae493728c89e83d3caabb0de0dc65f0413da",
       "paper/acmart.cls": "2f949e6e3f2a79f2cdc218b9dcdbaa7dd451adb4ee0be1af6dc7ebe00b318ea7",

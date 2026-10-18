@@ -33,7 +33,7 @@
     {
       "path": "paper/ACM-SOURCE-NOTICE.md",
       "bytes": 1604,
-      "sha256": "78fba498a5ae127b4d4998a63b9d5b6375ba13fedb171f3ce77d6a948e9a8a7c",
+      "sha256": "e336feb851a29c4b3824d570de57d256c239de76ec42f542854a878d5177cc87",
       "mode": "0644"
     },
     {
@@ -80,8 +80,8 @@
     },
     {
       "path": "paper/current-statement-locations.json",
-      "bytes": 25113,
-      "sha256": "eda5bb299c66c64ae117174059ed405d06ba713aef252f2204a74626df225d6f",
+      "bytes": 25112,
+      "sha256": "c338047813fad16d24f0586a10160997c0f7fb8006573932de7f3eb6c183fc67",
       "mode": "0644"
     },
     {
@@ -260,14 +260,14 @@
     },
     {
       "path": "artifact/current-export-supplement.json",
-      "bytes": 728,
-      "sha256": "baa92f4838574b5f4fb84d82ca183e295027900a084711ebead4afceffcd7f53",
+      "bytes": 727,
+      "sha256": "318aad244e56c3fc5b51ff1b351bb8a82a8363aaef59e9f1ebf18d8037eb69c0",
       "mode": "0644"
     },
     {
       "path": "artifact/current-package-metadata.json",
-      "bytes": 19307,
-      "sha256": "d16d4be212cdf1b88d5adf235e06c927e7e08c819d2ebb8faa3b8b4701f63d02",
+      "bytes": 19305,
+      "sha256": "dbead96b3c919d92cdaa594421f96f2c8d692641a9bc17eb18e788af57a37eae",
       "mode": "0644"
     },
     {
