@@ -150,7 +150,7 @@ def capacity(out):
         y = 5.35-row*1.4
         d.text(1.65, y, name)
         for i, label in enumerate(labels):
-            d.box(3.5+.7*i, y, .55, .48, label)
+            d.box(3.5+.7*i, y, .62, .48, label)
         for start in range(0, 8, group):
             d.ax.add_patch(Rectangle((3.16+.7*start, y-.38), .7*group-.02, .76,
                                      fill=False, lw=.85, zorder=3))
