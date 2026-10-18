@@ -1,6 +1,6 @@
 {
   "schema": "CURRENT_PROJECT_MANIFEST_V1",
-  "date": "2026-10-16",
+  "date": "2026-10-18",
   "scope": "Exact two-root delivery ZIP: every paper/artifact file; project navigation README is outside delivery. Historical reports retain original bytes.",
   "export_roots": [
     "paper",
@@ -10,7 +10,7 @@
     "artifact",
     "paper"
   ],
-  "file_count": 479,
+  "file_count": 478,
   "files": [
     {
       "path": "paper/.vscode/settings.json",
@@ -86,8 +86,8 @@
     },
     {
       "path": "paper/figures/capacity-closure.pdf",
-      "bytes": 11609,
-      "sha256": "ef5e180888fa6440ba6354bc3d7cda91e48ed892db02c29732389776887040a5",
+      "bytes": 11611,
+      "sha256": "9458d73a80a9c1210e4df9c5b0003de7423beea759453e3fa2658fde958f0f75",
       "mode": "0644"
     },
     {
@@ -116,8 +116,8 @@
     },
     {
       "path": "paper/main.pdf",
-      "bytes": 412429,
-      "sha256": "b9b39b30ee27ccb1b3fdec2f0c4e77970d53aacb645bb34335ace6fc1d2f7379",
+      "bytes": 412463,
+      "sha256": "fa8ae6abebc3e0df7a2f735c0d2cf323b38518007dfb151b3c4167be4ff4b8b1",
       "mode": "0644"
     },
     {
@@ -176,8 +176,8 @@
     },
     {
       "path": "paper/SUBMISSION-CHECKLIST.md",
-      "bytes": 417,
-      "sha256": "973a9e1d88891fcc6827967e2a67d23b81c9677422787c72cbec6eb064fa5f09",
+      "bytes": 392,
+      "sha256": "2ac8adf59322dc406bddd0cd3a89541cba13055c016c264cd76d150f77001c6e",
       "mode": "0644"
     },
     {
@@ -297,13 +297,13 @@
     {
       "path": "artifact/figures/build_figures.py",
       "bytes": 7938,
-      "sha256": "a7c63b7216c7f80c70194a00dfffb78e0e165603a14b6a878807822c42411ef7",
+      "sha256": "5fe3daa5bde7977b7721d24c4062b63a7c86d87075c98e7d312568ea03d23b02",
       "mode": "0644"
     },
     {
       "path": "artifact/figures/capacity-closure.pdf",
-      "bytes": 11609,
-      "sha256": "ef5e180888fa6440ba6354bc3d7cda91e48ed892db02c29732389776887040a5",
+      "bytes": 11611,
+      "sha256": "9458d73a80a9c1210e4df9c5b0003de7423beea759453e3fa2658fde958f0f75",
       "mode": "0644"
     },
     {
@@ -2656,12 +2656,6 @@
       "path": "artifact/results/source-execution/summary.json",
       "bytes": 1796,
       "sha256": "87ddfcad0978be11a9cc4e9ad9a57839bf011613a902ae2aaed69077cb6db4de",
-      "mode": "0644"
-    },
-    {
-      "path": "artifact/results/source-execution/test_command.json",
-      "bytes": 2155,
-      "sha256": "d4d87d9f146b1cbbf8108473f102f83d87850c46081ae528a4e0d23db1434469",
       "mode": "0644"
     },
     {
