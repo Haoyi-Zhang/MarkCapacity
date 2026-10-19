@@ -4,7 +4,7 @@
     "-B",
     "<PROJECTS_ROOT>\\wg-check\\substantive-library\\P031\\artifact\\src\\run_all.py",
     "--out",
-    "<PROJECTS_ROOT>/2026-07-13/new-chat-4/completion_workspace/library_review/private/substantive_library_completion/P031/abstract-run2/raw"
+    "<WORK_ROOT>/abstract-run2/raw"
   ],
   "cwd": "<PROJECTS_ROOT>\\wg-check\\substantive-library\\P031\\artifact",
   "exit_code": 0,
@@ -23,9 +23,9 @@
   "environment": {
     "PYTHONDONTWRITEBYTECODE": "1",
     "PYTHONUTF8": "1",
-    "TMP": "<PROJECTS_ROOT>\\2026-07-13\\new-chat-4\\completion_workspace\\library_review\\private\\substantive_library_completion\\P031\\abstract-run2\\temp",
-    "TEMP": "<PROJECTS_ROOT>\\2026-07-13\\new-chat-4\\completion_workspace\\library_review\\private\\substantive_library_completion\\P031\\abstract-run2\\temp",
-    "WOC_CHECK_OUTPUT": "<PROJECTS_ROOT>\\2026-07-13\\new-chat-4\\completion_workspace\\library_review\\private\\substantive_library_completion\\P031\\abstract-run2\\work",
+    "TMP": "<WORK_ROOT>/abstract-run2/temp",
+    "TEMP": "<WORK_ROOT>/abstract-run2/temp",
+    "WOC_CHECK_OUTPUT": "<WORK_ROOT>/abstract-run2/work",
     "PYTHONPATH": "<PROJECTS_ROOT>\\wg-check\\substantive-library\\P031\\artifact\\src;<PROJECTS_ROOT>\\wg-check\\substantive-library\\P031\\artifact"
   }
 }

@@ -398,8 +398,8 @@
     },
     {
       "path": "artifact/README.md",
-      "bytes": 14445,
-      "sha256": "1a0dadb631bf33b29a9f0821e37b3698e849b366244c7e319ae1d1127b47a14c",
+      "bytes": 14697,
+      "sha256": "bf81517a302dc37f40ff0c690e85a184f4c19abb2324a46355703b30e6555163",
       "mode": "0644"
     },
     {
@@ -428,14 +428,14 @@
     },
     {
       "path": "artifact/results/abstract-reexecution/execution_run1.json",
-      "bytes": 1971,
-      "sha256": "875fc0c00161c812494545b1c134e94d74863d063018bfa37fd64632aa8c43b5",
+      "bytes": 1520,
+      "sha256": "8be80ad2d7b6f21ff5eda77c76e2996112d164acf0d630ad5f9c44b09908db42",
       "mode": "0644"
     },
     {
       "path": "artifact/results/abstract-reexecution/execution_run2.json",
-      "bytes": 1971,
-      "sha256": "4d8069eb14fcd18b7ac2f06a78ab43dc565bd14714cda4093bcf1b309d7ca67d",
+      "bytes": 1520,
+      "sha256": "969ed02c5a4858aac8a682c7109aa4557192d3425c8645737a5d125650b587a5",
       "mode": "0644"
     },
     {
@@ -566,8 +566,8 @@
     },
     {
       "path": "artifact/results/partition-admission/after_command.json",
-      "bytes": 1696,
-      "sha256": "71c6f61c990b7c136d362d92d729b411cd8d447609197fb3603e2fe89c3b3225",
+      "bytes": 1237,
+      "sha256": "6c0090d7faf3e2cd3a48c8a1e238a4fc91f13c238b2502c455be7c43084d3861",
       "mode": "0644"
     },
     {
@@ -578,20 +578,20 @@
     },
     {
       "path": "artifact/results/partition-admission/before_command.json",
-      "bytes": 1699,
-      "sha256": "4b79207e2d4fb07618e04d62ad50e036a45384dfbd61a25fedd8324c6dab99da",
+      "bytes": 1240,
+      "sha256": "0c4fa397507769a8052d7885127d3c5f373402a3b6311489796f2952f5c83a3b",
       "mode": "0644"
     },
     {
       "path": "artifact/results/source-execution/execution_run1.json",
-      "bytes": 1966,
-      "sha256": "c6040828c092abfc3ecdc18439b03c05ebf377aa5527ff127380ed82e4ed550a",
+      "bytes": 1515,
+      "sha256": "f013ce15398f363ea8c4eb2d98c0a6761543c1aa756ab5c3abac378a09b80695",
       "mode": "0644"
     },
     {
       "path": "artifact/results/source-execution/execution_run2.json",
-      "bytes": 1966,
-      "sha256": "f3c2f7aff572569dbac98ac34924c3221ff0de2a53e276d1bce94d759e6a7454",
+      "bytes": 1515,
+      "sha256": "3464f72af063d3399a4cbca6f759522da55a4ae62ffce19d02ceeb9415b51350",
       "mode": "0644"
     },
     {
