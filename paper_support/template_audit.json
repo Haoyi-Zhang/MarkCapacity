@@ -1,0 +1,19 @@
+{
+  "schema": "TEMPLATE_AUDIT_V2",
+  "date": "2026-09-26",
+  "class_options": "manuscript,screen,review",
+  "acmart_sha256": "2f949e6e3f2a79f2cdc218b9dcdbaa7dd451adb4ee0be1af6dc7ebe00b318ea7",
+  "bibliography_style_sha256": "8ec002c927068bfc5b3cfe71b66aa4767b9e485530ac3c67ba5c064df4c2e6ac",
+  "pages": 48,
+  "page_size_points": [
+    612,
+    792
+  ],
+  "line_numbers": true,
+  "manual_geometry_override": false,
+  "manual_font_or_leading_override": false,
+  "publication_metadata_asserted": false,
+  "pdf_sha256": "28610e3cb2e2d17af8cafb21f7640fcb86a632c566740a6f0b6ab15526c14456",
+  "pdf_bytes": 783410,
+  "verdict": "PASS_INTERNAL_DRAFT"
+}

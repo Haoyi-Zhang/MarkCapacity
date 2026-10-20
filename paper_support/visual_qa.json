@@ -1,0 +1,71 @@
+{
+  "schema": "VISUAL_QA_V2",
+  "date": "2026-09-26",
+  "pdf_sha256": "28610e3cb2e2d17af8cafb21f7640fcb86a632c566740a6f0b6ab15526c14456",
+  "inspection": {
+    "primary_renderer": "Poppler at 100 DPI for all 48 pages",
+    "primary_pages": 48,
+    "contact_sheets": 4,
+    "full_resolution_200_dpi_pages": [
+      1,
+      2,
+      3,
+      13,
+      14,
+      15,
+      16,
+      18,
+      19,
+      20,
+      21,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48
+    ],
+    "secondary_evidence": "unchanged vector figures plus Ghostscript/PyMuPDF/Poppler preflight",
+    "notes": "All-page contact sheets and critical full-resolution pages were inspected after the input-contract and prose repairs."
+  },
+  "checks": {
+    "review_line_numbers_present": true,
+    "text_overlap_observed": false,
+    "line_text_overlap_observed": false,
+    "connector_overlap_observed": false,
+    "module_overlap_observed": false,
+    "table_overflow_observed": false,
+    "float_collision_observed": false,
+    "clipping_observed": false,
+    "broken_glyph_observed": false,
+    "abnormal_blank_page_observed": false,
+    "author_block_collision_observed": false
+  },
+  "figure_findings": [
+    {
+      "figure": 1,
+      "page": 2,
+      "finding": "Program boxes, rewrite arrows, detector cells, normalization arrow, and caption remain separated; no redraw or overlap."
+    },
+    {
+      "figure": 2,
+      "page": 14,
+      "finding": "Triangle nodes, edge labels, product grid, and explanatory text remain separated."
+    },
+    {
+      "figure": 3,
+      "page": 25,
+      "finding": "Three randomization panels and labels remain separated."
+    },
+    {
+      "figure": 4,
+      "page": 42,
+      "finding": "Partition boundaries, labels, arrows, and capacity annotations remain separated."
+    }
+  ],
+  "page_48": "Reference 68 ends in the normal bibliography text block; review line numbers and footer remain separate.",
+  "verdict": "PASS"
+}

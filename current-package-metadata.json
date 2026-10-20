@@ -101,9 +101,9 @@
   },
   "bibliography_binding_scope": "local current bytes only; no transfer of historical external-verification verdicts",
   "historical_file_sha256": {
-    "paper/pdf_preflight.json": "226fb217a4b5492519ecbca60ca0ac3e85974a913cef1a67c0b7beab0c17dbbc",
-    "paper/statement_location_audit.json": "1f3ac409f93125750db77106b3b4f0488168e7fa9d3c0a36d9ffbf6990ab6038",
-    "paper/visual_qa.json": "0a47fc2169a7799324869ae20a0a70cc92919f39b119e5b764861f852749f07d",
+    "artifact/paper_support/pdf_preflight.json": "226fb217a4b5492519ecbca60ca0ac3e85974a913cef1a67c0b7beab0c17dbbc",
+    "artifact/paper_support/statement_location_audit.json": "1f3ac409f93125750db77106b3b4f0488168e7fa9d3c0a36d9ffbf6990ab6038",
+    "artifact/paper_support/visual_qa.json": "0a47fc2169a7799324869ae20a0a70cc92919f39b119e5b764861f852749f07d",
     "artifact/code-quality-audit.json": "923a524830200f69dba96a6a07e6245abe2042557be7b0b40cbaf1b70ee95cd4",
     "artifact/reproduction-report.json": "d58fe2fb4b6af747fe4f945814f904174ea024f2a2f05a5b5e520e9b327384f4",
     "artifact/raw/run_manifest.json": "af2c382aa6ae49bdfc16ecfb41d53e37bf390b5271fa5c972d2111817951a09c",
@@ -301,7 +301,7 @@
     "artifact/reference-audit-final.csv": "4ed830e4181cfaa4f778beb587e2bd63f243ca8d1ba93d692447aa97d6ce7a10"
   },
   "current_file_sha256": {
-    "artifact/claim_evidence_ledger.csv": "ccd724d68af0560297272f29250bc11cd4af18f875c54b364d710ae3ac8d09c9",
+    "artifact/claim_evidence_ledger.csv": "096b8a0d7ad95d97a29e780b42bf86474530a98464a5faafdf00723ca783b3dc",
     "artifact/correctness_correspondence.csv": "d12e6716ae5bdc706955eccc61f63cb0ee37b9b5a0f0a763773abe72b4c81450",
     "artifact/literature-evidence/records.jsonl": "c2fcabf51d4c4df896d39c1f645218f56ad579754d7b8ad086f92f631f39d0d7",
     "artifact/citation_support.csv": "8372597a0774194e0a8cb871d5c609856a41f44cd2c618ea62c13849a6175d9e",

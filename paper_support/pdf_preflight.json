@@ -1,0 +1,35 @@
+{
+  "schema": "PDF_PREFLIGHT_V2",
+  "date": "2026-09-26",
+  "pdf_sha256": "28610e3cb2e2d17af8cafb21f7640fcb86a632c566740a6f0b6ab15526c14456",
+  "pdf_bytes": 783410,
+  "pages": 48,
+  "page_sizes_points": [
+    [
+      612.0,
+      792.0
+    ]
+  ],
+  "uniform_page_size": true,
+  "fonts_listed": 22,
+  "fonts_embedded_subset_and_unicode": true,
+  "raster_image_objects": 0,
+  "encrypted": false,
+  "forms": 0,
+  "attachments": 0,
+  "javascript_xrefs": [],
+  "xfa_xrefs": [],
+  "ghostscript_parse": "PASS",
+  "review_line_numbers_present": true,
+  "detected_line_number_spans": 1917,
+  "xmp_creators": [
+    "Haoyi Zhang",
+    "Huaijin Ran",
+    "Xunzhu Tang"
+  ],
+  "rendered_pages": 48,
+  "overfull_boxes": 0,
+  "undefined_citations_or_references": 0,
+  "two_clean_builds_byte_identical": true,
+  "verdict": "PASS"
+}

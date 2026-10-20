@@ -10,13 +10,13 @@ required_paths=(
   "$PROJECT_ROOT/paper/main.tex"
   "$PROJECT_ROOT/paper/main.pdf"
   "$PROJECT_ROOT/paper/references.bib"
-  "$PROJECT_ROOT/paper/statement_location_audit.json"
+  "$PROJECT_ROOT/artifact/paper_support/statement_location_audit.json"
   "$PROJECT_ROOT/paper/provenance/CURRENT-STATE.md"
   "$PROJECT_ROOT/paper/provenance/research-plan.md"
   "$PROJECT_ROOT/artifact/project-manifest.json"
   "$PROJECT_ROOT/artifact/current-project-manifest.json"
   "$PROJECT_ROOT/artifact/current-package-metadata.json"
-  "$PROJECT_ROOT/paper/current-statement-locations.json"
+  "$PROJECT_ROOT/artifact/paper_support/current-statement-locations.json"
 )
 missing=()
 for path in "${required_paths[@]}"; do

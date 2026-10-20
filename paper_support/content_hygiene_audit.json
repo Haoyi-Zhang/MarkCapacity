@@ -1,0 +1,23 @@
+{
+  "schema": "CONTENT_HYGIENE_AUDIT_V2",
+  "date": "2026-09-26",
+  "manuscript_sha256": "65e28a4c7c2913e0a7c196b944045348557445cb97dc483c7c8f2d53c0617776",
+  "pdf_sha256": "28610e3cb2e2d17af8cafb21f7640fcb86a632c566740a6f0b6ab15526c14456",
+  "checks": {
+    "local_paths": 0,
+    "source_filenames": 0,
+    "hash_literals": 0,
+    "process_terms": 0,
+    "inline_appendix": 0
+  },
+  "engineering_identifier_findings": {
+    "local_paths": [],
+    "source_filenames": [],
+    "hash_literals": [],
+    "process_terms": [],
+    "inline_appendix": []
+  },
+  "review_line_numbers_present": true,
+  "author_state": "three known author records and three blank title-block line heights; no fictitious authors in ACM/PDF metadata",
+  "verdict": "PASS"
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "PAGE_FIT_AUDIT_V2",
+  "date": "2026-09-26",
+  "manuscript_sha256": "65e28a4c7c2913e0a7c196b944045348557445cb97dc483c7c8f2d53c0617776",
+  "bibliography_sha256": "51fbd08724bfb8ba238001421f3a57d43e2ab752cdaf25216c165e08b4ebf310",
+  "pdf_sha256": "28610e3cb2e2d17af8cafb21f7640fcb86a632c566740a6f0b6ab15526c14456",
+  "pdf_bytes": 783410,
+  "total_pages": 48,
+  "page_size_points": [
+    612.0,
+    792.0
+  ],
+  "reference_start_page": 46,
+  "last_substantive_line_top_pt": 636.043,
+  "last_substantive_block_bottom_pt": 644.741,
+  "last_substantive_text": "in Theory and Practice. arXiv preprint arXiv:2507.05512 (2025). Version 2, revised 30 August 2026. doi:10.48550/arXiv.2507.05512",
+  "ordinary_bibliography_baseline_spacing_pt": 9.963,
+  "next_unused_baseline_pt": 654.704,
+  "normal_text_bottom_pt": 672.513,
+  "unused_ordinary_baselines": 2,
+  "main_top_level_sections": 8,
+  "forced_pagebreak_present": false,
+  "deterministic_build": {
+    "build_1_sha256": "28610e3cb2e2d17af8cafb21f7640fcb86a632c566740a6f0b6ab15526c14456",
+    "build_2_sha256": "28610e3cb2e2d17af8cafb21f7640fcb86a632c566740a6f0b6ab15526c14456",
+    "byte_identical": true,
+    "isolated_clean_builds": true
+  },
+  "verdict": "PASS"
+}
