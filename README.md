@@ -28,7 +28,7 @@ python3 -B -m unittest discover -s regressions -p test_associativity_example.py 
 python3 -B src/associativity_example.py --out /absolute/fresh/associativity
 ```
 
-The scientific workflow runs these four new regression methods and compares the
+The scientific workflow runs these five new regression methods and compares the
 newly generated directory with `results/associativity`. The earlier 92-method
 campaign and all historical source/output bindings remain separate and unchanged.
 

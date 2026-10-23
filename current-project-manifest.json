@@ -39,7 +39,7 @@
     {
       "path": "artifact/README.md",
       "bytes": 15832,
-      "sha256": "871ef7cfe3273f378a0c79322ca68ea2638d6bd408ee5addcd0277efa882add6",
+      "sha256": "f0952eab881442c2a70c7bf4e57365114f21b71093f5bad78bd05ece54f70856",
       "mode": "0644"
     },
     {
@@ -87,13 +87,13 @@
     {
       "path": "artifact/current-export-supplement.json",
       "bytes": 728,
-      "sha256": "610a1eabc48b44eda48c1196d17d4a50356d8a20b5314486a89cc582521f9096",
+      "sha256": "8c8e31653da8bd131dc97dd71272d6da89d866e327bf32e853eaaddbb2fbd6bf",
       "mode": "0644"
     },
     {
       "path": "artifact/current-package-metadata.json",
       "bytes": 19410,
-      "sha256": "76b2680638205df4da4cbe5748da38bff79207a5160def0d76946f3330e9250d",
+      "sha256": "ca306ec2e3b96fecd611eb6a25dc67c1ccdacf4679bd68775fffcbbd1d1bffa9",
       "mode": "0644"
     },
     {
@@ -201,7 +201,7 @@
     {
       "path": "artifact/paper_support/current-statement-locations.json",
       "bytes": 26812,
-      "sha256": "1ad0586ec640a869e1fbb87eb24c8a3c440e8ce2d0d38ea7c9514f4726390a8f",
+      "sha256": "a68fa0ee5164458e21b52b34d0d0c30ad9acf21b4a5355189c80711bb9c52ac5",
       "mode": "0644"
     },
     {
@@ -278,8 +278,8 @@
     },
     {
       "path": "artifact/regressions/test_associativity_example.py",
-      "bytes": 1881,
-      "sha256": "d38ac05f749527169a85a3dc4c38dfe8fbfdc8a9dcd5fd25d42acb4b50699b7a",
+      "bytes": 2761,
+      "sha256": "c109fdf127c3cfbc98ca1376e651583246109ae810a92ad9835da92787820e83",
       "mode": "0644"
     },
     {
@@ -434,14 +434,14 @@
     },
     {
       "path": "artifact/results/associativity/summary.json",
-      "bytes": 1743,
-      "sha256": "79eccc5f0c2c5b9530ead382a09abb6224145aff95c237b8ecdcc03c08c1610d",
+      "bytes": 1629,
+      "sha256": "50aa1c5881291a25ccb327d83430c00fe87a14c5b549a5a701a785b08acb0c42",
       "mode": "0644"
     },
     {
       "path": "artifact/results/associativity/table.tex",
-      "bytes": 177,
-      "sha256": "2085138feae0fe43f92f546d1f56ab6b8278c1a199c32a881c9c709f3414bba9",
+      "bytes": 170,
+      "sha256": "02392b87019cd9d03be22abe4b2ce2a915efec33cccfb0d6d6491194d20f7124",
       "mode": "0644"
     },
     {
@@ -2654,8 +2654,8 @@
     },
     {
       "path": "artifact/src/associativity_example.py",
-      "bytes": 7477,
-      "sha256": "0ea6989c355c3ebafe505dad74cf037ab674460c3a5511277afb1223e3b47f24",
+      "bytes": 7505,
+      "sha256": "06a74911f72c7a39241b58364b6e5d2154a7406e6dae79d04be7aaf4177e3c98",
       "mode": "0644"
     },
     {
@@ -2931,7 +2931,7 @@
     {
       "path": "paper/main.pdf",
       "bytes": 419318,
-      "sha256": "4cf6c2d330fe5977b558ca4223aa027c6e6a316d4544657a41eb800ec54e6d11",
+      "sha256": "d2dff07929f2dd704cff552894c16718793d96c81bfd933796dbce6419b73c8a",
       "mode": "0644"
     },
     {

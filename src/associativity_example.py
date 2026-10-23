@@ -159,12 +159,12 @@ def main():
     (out / 'sources').mkdir(parents=True)
     for name, text in sources.items():
         (out / 'sources' / name).write_text(text, encoding='utf-8', newline='\n')
-    (out / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n', encoding='utf-8')
+    (out / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n', encoding='utf-8', newline='\n')
     rows = [r'\begin{tabular}{lrrr}', r'\toprule',
             r'Carrier & Local cells & Exact messages & Native calls \\', r'\midrule',
             r'Four-operand reassociation & 3 & 2 & ' + f"{summary['actual_native_calls']:,}" + r' \\',
             r'\bottomrule', r'\end{tabular}']
-    (out / 'table.tex').write_text('\n'.join(rows) + '\n', encoding='utf-8')
+    (out / 'table.tex').write_text('\n'.join(rows) + '\n', encoding='utf-8', newline='\n')
     print(json.dumps(summary))
 
 

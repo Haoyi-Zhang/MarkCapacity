@@ -8,7 +8,7 @@
     612,
     792
   ],
-  "pdf_sha256": "4cf6c2d330fe5977b558ca4223aa027c6e6a316d4544657a41eb800ec54e6d11",
+  "pdf_sha256": "d2dff07929f2dd704cff552894c16718793d96c81bfd933796dbce6419b73c8a",
   "manuscript_sha256": "eb1987a8a67ff521ee7c264209ac7a606e1d1f8643e15657df4da376f3b5da86",
   "scheduled_tests": {
     "scientific": 92,
@@ -308,5 +308,5 @@
     "artifact/reference-audit-final.csv": "96b4f28aab57053ad08da56eb359994aee77582df0d03d49b8c0bfbd182812be"
   },
   "current_binding_date": "2026-10-23",
-  "additional_separately_recorded_regressions": 4
+  "additional_separately_recorded_regressions": 5
 }

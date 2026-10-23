@@ -2,8 +2,13 @@
 import sys
 from pathlib import Path
 import unittest
+import io
+import json
+import tempfile
+from contextlib import redirect_stdout
+from unittest.mock import patch
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'src'))
-from associativity_example import colorings, detect, instance, rotations, source, study
+from associativity_example import colorings, detect, instance, rotations, source, study, main
 
 
 class AssociativityTests(unittest.TestCase):
@@ -35,6 +40,19 @@ class AssociativityTests(unittest.TestCase):
         self.assertEqual(len(result['source_message_witnesses']), 10)
         self.assertEqual(result['two_rotation_reachable_cells'], [5]*5)
         self.assertEqual(result['two_rotation_capacity'], 5)
+
+    def test_cli_outputs_have_canonical_lf_bytes_on_every_host(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            out = Path(temporary) / 'owned-output'
+            with patch.object(sys, 'argv', ['owned-example', '--out', str(out)]), redirect_stdout(io.StringIO()):
+                main()
+            files = {p.relative_to(out).as_posix(): p.read_bytes() for p in out.rglob('*') if p.is_file()}
+            self.assertEqual(len(files), 12)
+            for name, data in files.items():
+                self.assertNotIn(b'\r', data, name)
+                self.assertTrue(data.endswith(b'\n'), name)
+            self.assertEqual(files['summary.json'],
+                             (json.dumps(study()[0], indent=2) + '\n').encode('utf-8'))
 
 
 if __name__ == '__main__':
