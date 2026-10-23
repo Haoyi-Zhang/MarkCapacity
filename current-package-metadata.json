@@ -1,15 +1,15 @@
 {
   "schema": "CURRENT_PACKAGE_METADATA_V1",
-  "date": "2026-10-16",
+  "date": "2026-10-23",
   "scope": "Current compiled/source/ledger/export bindings; earlier immutable reports and prior mutable-ledger identities are separate.",
   "class_options": "manuscript,screen,review",
-  "pdf_pages": 52,
+  "pdf_pages": 53,
   "page_size_points": [
     612,
     792
   ],
-  "pdf_sha256": "fa8ae6abebc3e0df7a2f735c0d2cf323b38518007dfb151b3c4167be4ff4b8b1",
-  "manuscript_sha256": "cafa8e6b9b9825e9d0c712ca3be9bffde9faabc79d788ea26ea70edd96755557",
+  "pdf_sha256": "4cf6c2d330fe5977b558ca4223aa027c6e6a316d4544657a41eb800ec54e6d11",
+  "manuscript_sha256": "eb1987a8a67ff521ee7c264209ac7a606e1d1f8643e15657df4da376f3b5da86",
   "scheduled_tests": {
     "scientific": 92,
     "package": 8,
@@ -301,11 +301,12 @@
     "artifact/reference-audit-final.csv": "4ed830e4181cfaa4f778beb587e2bd63f243ca8d1ba93d692447aa97d6ce7a10"
   },
   "current_file_sha256": {
-    "artifact/claim_evidence_ledger.csv": "096b8a0d7ad95d97a29e780b42bf86474530a98464a5faafdf00723ca783b3dc",
-    "artifact/correctness_correspondence.csv": "d12e6716ae5bdc706955eccc61f63cb0ee37b9b5a0f0a763773abe72b4c81450",
-    "artifact/literature-evidence/records.jsonl": "c2fcabf51d4c4df896d39c1f645218f56ad579754d7b8ad086f92f631f39d0d7",
-    "artifact/citation_support.csv": "8372597a0774194e0a8cb871d5c609856a41f44cd2c618ea62c13849a6175d9e",
-    "artifact/reference-audit-final.csv": "6bacd26bca769087d532edd6bb3f17b23061527113cafc25ebef1c0e11260c5d"
+    "artifact/claim_evidence_ledger.csv": "e001e745bc02e4190dfed7dd0b9ddfa29a53b9695ea6e69c49b6627491ba9c92",
+    "artifact/correctness_correspondence.csv": "b056b2a5e21a611710d6658dd2de5d65852b7fbe5278cb8274a4e0505330d640",
+    "artifact/literature-evidence/records.jsonl": "446a192109c81042c0094c4b7438c43fa9067c4f9fc0814d09cb739c8702e815",
+    "artifact/citation_support.csv": "4843cfe738d0cad18738dd79254ea3523e785ea92d4a500932fad477ef67dfc9",
+    "artifact/reference-audit-final.csv": "96b4f28aab57053ad08da56eb359994aee77582df0d03d49b8c0bfbd182812be"
   },
-  "current_binding_date": "2026-10-18"
+  "current_binding_date": "2026-10-23",
+  "additional_separately_recorded_regressions": 4
 }

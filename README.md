@@ -13,6 +13,25 @@ remains independent of this optional rendering dependency.
 
 ## Self-contained scientific reproduction
 
+The interacting four-operand reassociation example is an additional, separately
+recorded language instance. Its rotations are derived from addition-tree syntax,
+not from supplied graph edges. With free bound-identifier renaming and at most
+one associativity rewrite, every source reaches three cells but only two labels
+can be decoded consistently. Two rotations reach all five cells. The independent
+AST detector and actual generated Python calls check the printer, alpha-renaming
+and ten source--message witnesses on bounded integer inputs. This is a pure-integer
+example, not a compiler-wide or cryptographic result. Reproduce its current
+retained summary, table and ten functions outside the artifact:
+
+```sh
+python3 -B -m unittest discover -s regressions -p test_associativity_example.py -v
+python3 -B src/associativity_example.py --out /absolute/fresh/associativity
+```
+
+The scientific workflow runs these four new regression methods and compares the
+newly generated directory with `results/associativity`. The earlier 92-method
+campaign and all historical source/output bindings remain separate and unchanged.
+
 Run:
 
 ```sh

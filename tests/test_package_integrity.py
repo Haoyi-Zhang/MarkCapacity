@@ -113,6 +113,7 @@ def parse_statement_locations(text: str) -> tuple[list[str], dict[str, dict[str,
         "subsubsection": None,
     }
     section_number = 0
+    appendix = False
     theorem_counter = 0
     top_level_sections: list[str] = []
     records: dict[str, dict[str, object]] = {}
@@ -120,6 +121,9 @@ def parse_statement_locations(text: str) -> tuple[list[str], dict[str, dict[str,
     i = 0
     while i < len(lines):
         stripped = lines[i].strip()
+        if stripped == r"\appendix":
+            appendix = True
+            section_number = 0
         section_match = re.match(r"\\section\{(.+)\}$", stripped)
         if section_match:
             section_number += 1
@@ -186,7 +190,7 @@ def parse_statement_locations(text: str) -> tuple[list[str], dict[str, dict[str,
                 raise ValueError(f"duplicate formal label {label}")
             records[label] = {
                 "environment": environment,
-                "number": f"{section_number}.{theorem_counter}",
+                "number": f"{chr(64 + section_number) if appendix else section_number}.{theorem_counter}",
                 "statement_start_line": statement_start,
                 "statement_end_line": statement_end,
                 "proof_start_line": proof_start,
@@ -461,8 +465,9 @@ class PublicPackageIntegrityTests(unittest.TestCase):
 
         self.assertIn(r"\renewcommand{\shortauthors}{Zhang et al.}", manuscript)
         self.assertEqual((formal_count, proof_count), (55, 55))
-        self.assertEqual((figure_count, table_count), (4, 9))
-        self.assertEqual((author_count, section_count), (5, 8))
+        self.assertEqual((figure_count, table_count), (4, 11))
+        self.assertEqual((author_count, section_count), (5, 9))
+        self.assertEqual(len(re.findall(r"^\\section\{", manuscript.split(r"\appendix")[0], flags=re.MULTILINE)), 8)
         self.assertEqual(len(citation_commands), 104)
         self.assertEqual(manuscript.count(r"\affiliation{"), 5)
         self.assertEqual(manuscript.count(r"\authornote{Corresponding author:"), 1)
@@ -656,12 +661,14 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         audit = json.loads(CURRENT_STATEMENTS.read_text(encoding="utf-8"))
         audit_records = {entry["statement_id"]: entry for entry in audit["entries"]}
 
-        self.assertEqual(len(top_sections), 8)
-        self.assertEqual(audit["top_level_section_count"], 8)
+        self.assertEqual(len(top_sections), 9)
+        self.assertEqual(audit["top_level_section_count"], 9)
+        self.assertEqual(audit['body_top_level_section_count'], 8)
         self.assertEqual(len(tex_command_arguments(manuscript, "author")), 5)
         self.assertEqual(audit["top_level_sections"], top_sections)
-        self.assertNotRegex(manuscript, r"\\appendix\b")
-        self.assertNotRegex(manuscript, r"\bAppendix\b")
+        self.assertEqual(len(re.findall(r"\\appendix\b", manuscript)), 1)
+        self.assertEqual(top_sections[-1], 'Contract laws and observation profiles')
+        self.assertIn(r"\label{app:standard-facts}", manuscript)
         self.assertEqual(audit["manuscript_sha256"], sha256_file(MANUSCRIPT))
         self.assertEqual(audit["pdf_sha256"], sha256_file(PDF))
         self.assertEqual(audit["formal_statement_count"], 55)
