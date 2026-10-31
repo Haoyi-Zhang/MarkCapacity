@@ -1,5 +1,25 @@
 # Executable pure-source realization
 
+## Source-facing single-step receipts
+
+`src/source_witness.py` adds `encode_with_receipt(text, message, normalized)`
+and `verify_receipt(text, output, receipt, normalized)` for this same admitted grammar.
+Unlike the retained historical encoder, the adapter applies an actual AST
+commutation without invoking the model embedder. The receipt binds both source
+texts, the normalization contract, requested message, source site and budget.
+The verifier replays the AST effect and uses the retained decoder, rejecting a
+correctly decoded output reached by two swaps, an extra naming edit, and changed
+source bindings. Its trusted normalization policy is supplied separately and
+must match the receipt; the receipt cannot weaken its own attack contract.
+Hashes bind the handoff; they are not proof of reachability.
+
+Run `python -B -m unittest discover -s tests -p test_source_witness.py -v`.
+The check covers the existing 1,213 through-three-site source/request pairs and
+their Boolean inputs; it does not enlarge the claimed language or capacity.
+The original source encoder, campaigns and historical records are unchanged.
+Both paths trust the same strict source admission/parser; this is a separate
+algorithmic representation of the edit obligation, not independent authorship.
+
 The source stage lowers the existing component-local arithmetic grammar into
 ordinary function-local CPython syntax. Distinct fresh `v_i` temporaries preserve
 the local bindings; actual AST operand swaps and temporary rewrites implement

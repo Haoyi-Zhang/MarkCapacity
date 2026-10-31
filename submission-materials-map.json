@@ -1,14 +1,20 @@
 {
   "schema": "SUBMISSION_MATERIALS_MAP",
-  "date": "2026-09-24",
-  "status": "HOLD_AUTHOR_LIST_AND_LIVE_PORTAL_ACTIONS",
+  "date": "2026-10-31",
+  "status": "ANONYMOUS_SOURCES_PREPARED_PARENT_PDF_REBUILD_REQUIRED",
   "rows": [
     {
       "material": "main review PDF",
       "path": "paper/main.pdf",
-      "format": "identified ACM manuscript review PDF with continuous line numbers",
-      "anonymity": "identified working draft; live portal rule unresolved",
-      "status": "FINAL_INTERNAL_FILE_AUTHOR_LIST_INCOMPLETE"
+      "format": "acmsmall anonymous main; no review option and no author-added line numbers",
+      "anonymity": "double-anonymous regular route; approved identifying data only in separate titlepage.tex",
+      "status": "SOURCE_READY_EXISTING_PDF_IS_STALE_IDENTIFIED_DRAFT"
+    },
+    {
+      "material": "separate identifying title page",
+      "path": "paper/titlepage.tex -> paper/titlepage.pdf",
+      "format": "title page only; unchanged approved five-author list, affiliations, ORCIDs and contacts",
+      "status": "SOURCE_READY_PARENT_COMPILES_SEPARATELY"
     },
     {
       "material": "paper source",
@@ -31,5 +37,10 @@
       "status": "EXTERNAL_HUMAN_ACTION_REQUIRED"
     }
   ],
-  "note": "Only one PDF is retained in the final internal package. If the live portal requires anonymous review, generate a compliant anonymous copy after the author list and policy are final."
+  "official_guide": "https://dl.acm.org/journal/toplas/author-guidelines",
+  "regular_track": "https://dl.acm.org/journal/toplas/regular-research-papers",
+  "policy_evidence": "Parent's successful normal-browser live reading 2026-10-31; worker text HTTP403 is only an access limitation",
+  "length": "Contact EIC for likely >50 pages; no hard35-page cap inferred; acmsmall PDF not rebuilt here",
+  "identifying_repository_coordination": "artifact/REPOSITORY.md; not input by anonymous main",
+  "note": "No second full identified manuscript. Parent must rebuild main and titlepage PDFs and inspect anonymous main text/metadata/links before upload. Existing PDF is stale; historical measurements and genuine self-citations are unchanged."
 }

@@ -166,15 +166,16 @@ ZIP member with mode `0644`. Ordinary files, including shebang-bearing `.py`
 files, use `0644`; only `.sh` files use `0755`. The ZIP regression checks the
 actual stored bytes/modes and rejects unlisted members in either delivery root.
 
-The current package metadata binds the actual compiled `paper/main.bbl` keys
+The retained pre-anonymization package metadata binds the then-compiled `paper/main.bbl` keys
 (70 rendered references and 104 single-key citation commands), the 55 current
-statement/proof locations, five supplied authors, and the current claim,
+statement/proof locations, five supplied authors, and the then-current claim,
 correctness and citation ledgers. Uncited BibTeX database records do not count
 as rendered references. The original identities of superseded mutable ledgers
 are checked against the unchanged historical `project-manifest.json`; current
 ledger bytes have separate required bindings. The dated 48-page, 52-statement,
 68-reference and 56-test reports are not assertions about this source export.
-The full-project tests still require actual POSIX file modes as well as exact
+Those bindings do not certify the new anonymous-main/separate-titlepage source
+layout. The full-project tests still require actual POSIX file modes as well as exact
 inventory, hashes, source locations and Poppler output; flat scientific CI does
 not replace those checks.
 
@@ -183,6 +184,19 @@ snapshot accompany the unchanged class. See `../paper/ACM-SOURCE-NOTICE.md` for
 the CTAN release authority, original copyright/LPPL notices and exact derived
 class comparison. This source packaging does not assert current portal policy
 or decide whether the scientific artifact or full paper should be published.
+
+## Anonymous TOPLAS main and identifying title page
+
+The current `paper/main.tex` uses `acmsmall,screen,anonymous`, without `review`
+or author-added line numbering. The unchanged approved authors/ORCIDs/contacts
+are in the separate `paper/titlepage.tex`, not loaded by main. `REPOSITORY.md`
+retains the real identifying URL for coordination; no anonymous URL is invented
+and the main no longer renders the public link. Self-citations remain intact.
+The parent handles both PDF builds and final anonymity inspection. Existing
+PDFs and historical export inventories are pre-change records, not evidence of
+current anonymous-PDF compliance. Current guide evidence and the >50-page EIC
+contact advice are recorded in `paper/VENUE_RULES.md`. New source inventory,
+hashes, file roles and package tests must be rebuilt centrally before export.
 
 ## Portable path notation
 
