@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "source_requests": 1213,
+  "boolean_input_returns_checked": true,
+  "negative_budget_naming_identity_and_normalization_checks": true,
+  "new_capacity_theorem_claimed": false,
+  "input_bindings": {
+    "src/source_witness.py": "74304ad4e20cf6796dfc4d3ce13546299ba41a6af74e12ad6e57bf5a96410a9b",
+    "src/source_language.py": "02c44224d353abec348678501f5ab37d61c954d3a7c663f82271541d6fa58dc7",
+    "src/arithmetic_language.py": "e4253ca53fe1f631a4ac50fe1c2d4c67eff22d8efe74a5bb62b13e963135773d",
+    "tests/test_source_witness.py": "0f0380f2131a9349106b2956357f1df8eb712f0d1ac7f1ee1bd822a5532ab33e"
+  },
+  "actual_test_logs": [
+    {
+      "mode": "normal",
+      "sha256": "8d0bcac42c9da09faa62ae08e1831bbc454c6605dfc08442d4064ba23e9d9acc",
+      "text": "...\n----------------------------------------------------------------------\nRan 3 tests in 0.535s\n\nOK\n"
+    },
+    {
+      "mode": "optimized",
+      "sha256": "9eefe57b0e5b01466aad3e3278bf7400310b7996080957a24e13bb5f63187102",
+      "text": "...\n----------------------------------------------------------------------\nRan 3 tests in 0.540s\n\nOK\n"
+    }
+  ],
+  "scope": "Current bounded owned-source adapter regressions; separate from the earlier source campaign"
+}

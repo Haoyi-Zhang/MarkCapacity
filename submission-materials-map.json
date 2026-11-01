@@ -9,8 +9,8 @@
       "format": "acmsmall anonymous main; no review option and no author-added line numbers",
       "anonymity": "double-anonymous regular route; approved identifying data only in separate titlepage.tex",
       "status": "CURRENT_DOCUMENT_SOURCE_BOUND",
-      "pdf_sha256": "fc9691012a643c8e8679db306c6e498e242680daac21e2f35c928233298cb7da",
-      "source_sha256": "ef30b0a78e0e9f9baf067aa0fe43c3173077a25c247578420c30e83cd3b03e71",
+      "pdf_sha256": "02ab58ac6f13f1d2f86d6d3a832cebe30656556d6c389ed31d010ce86a98add7",
+      "source_sha256": "716fc66d12f0d09da0b57e89e655c39bab6bb889f9ae29c45f4cf73efcac6281",
       "pages": 50
     },
     {
@@ -18,7 +18,7 @@
       "path": "paper/titlepage.tex -> paper/titlepage.pdf",
       "format": "title page only; unchanged approved five-author list, affiliations, ORCIDs and contacts",
       "status": "CURRENT_DOCUMENT_SOURCE_BOUND",
-      "pdf_sha256": "71fb6f57c44f877f8c94fc1e782ea68ce8566195a86e303513728b3673e17313",
+      "pdf_sha256": "4a0d80c3ba1b2e30bd809199849de14169384d3ce823703ba53f795917746f36",
       "source_sha256": "03f22865e8622441a1e7f26b49224f3ac43abbfc543d734078b96897e09f421e",
       "pages": 1
     },

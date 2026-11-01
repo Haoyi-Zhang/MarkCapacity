@@ -327,6 +327,7 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         self.assertRegex(current['current_census_sha256'],r'^[0-9a-f]{64}$')
         status='BOUND_ORIGINAL_BODY_READING_CURRENT_CLAUSES_ONLY'
         expected_contexts=[]
+        historical_origins={}
         for key,entry in entries.items():
             row,record,citation=audit_rows[key],records[key],citation_rows[key]
             body=record['current_source_support']
@@ -369,12 +370,20 @@ class PublicPackageIntegrityTests(unittest.TestCase):
                 self.assertIn(pos['paragraph'],actual)
                 expected_contexts.append((key,pos['file'],int(pos['line']),pos['paragraph_sha256'],clause))
             historical=record['historical_record']
+            self.assertEqual(citation['historical_evidence_sha256'],
+                             historical['local_bib_entry_sha256'] if historical else '')
+            # A current-snapshot predecessor is not the original dated receipt.
+            # Preserve and check every predecessor, then check the unchanged
+            # original category (or its actual absence for replacement sources).
+            while historical and historical.get('verification_status')==status:
+                self.assertEqual(historical['citation_key'],key)
+                self.assertRegex(historical['local_bib_entry_sha256'],r'^[0-9a-f]{64}$')
+                historical=historical['historical_record']
+            historical_origins[key]=historical
             if key in {'abramsky1990lazy','sangiorgi2007environmental'}:
                 self.assertIsNone(historical)
-                self.assertEqual(citation['historical_evidence_sha256'],'')
             else:
                 self.assertEqual(historical['citation_key'],key)
-                self.assertEqual(citation['historical_evidence_sha256'],historical['local_bib_entry_sha256'])
                 if key in current['historical_bib_entry_sha256']:
                     self.assertEqual(historical['local_bib_entry_sha256'],current['historical_bib_entry_sha256'][key])
         self.assertIs(current['current_claim_support_complete'],True)
@@ -387,8 +396,8 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         # These are explicitly historical, not today's source-body verdicts.
         for key,old_status in {'hamming1950':'PRIMARY_PUBLISHER_METADATA_ONLY_FULLTEXT_NOT_READ',
                               'francis2021domatic':'PRIMARY_RECORD_AND_COROLLARY_4_1_CONTEXT_READ_NOT_WHOLE_ARTICLE'}.items():
-            self.assertEqual(records[key]['historical_record']['verification_status'],old_status)
-            self.assertIn('NOT_A_COMPLETE_NOTICE',records[key]['historical_record']['notice_check'])
+            self.assertEqual(historical_origins[key]['verification_status'],old_status)
+            self.assertIn('NOT_A_COMPLETE_NOTICE',historical_origins[key]['notice_check'])
         with (ROOT/'artifact/citation-contexts.csv').open(newline='',encoding='utf-8') as handle:
             contexts=list(csv.DictReader(handle))
         self.assertEqual(len(contexts),105)
@@ -646,7 +655,7 @@ class PublicPackageIntegrityTests(unittest.TestCase):
     def test_running_figure_is_narratively_placed_and_notation_light(self):
         manuscript = strip_tex_comments(MANUSCRIPT.read_text(encoding="utf-8"))
         reference = manuscript.index(
-            r"Figure~\ref{fig:running} gives a minimal instance in a pure integer fragment."
+            r"Figure~\ref{fig:running} illustrates a pure integer fragment:"
         )
         figure_start = manuscript.index(r"\begin{figure}[t]", reference)
         next_paragraph = manuscript.index(
