@@ -13,6 +13,19 @@ remains independent of this optional rendering dependency.
 
 ## Self-contained scientific reproduction
 
+The dual-role rewrite proposition uses the single-step union `R union T`,
+not arbitrary alternation `(R union T)*`. A three-program proof witness has
+capacities `1,1,2` for old, single-step and composed access respectively,
+even though the old access relation is reflexive and transitive. A direct
+enumeration of all program decoders and the existing quotient solver agree:
+
+```sh
+python3 -B -m unittest discover -s regressions -p test_dual_role_access.py -v
+```
+
+This separate proof-boundary check does not change historical campaign counts
+or claim a real-program study or a new coding theorem.
+
 The interacting four-operand reassociation example is an additional, separately
 recorded language instance. Its rotations are derived from addition-tree syntax,
 not from supplied graph edges. With free bound-identifier renaming and at most

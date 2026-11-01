@@ -32,6 +32,9 @@ jobs:
           timeout --kill-after=10s 60s python -B -m unittest discover -s regressions -p test_current_export.py -v > "$WOC_CHECK_OUTPUT/current-export-regressions.log" 2>&1
           cat "$WOC_CHECK_OUTPUT/materials.json"
           cat "$WOC_CHECK_OUTPUT/scientific.log"
+      - name: Check single-step versus composed dual-role access
+        if: success()
+        run: timeout --kill-after=5s 30s python -B -m unittest discover -s regressions -p test_dual_role_access.py -v
       - name: Check the interacting associativity channel
         if: success()
         shell: bash

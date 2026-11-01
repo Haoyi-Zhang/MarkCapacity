@@ -86,6 +86,15 @@ cover-decomposition bounds; it assumes independent component budgets and access.
 
 ## Hygienic source realization and finite admission
 
+The single-step dual-role proposition does not apply to alternating closure.
+For behaviorally equivalent `a,b,c`, use singleton detector cells and access
+rows `R(a)={a}`, `R(b)=R(c)={b,c}`. Adding both the attack and access edge
+`a -> b` merges detector cells `a,b`. Direct union still permits one message,
+but alternating closure reaches both `{a,b}` and `{c}` from every source and
+permits two. The old relation is already reflexive and transitive. The exact
+finite witness is checked by `regressions/test_dual_role_access.py`; it does
+not broaden the arithmetic insertion-wide commutation budget.
+
 `src/source_language.py` prints and admits actual ordinary CPython function
 syntax for this fragment. Each named component receives a distinct fresh `v_i`,
 disjoint from the positional `x_i` arguments. A source parser rejects repeated
