@@ -20,11 +20,21 @@ METADATA = "artifact/current-package-metadata.json"
 SUPPLEMENT = "artifact/current-export-supplement.json"
 EXPORT_ROOTS = ("paper", "artifact")
 BIB_PATHS = ("paper/main.tex", "paper/references.bib", "paper/main.bbl")
+SUBMISSION_PATHS = ("paper/titlepage.tex", "paper/project-repository.tex", "paper/main.pdf", "paper/titlepage.pdf")
 VENDOR_PATHS = ("paper/acmart.cls", "paper/acmart.dtx", "paper/acmart.ins",
                 "paper/acmart-source-v2.19.tar.gz", "paper/ACM-SOURCE-NOTICE.md")
 FORBIDDEN = {".pyc", ".pyo", ".aux", ".blg", ".bbl", ".log", ".fls", ".fdb_latexmk", ".toc"}
 FORBIDDEN_PARTS = {"__pycache__", ".pytest_cache", ".mypy_cache", ".git"}
 ARCHIVE_ENV = "TOPLAS19_EXPORT_ARCHIVE"
+MAIN_OPTIONS = "acmsmall,screen,anonymous,nonacm"
+TITLE_OPTIONS = "acmsmall,screen,nonacm"
+# Existing approved identities belong to the separate title page, never main.
+APPROVED_AUTHORS = ("Haoyi Zhang", "Huaijin Ran", "Xunzhu Tang", "Kisub Kim", r"Tegawend\'{e} F. Bissyand\'{e}")
+APPROVED_EMAILS = ("hyeliozhang@gmail.com", "huaijin003@e.ntu.edu.sg", "realdanieltang@gmail.com", "kisub.kim@dgist.ac.kr", "tegawende.bissyande@uni.lu")
+APPROVED_ORCIDS = ("0009-0009-3693-786X", "0009-0009-2482-2344", "0000-0002-6377-0884", "0000-0002-4462-6916", "0000-0001-7270-9869")
+NON_DOI_CHAPTER = {"author": "Samson Abramsky", "title": "The Lazy Lambda Calculus", "booktitle": "Research Topics in Functional Programming",
+                   "editor": "D. Turner", "publisher": "Addison Wesley", "year": "1990", "pages": "65--117",
+                   "url": "https://www.cs.ox.ac.uk/people/samson.abramsky/lazy.pdf", "note": "Author-hosted manuscript"}
 
 
 def require(condition, message):
@@ -119,6 +129,92 @@ def bibliography_keys(bbl):
     return re.findall(r"\\bibitem(?:\[[\s\S]*?\])?\s*\{([^{}]+)\}", uncomment(bbl))
 
 
+def literal_arguments(text, command):
+    """Balanced literal TeX arguments; preserve accents and reject truncation."""
+    source, values = uncomment(text), []
+    for match in re.finditer(r"\\" + command + r"\{", source):
+        start, depth, end = match.end(), 1, match.end()
+        while end < len(source) and depth:
+            if source[end] == "{" and source[end-1] != "\\": depth += 1
+            elif source[end] == "}" and source[end-1] != "\\": depth -= 1
+            end += 1
+        require(depth == 0, "unclosed literal argument: " + command)
+        values.append(source[start:end-1])
+    return values
+
+
+def reference_entries(text):
+    """Exact brace-delimited source entries; not a DOI-resolution check."""
+    result, cursor = {}, 0
+    while True:
+        match = re.search(r"@([A-Za-z]+)\s*\{\s*([^,\s]+)\s*,", text[cursor:])
+        if match is None: return result
+        start = cursor + match.start(); opening = text.index("{", start)
+        depth, end = 1, opening + 1
+        while end < len(text) and depth:
+            if text[end] == "{" and text[end-1] != "\\": depth += 1
+            elif text[end] == "}" and text[end-1] != "\\": depth -= 1
+            end += 1
+        require(depth == 0 and match[2] not in result, "duplicate/unclosed bibliography entry")
+        result[match[2]] = text[start:end].strip(); cursor = end
+
+
+def validate_reference_identities(entries):
+    """One exact non-DOI chapter exception; no general missing-DOI waiver."""
+    identities = []
+    for key, entry in entries.items():
+        kind = re.match(r"@([A-Za-z]+)", entry).group(1).lower()
+        doi = re.search(r'(?im)^\s*doi\s*=\s*[{"]([^}"]+)', entry)
+        if key == "abramsky1990lazy":
+            require(kind == "incollection" and doi is None, "exact non-DOI chapter role")
+            for field, expected in NON_DOI_CHAPTER.items():
+                match = re.search(r'(?im)^\s*' + field + r'\s*=\s*\{([^}]+)\}', entry)
+                require(match is not None and match[1] == expected, "exact non-DOI chapter identity: " + field)
+            identities.append("bookchapter:Samson-Abramsky:1990:Research-Topics-in-Functional-Programming:65-117")
+        else:
+            require(kind in {"article", "inproceedings"} and doi is not None and doi[1].strip(), "DOI/type required: " + key)
+            identities.append("doi:" + doi[1].strip().lower())
+    require(len(identities) == len(set(identities)), "duplicate scholarly identity")
+
+
+def validate_submission(files, current):
+    """Check source roles and bound separate documents; not PDF visual QA."""
+    main = uncomment(files["paper/main.tex"].decode("utf-8"))
+    title = uncomment(files["paper/titlepage.tex"].decode("utf-8"))
+    for source, expected in ((main, MAIN_OPTIONS), (title, TITLE_OPTIONS)):
+        require(re.findall(r"\\documentclass\[([^\]]+)\]\{acmart\}", source) == [expected], "submission class role")
+        require(not re.search(r"\\(?:linenumbers|runninglinenumbers)\b|\\usepackage(?:\[[^]]*\])?\{lineno\}", source), "submission line numbering")
+        require(r"\usepackage{geometry}" not in source and r"\fancypagestyle" not in source
+                and not re.search(r"\\setlength\{\\(?:textwidth|textheight|oddsidemargin|evensidemargin|topmargin)\}", source), "submission manual geometry")
+        require(not re.search(r"\\acm(?:DOI|Volume|Number|Article|Year|Month)\{[^}]+\}", source), "unassigned publication metadata")
+    require(current["class_options"] == MAIN_OPTIONS, "current anonymous main class")
+    require(literal_arguments(main,"author") == ["Anonymous Author(s)"], "anonymous main author marker")
+    for command in ("email", "orcid", "affiliation", "authornote"):
+        require(not literal_arguments(main,command), "identifying main topmatter: " + command)
+    require(r"\hypersetup{pdfauthor={}}" in main, "anonymous PDF author metadata clearing")
+    require(not any("titlepage" in name for name in literal_arguments(main,"input")), "main inputs identifying titlepage")
+    require(not re.search(r"\\(?:section|subsection)\*?\{|\\begin\{(?:abstract|theorem|proof)\}", title), "titlepage is a second manuscript")
+    require(len(literal_arguments(title,"affiliation")) == 5, "titlepage five affiliations")
+    for command, expected, field in (("author",APPROVED_AUTHORS,"authors_tex"), ("email",APPROVED_EMAILS,"author_emails"), ("orcid",APPROVED_ORCIDS,"author_orcids")):
+        require(literal_arguments(title,command) == list(expected) == current[field], "approved titlepage identities: " + command)
+    require(literal_arguments(title,"authornote") == [r"Corresponding author: Tegawend\'{e} F. Bissyand\'{e}."], "titlepage corresponding author")
+    availability = uncomment(files["paper/project-repository.tex"].decode("utf-8"))
+    require(not re.search(r"https?://[^\s{}]*(?:github|gitlab)\.[^\s{}]+", main + availability, re.I), "identifying rendered repository URL")
+    for identifier in APPROVED_EMAILS + APPROVED_ORCIDS:
+        require(identifier not in main + availability, "identifying submission source")
+    require({p for p in files if len(PurePosixPath(p).parts)==2 and p.startswith("paper/") and p.endswith(".pdf")}
+            == {"paper/main.pdf","paper/titlepage.pdf"}, "exact main/titlepage PDF roles")
+    documents = current["current_documents"]
+    require(set(documents) == {"paper/main.pdf","paper/titlepage.pdf"}, "submission document metadata roles")
+    for pdf, source, role in (("paper/main.pdf","paper/main.tex","anonymous_main"), ("paper/titlepage.pdf","paper/titlepage.tex","identifying_titlepage")):
+        record = documents[pdf]
+        require(record["role"] == role and record["source"] == source and record["source_sha256"] == digest(files[source])
+                and record["pdf_sha256"] == digest(files[pdf]), "submission document byte/source binding")
+        require(type(record["pages"]) is int and record["pages"] > 0 and record["page_size_points"] == [486,720], "native acmsmall document geometry/pages")
+    require(documents["paper/titlepage.pdf"]["pages"] == 1, "separate titlepage must be one page")
+    require(documents["paper/main.pdf"]["pdf_sha256"] == current["pdf_sha256"] and documents["paper/main.pdf"]["pages"] == current["pdf_pages"], "current main document linkage")
+
+
 def validate_bibliography(files, current):
     """Only the named, byte-bound bibliography source earns a suffix exception."""
     role = current["publisher_bibliography"]
@@ -143,6 +239,8 @@ def validate_bibliography(files, current):
             "bibliography exact compiled-key coverage")
     require(type(role["key_count"]) is int and role["key_count"] == len(keys)
             and role["keys"] == sorted(expected), "bibliography metadata keys")
+    database = reference_entries(bib.decode("utf-8"))
+    validate_reference_identities({key:database[key] for key in keys})
     text = bbl.decode("utf-8")
     require(text.count(r"\begin{thebibliography}{" + str(len(keys)) + "}") == 1
             and text.count(r"\end{thebibliography}") == 1
@@ -224,6 +322,7 @@ def validate_inventory(records, manifest, current):
         require(old_rows.get(path) == expected, 'prior export identity: ' + path)
     validate_bibliography(files, current)
     validate_vendor(files, current)
+    validate_submission(files, current)
 
 
 def main():
@@ -242,7 +341,7 @@ def main():
     supplement = json.loads(records[SUPPLEMENT][0])
     require(supplement["schema"] == "CURRENT_EXPORT_SUPPLEMENT_V1"
             and supplement["current_metadata_sha256"] == digest(records[METADATA][0])
-            and supplement["publisher_source_paths"] == list(BIB_PATHS + VENDOR_PATHS)
+            and supplement["publisher_source_paths"] == list(BIB_PATHS + SUBMISSION_PATHS[:2] + VENDOR_PATHS)
             and supplement["scheduled_checks"] == {"package": 8, "export_regressions": 7},
             "export supplement binding")
     # The exact manifest includes the supplement, metadata and validator.

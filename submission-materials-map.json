@@ -1,20 +1,26 @@
 {
   "schema": "SUBMISSION_MATERIALS_MAP",
   "date": "2026-10-31",
-  "status": "ANONYMOUS_SOURCES_PREPARED_PARENT_PDF_REBUILD_REQUIRED",
+  "status": "CURRENT_DOCUMENTS_SOURCE_BOUND",
   "rows": [
     {
       "material": "main review PDF",
       "path": "paper/main.pdf",
       "format": "acmsmall anonymous main; no review option and no author-added line numbers",
       "anonymity": "double-anonymous regular route; approved identifying data only in separate titlepage.tex",
-      "status": "SOURCE_READY_EXISTING_PDF_IS_STALE_IDENTIFIED_DRAFT"
+      "status": "CURRENT_DOCUMENT_SOURCE_BOUND",
+      "pdf_sha256": "fc9691012a643c8e8679db306c6e498e242680daac21e2f35c928233298cb7da",
+      "source_sha256": "ef30b0a78e0e9f9baf067aa0fe43c3173077a25c247578420c30e83cd3b03e71",
+      "pages": 50
     },
     {
       "material": "separate identifying title page",
       "path": "paper/titlepage.tex -> paper/titlepage.pdf",
       "format": "title page only; unchanged approved five-author list, affiliations, ORCIDs and contacts",
-      "status": "SOURCE_READY_PARENT_COMPILES_SEPARATELY"
+      "status": "CURRENT_DOCUMENT_SOURCE_BOUND",
+      "pdf_sha256": "71fb6f57c44f877f8c94fc1e782ea68ce8566195a86e303513728b3673e17313",
+      "source_sha256": "03f22865e8622441a1e7f26b49224f3ac43abbfc543d734078b96897e09f421e",
+      "pages": 1
     },
     {
       "material": "paper source",
@@ -39,8 +45,8 @@
   ],
   "official_guide": "https://dl.acm.org/journal/toplas/author-guidelines",
   "regular_track": "https://dl.acm.org/journal/toplas/regular-research-papers",
-  "policy_evidence": "Parent's successful normal-browser live reading 2026-10-31; worker text HTTP403 is only an access limitation",
-  "length": "Contact EIC for likely >50 pages; no hard35-page cap inferred; acmsmall PDF not rebuilt here",
+  "policy_evidence": "Official author and regular-research instructions consulted 2026-10-31; no editorial acceptance is asserted",
+  "length": "Current acmsmall main: 50 pages including references and appendix. Official guidance recommends contacting the editor for likely lengths over 50 pages; this is not represented as a hard rejection rule",
   "identifying_repository_coordination": "artifact/REPOSITORY.md; not input by anonymous main",
-  "note": "No second full identified manuscript. Parent must rebuild main and titlepage PDFs and inspect anonymous main text/metadata/links before upload. Existing PDF is stale; historical measurements and genuine self-citations are unchanged."
+  "note": "One anonymous manuscript and one separate identifying title page. Cover letter, portal facts and submission remain author actions; current document consistency does not certify scientific acceptance. Historical measurements and genuine self-citations remain distinct."
 }

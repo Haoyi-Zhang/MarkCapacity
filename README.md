@@ -166,18 +166,17 @@ ZIP member with mode `0644`. Ordinary files, including shebang-bearing `.py`
 files, use `0644`; only `.sh` files use `0755`. The ZIP regression checks the
 actual stored bytes/modes and rejects unlisted members in either delivery root.
 
-The retained pre-anonymization package metadata binds the then-compiled `paper/main.bbl` keys
-(70 rendered references and 104 single-key citation commands), the 55 current
-statement/proof locations, five supplied authors, and the then-current claim,
-correctness and citation ledgers. Uncited BibTeX database records do not count
-as rendered references. The original identities of superseded mutable ledgers
-are checked against the unchanged historical `project-manifest.json`; current
-ledger bytes have separate required bindings. The dated 48-page, 52-statement,
-68-reference and 56-test reports are not assertions about this source export.
-Those bindings do not certify the new anonymous-main/separate-titlepage source
-layout. The full-project tests still require actual POSIX file modes as well as exact
-inventory, hashes, source locations and Poppler output; flat scientific CI does
-not replace those checks.
+The current metadata binds 70 rendered references and 105 single-key citation
+commands, 52 primary statements with proofs, and 55 scoped correctness rows
+whose shared-proof aliases remain explicit. It separately binds the anonymous
+main and identifying title page with the existing five authors. Uncited
+database entries do not count as rendered references. Current claim, correctness
+and citation ledgers have their own byte and source-location bindings; original
+identities remain in the unchanged historical `project-manifest.json`. The dated
+48-page, 68-reference and 56-test reports describe their original snapshots,
+not this export. Full-project tests check the current document roles, actual
+POSIX modes, exact inventory, hashes, source locations and Poppler output;
+standalone scientific CI does not replace those checks.
 
 The matching unmodified ACM 2.19 `.dtx`/`.ins` and complete original source
 snapshot accompany the unchanged class. See `../paper/ACM-SOURCE-NOTICE.md` for

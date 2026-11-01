@@ -20,12 +20,17 @@ def sha(data):
 
 
 def fixture():
-    keys = ["owned%02d" % i for i in range(68)]
+    keys = sorted(["owned%02d" % i for i in range(69)] + ["abramsky1990lazy"])
+    chapter = "@incollection{abramsky1990lazy,\n" + "\n".join(
+        "  " + field + " = {" + value + "}," for field,value in validator.NON_DOI_CHAPTER.items()) + "\n}"
     files = {
-        "paper/main.tex": ("\\bibliographystyle{ACM-Reference-Format}\n\\bibliography{references}\n"
+        "paper/main.tex": ("\\documentclass[acmsmall,screen,anonymous,nonacm]{acmart}\n"
+                           "\\author{Anonymous Author(s)}\n\\hypersetup{pdfauthor={}}\n"
+                           "\\bibliographystyle{ACM-Reference-Format}\n\\bibliography{references}\n"
                            + "\n".join("\\cite{" + key + "}" for key in keys)).encode(),
-        "paper/references.bib": "\n".join("@article{" + key + ", title={owned fixture}}" for key in keys).encode(),
-        "paper/main.bbl": ("% ACM-Reference-Format-Journals [18-Jan-2012]\n\\begin{thebibliography}{68}\n"
+        "paper/references.bib": "\n".join(chapter if key=="abramsky1990lazy" else
+            "@article{" + key + ",\n title={owned fixture},\n doi={10.0000/owned-fixture-" + key + "}\n}" for key in keys).encode(),
+        "paper/main.bbl": ("% ACM-Reference-Format-Journals [18-Jan-2012]\n\\begin{thebibliography}{70}\n"
                            + "\n".join("\\bibitem[Owned(2026)]%\n{" + key + "} owned" for key in keys)
                            + "\n\\end{thebibliography}\n").encode(),
         "paper/acmart.cls": b"owned class fixture",
@@ -36,6 +41,15 @@ def fixture():
         "artifact/owned.sh": b"#!/bin/sh\nexit 0\n",
         "artifact/owned-ledger.csv": b"current owned ledger\n",
     }
+    # Owned byte fixtures only: not generated PDFs or claimed document review.
+    files['paper/main.pdf'] = b'owned anonymous PDF byte fixture'
+    files['paper/titlepage.pdf'] = b'owned identifying title-page PDF byte fixture'
+    files['paper/project-repository.tex'] = b'Accompanying finite checker.'
+    title = "\\documentclass[acmsmall,screen,nonacm]{acmart}\n"
+    for author,email,orcid in zip(validator.APPROVED_AUTHORS,validator.APPROVED_EMAILS,validator.APPROVED_ORCIDS):
+        title += '\\author{'+author+'}\n\\email{'+email+'}\n\\orcid{'+orcid+'}\n\\affiliation{owned institution}\n'
+    title += r"\authornote{Corresponding author: Tegawend\'{e} F. Bissyand\'{e}.}"
+    files['paper/titlepage.tex'] = title.encode()
     old_ledger_hash = sha(b'earlier owned ledger\n')
     files['artifact/project-manifest.json'] = json.dumps({'files': [
         {'path': 'artifact/owned-ledger.csv', 'sha256': old_ledger_hash}]}).encode()
@@ -54,12 +68,16 @@ def fixture():
                    prior_export_file_sha256={'artifact/owned-ledger.csv': old_ledger_hash},
                    publisher_bibliography=dict(path="paper/main.bbl", bytes=len(files["paper/main.bbl"]),
                        sha256=sha(files["paper/main.bbl"]), references_sha256=sha(files["paper/references.bib"]),
-                       keys=keys, key_count=68),
+                       keys=keys, key_count=70),
                    template_source=dict(release="2.19", date="2026-06-27",
                        upstream_commit="062edc8119be9067a346ce874281eab48b2c29a4",
                        source_url="https://raw.githubusercontent.com/borisveytsman/acmart/062edc8119be9067a346ce874281eab48b2c29a4/acmart.dtx",
                        derived_class_sha256=sha(files["paper/acmart.cls"]),
-                       file_sha256={path: sha(files[path]) for path in validator.VENDOR_PATHS}))
+                       file_sha256={path: sha(files[path]) for path in validator.VENDOR_PATHS}),
+                   class_options='acmsmall,screen,anonymous,nonacm',pdf_pages=53,pdf_sha256=sha(files['paper/main.pdf']),
+                   authors_tex=list(validator.APPROVED_AUTHORS),author_emails=list(validator.APPROVED_EMAILS),author_orcids=list(validator.APPROVED_ORCIDS),
+                   current_documents={pdf:dict(role=role,source=source,source_sha256=sha(files[source]),pdf_sha256=sha(files[pdf]),pages=pages,page_size_points=[486,720])
+                              for pdf,source,role,pages in [('paper/main.pdf','paper/main.tex','anonymous_main',53),('paper/titlepage.pdf','paper/titlepage.tex','identifying_titlepage',1)]})
     records = {path: (data, "0755" if path.endswith(".sh") else "0644") for path, data in files.items()}
     records[validator.MANIFEST] = (b"manifest fixture", "0644")
     return records, manifest_for(records), current
@@ -184,14 +202,14 @@ class CurrentExportTests(unittest.TestCase):
         self.assertEqual((records, manifest, current), original)
         validator.validate_bibliography({p: records[p][0] for p in validator.BIB_PATHS}, current)
         # An unused database record is not a rendered reference. Its source
-        # bytes remain bound, but the compiled/cited key count must stay 68.
+        # bytes remain bound, but the compiled/cited key count must stay 70.
         files = {p: records[p][0] for p in validator.BIB_PATHS}
         files['paper/references.bib'] += b'\n@article{unused, title={owned unused fixture}}\n'
         current['publisher_bibliography']['references_sha256'] = sha(files['paper/references.bib'])
         validator.validate_bibliography(files, current)
-        self.assertEqual(current['publisher_bibliography']['key_count'], 68)
+        self.assertEqual(current['publisher_bibliography']['key_count'], 70)
         badmeta = copy.deepcopy(current)
-        badmeta['publisher_bibliography']['key_count'] = 69
+        badmeta['publisher_bibliography']['key_count'] = 71
         with self.assertRaisesRegex(ValueError, 'metadata keys'):
             validator.validate_bibliography(files, badmeta)
 
@@ -250,6 +268,46 @@ class CurrentExportTests(unittest.TestCase):
         badmeta = dict(current, manuscript_sha256=sha(changed))
         with self.assertRaisesRegex(ValueError, "inclusion/style"):
             validator.validate_bibliography(badfiles, badmeta)
+        entries = validator.reference_entries(files['paper/references.bib'].decode())
+        validator.validate_reference_identities(entries)
+        for key, changed in (
+            ('abramsky1990lazy', entries['abramsky1990lazy'].replace('{1990}','{1993}')),
+            ('abramsky1990lazy', entries['abramsky1990lazy'].replace('@incollection','@article')),
+            ('abramsky1990lazy', entries['abramsky1990lazy'].replace('Samson Abramsky','Different Author')),
+            ('owned00', entries['owned00'].replace('doi={10.0000/owned-fixture-owned00}','url={https://example.invalid/fixture}')),
+            ('owned00', entries['owned00'].replace('owned-fixture-owned00','owned-fixture-owned01')),
+        ):
+            with self.subTest(identity=key,changed=changed):
+                bad = dict(entries);bad[key] = changed
+                with self.assertRaises(ValueError):validator.validate_reference_identities(bad)
+        bad = dict(entries);bad['unapproved-chapter'] = entries['abramsky1990lazy'].replace('abramsky1990lazy','unapproved-chapter')
+        with self.assertRaisesRegex(ValueError,'DOI/type required'):validator.validate_reference_identities(bad)
+
+        # Resealing current byte/manifest hashes cannot authorize a wrong role.
+        records, _, current = fixture();files = {p:v[0] for p,v in records.items()}
+        validator.validate_submission(files,current)
+        for before,after in (
+            (b'acmsmall,screen,anonymous,nonacm',b'manuscript,screen,review'),
+            (b'Anonymous Author(s)',b'Haoyi Zhang'),
+            (b'\\hypersetup{pdfauthor={}}',b'\\linenumbers'),
+            (b'\\author{Anonymous Author(s)}',b'\\author{Anonymous Author(s)}\\email{leak@example.invalid}'),
+            (b'\\bibliography{references}',b'\\input{titlepage.tex}\\bibliography{references}'),
+        ):
+            badfiles=dict(files);badfiles['paper/main.tex']=files['paper/main.tex'].replace(before,after)
+            badmeta=copy.deepcopy(current);badmeta['manuscript_sha256']=sha(badfiles['paper/main.tex'])
+            badmeta['current_documents']['paper/main.pdf']['source_sha256']=sha(badfiles['paper/main.tex'])
+            with self.subTest(role=after),self.assertRaises(ValueError):validator.validate_submission(badfiles,badmeta)
+        for path in ('paper/titlepage.tex','paper/titlepage.pdf'):
+            badfiles=dict(files);badfiles.pop(path)
+            with self.assertRaises((ValueError,KeyError)):validator.validate_submission(badfiles,current)
+        for before,after in ((b'Haoyi Zhang',b'Changed Author'),(b'0009-0009-3693-786X',b'0000-0000-0000-0000')):
+            badfiles=dict(files);badfiles['paper/titlepage.tex']=files['paper/titlepage.tex'].replace(before,after)
+            badmeta=copy.deepcopy(current);badmeta['current_documents']['paper/titlepage.pdf']['source_sha256']=sha(badfiles['paper/titlepage.tex'])
+            with self.assertRaisesRegex(ValueError,'approved titlepage identities'):validator.validate_submission(badfiles,badmeta)
+        badfiles=dict(files);badfiles['paper/identified-main.pdf']=b'owned extra full draft'
+        with self.assertRaisesRegex(ValueError,'exact main/titlepage PDF roles'):validator.validate_submission(badfiles,current)
+        badfiles=dict(files);badfiles['paper/project-repository.tex']=b'\\url{https://github.com/owned-identifying/repository}'
+        with self.assertRaisesRegex(ValueError,'repository URL'):validator.validate_submission(badfiles,current)
 
     def test_retained_log_binding_cannot_be_resealed_by_current_manifest(self):
         records, _, current = fixture()

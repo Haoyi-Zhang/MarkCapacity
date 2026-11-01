@@ -1,0 +1,150 @@
+{
+  "schema": "CAPACITY_CURRENT_STRUCTURAL_CONTRACT_V1",
+  "approved_for_refresh": true,
+  "approval_instruction": "Parent reviews/finalizes exact titlepage identities, object set and final source hashes, then sets true. No author count guessed.",
+  "approved_source_sha256": {
+    "paper/main.tex": "ef30b0a78e0e9f9baf067aa0fe43c3173077a25c247578420c30e83cd3b03e71",
+    "paper/titlepage.tex": "03f22865e8622441a1e7f26b49224f3ac43abbfc543d734078b96897e09f421e",
+    "paper/references.bib": "634ce14322d89cf1803241f6e70a46daea35301166b1531a8e2ddcf0cee67e0e"
+  },
+  "expected_main_options": [
+    "acmsmall",
+    "screen",
+    "anonymous",
+    "nonacm"
+  ],
+  "expected_main_authors_tex": [
+    "Anonymous Author(s)"
+  ],
+  "expected_titlepage_options": [
+    "acmsmall",
+    "screen",
+    "nonacm"
+  ],
+  "expected_counts": {
+    "formal_statements": 52,
+    "proofs": 52,
+    "figures": 4,
+    "tables": 10,
+    "sections": 9,
+    "body_sections": 8,
+    "bibliography_keys": 70,
+    "citation_commands": 105
+  },
+  "formal_primary_ids": [
+    "cor:access-bipartite",
+    "cor:access-capacity",
+    "cor:access-class-complete",
+    "cor:activation",
+    "cor:canonicalization",
+    "cor:cross-language",
+    "cor:crossing-bipartite",
+    "cor:general-capacity",
+    "cor:local-list-budget",
+    "cor:one-bit",
+    "cor:refinement-product",
+    "cor:refinement-reduction",
+    "cor:rigidity-rate",
+    "cor:robust-boolean-algebra",
+    "cor:semantic-rate",
+    "lem:arithmetic-translation",
+    "lem:embedding-injection",
+    "lem:factor",
+    "prop:access-monotonicity",
+    "prop:access-realization",
+    "prop:access-triangle",
+    "prop:alternative-capacity",
+    "prop:detector-refinement",
+    "prop:dual-role-rewrite",
+    "prop:hygienic-source",
+    "prop:incidence-realization",
+    "prop:infinite-width-failure",
+    "prop:monotonicity",
+    "prop:perfect-list-cover",
+    "prop:running-capacity",
+    "prop:semantic-product",
+    "prop:stochastic-triangle",
+    "prop:support",
+    "prop:transversal-partition",
+    "prop:triangle",
+    "prop:triangle-square",
+    "thm:access-hypergraph",
+    "thm:access-npcomplete",
+    "thm:arithmetic-capacity",
+    "thm:crossing-npcomplete",
+    "thm:directed-preservation",
+    "thm:finitary-compactness",
+    "thm:hypergraph",
+    "thm:joint-capacity",
+    "thm:list-recovery",
+    "thm:open",
+    "thm:predicate-toggle",
+    "thm:quotient-capacity",
+    "thm:random-hierarchy",
+    "thm:regularized-rate",
+    "thm:robust-predicate",
+    "thm:semantic-observable"
+  ],
+  "formal_label_aliases": {
+    "lem:path": "lem:factor",
+    "lem:expanded-factor": "lem:factor",
+    "cor:full-collapse": "cor:one-bit",
+    "cor:rigid": "cor:one-bit",
+    "cor:closure-all-rewrites": "cor:canonicalization",
+    "cor:local-necessary": "cor:refinement-reduction",
+    "cor:one-cell-general": "cor:refinement-reduction",
+    "prop:attack-union": "prop:detector-refinement",
+    "cor:no-independent-attacks": "prop:detector-refinement",
+    "prop:message-restriction": "prop:detector-refinement",
+    "prop:behavior-refinement": "prop:detector-refinement",
+    "cor:compatible-quotient-count": "prop:detector-refinement",
+    "cor:clopen": "thm:open",
+    "thm:uniform": "thm:open",
+    "cor:uniform-finite-detector": "thm:open"
+  },
+  "authors_tex": [
+    "Haoyi Zhang",
+    "Huaijin Ran",
+    "Xunzhu Tang",
+    "Kisub Kim",
+    "Tegawend\\'{e} F. Bissyand\\'{e}"
+  ],
+  "author_emails": [
+    "hyeliozhang@gmail.com",
+    "huaijin003@e.ntu.edu.sg",
+    "realdanieltang@gmail.com",
+    "kisub.kim@dgist.ac.kr",
+    "tegawende.bissyande@uni.lu"
+  ],
+  "author_orcids": [
+    "0009-0009-3693-786X",
+    "0009-0009-2482-2344",
+    "0000-0002-6377-0884",
+    "0000-0002-4462-6916",
+    "0000-0001-7270-9869"
+  ],
+  "corresponding_author_notes_tex": [
+    "Corresponding author: Tegawend\\'{e} F. Bissyand\\'{e}."
+  ],
+  "old_metadata_author_count_is_not_current_authority": true,
+  "approved_non_doi": {
+    "abramsky1990lazy": {
+      "ENTRYTYPE": "incollection",
+      "author": "Samson Abramsky",
+      "title": "The Lazy Lambda Calculus",
+      "booktitle": "Research Topics in Functional Programming",
+      "editor": "D. Turner",
+      "publisher": "Addison Wesley",
+      "year": "1990",
+      "pages": "65--117",
+      "url": "https://www.cs.ox.ac.uk/people/samson.abramsky/lazy.pdf",
+      "note": "Author-hosted manuscript"
+    }
+  },
+  "immutable_metadata_sha256": {
+    "historical_file_sha256": "a827ddf8f23ebb73a59b377c5c9fdcec4d9f40e182485723b27427ace0399f5d",
+    "prior_export_file_sha256": "d80e1c0e88f99113f08da8a89a52dd5cc6c1d9f0256b994ef063a1f5379b0323",
+    "historical_bib_entry_sha256": "9d1efe8aca4934cbb6220a78ab00c9c667a993f2de3825f8bb80d87af9677e46",
+    "template_source": "7f0559a5b14a75d3325940584522447465698b6b4fe4398aefcef31dd400a53e"
+  }
+}
