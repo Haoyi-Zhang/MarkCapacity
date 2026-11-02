@@ -108,7 +108,7 @@ def strip_tex_comments(text: str) -> str:
 
 
 def parse_statement_locations(text: str) -> tuple[list[str], dict[str, dict[str, object]]]:
-    """Derive formal statement numbers, headings, and source ranges from TeX."""
+    """Derive numbered sections and statement locations; starred headings do not count."""
     lines = text.splitlines()
     headings: dict[str, str | None] = {
         "section": None,
@@ -127,12 +127,15 @@ def parse_statement_locations(text: str) -> tuple[list[str], dict[str, dict[str,
         if stripped == r"\appendix":
             appendix = True
             section_number = 0
-        section_match = re.match(r"\\section\{(.+)\}$", stripped)
+        section_match = re.match(r"\\section(\*)?\{(.+)\}$", stripped)
         if section_match:
-            section_number += 1
-            theorem_counter = 0
-            title = section_match.group(1)
-            top_level_sections.append(title)
+            title = section_match.group(2)
+            if section_match.group(1) is None:
+                section_number += 1
+                theorem_counter = 0
+                top_level_sections.append(title)
+            # Availability metadata has a real heading, but a starred section
+            # neither advances the section number nor resets statement numbers.
             headings["section"] = title
             headings["subsection"] = None
             headings["subsubsection"] = None
@@ -519,7 +522,24 @@ class PublicPackageIntegrityTests(unittest.TestCase):
                 stderr=subprocess.PIPE,
             ).stdout
 
-        info = command_text(["pdfinfo", "-enc", "UTF-8", "-isodates", str(PDF)])
+        iso_date = r"\A\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:Z|[+-]\d{2}:\d{2})?\Z"
+        # Format-only controls, not substitutes for the real Poppler calls below.
+        for value in ("2026-10-31T10:40:00Z", "2026-10-31T18:40:00+08:00"):
+            self.assertRegex(value, iso_date)
+        for value in ("Sat Oct 31 10:40:00 2026", "2026年10月31日 18:40:00", ""):
+            self.assertNotRegex(value, iso_date)
+
+        def pdfinfo_text(path: Path) -> str:
+            # -enc does not govern locale-formatted dates on Windows. Use the
+            # same ISO-date command for both PDFs, with strict UTF-8 decoding.
+            output = command_text(["pdfinfo", "-enc", "UTF-8", "-isodates", str(path)])
+            dates = re.findall(r"(?m)^(?:CreationDate|ModDate):[ \t]*([^\r\n]*)", output)
+            self.assertTrue(dates, f"missing PDF dates: {path}")
+            for value in dates:
+                self.assertRegex(value, iso_date, str(path))
+            return output
+
+        info = pdfinfo_text(PDF)
         self.assertGreater(current["pdf_pages"], 0)
         self.assertRegex(info, rf"(?m)^Pages:\s+{current['pdf_pages']}$")
         self.assertEqual(current["page_size_points"], [486, 720])
@@ -533,7 +553,7 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         self.assertTrue(author_info is None or author_info[1].strip()=="", "anonymous PDF author metadata")
         self.assertEqual(sorted(path.name for path in (ROOT / "paper").glob("*.pdf")), ["main.pdf","titlepage.pdf"])
         titlepage=(ROOT/'paper/titlepage.tex').read_text(encoding='utf-8')
-        title_info=command_text(["pdfinfo","-enc","UTF-8",str(ROOT/'paper/titlepage.pdf')])
+        title_info=pdfinfo_text(ROOT/'paper/titlepage.pdf')
         self.assertRegex(title_info,r"(?m)^Pages:\s+1$")
         self.assertRegex(title_info,r"(?m)^Page size:\s+486 x 720 pts")
         for identifier in current['author_emails']+current['author_orcids']:
@@ -552,8 +572,11 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         self.assertIn(r"\renewcommand{\shortauthors}{Zhang et al.}",titlepage)
         self.assertEqual((formal_count, proof_count), (52, 52))
         self.assertEqual((figure_count, table_count), (4, 10))
-        self.assertEqual((author_count, section_count), (1, 9))
-        self.assertEqual(len(re.findall(r"^\\section\{", manuscript.split(r"\appendix")[0], flags=re.MULTILINE)), 8)
+        self.assertEqual((author_count, section_count), (1, 10))
+        self.assertEqual(len(re.findall(r"\\appendix\b", manuscript)), 1)
+        body_source, appendix_source = manuscript.split(r"\appendix")
+        self.assertEqual(len(re.findall(r"^\\section\{", body_source, flags=re.MULTILINE)), 8)
+        self.assertEqual(len(re.findall(r"^\\section\{", appendix_source, flags=re.MULTILINE)), 2)
         self.assertEqual(len(citation_commands), 105)
         self.assertEqual(tex_command_arguments(manuscript,"author"),["Anonymous Author(s)"])
         self.assertEqual(manuscript.count(r"\affiliation{"), 0)
@@ -570,8 +593,46 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         self.assertEqual(tex_command_arguments(titlepage, "authornote"),
                          [current["corresponding_author_note_tex"]])
         self.assertNotRegex(manuscript, r"\\author\{Author [A-F]\}")
-        self.assertIn("Retained scientific test baseline & 65", manuscript)
-        self.assertIn("Full-project integrity tests & 8", manuscript)
+        # The paper reports semantic instances, not software test schedules.
+        # Bind its current table to immutable results and real rendered text;
+        # the companion owns the independently checked 92/8/100 schedule.
+        separation = (
+            "Scientific instance counts are distinct from software regression "
+            "and package/export checks, whose schedules remain in the companion artifact."
+        )
+        self.assertIn(separation, " ".join(manuscript.split()))
+        self.assertIn(separation, " ".join(rendered.split()))
+        validation_tables = [
+            block for block in re.findall(r"\\begin\{table\}[\s\S]*?\\end\{table\}", manuscript)
+            if r"\label{tab:validation-summary}" in block
+        ]
+        self.assertEqual(len(validation_tables), 1)
+        validation_table = validation_tables[0]
+        self.assertIn("Counts denote distinct semantic instances or comparisons, not performance measurements.",
+                      validation_table)
+        retained_results = json.loads((ROOT / "artifact/raw/results.json").read_text(encoding="utf-8"))
+        for label, family, expected in (
+            ("Refinement message instances", "exhaustive_refinement_theorem", 1943),
+            ("General message instances and oracle agreements", "exhaustive_general_theorem", 11423),
+            ("Access message instances and oracle agreements", "exhaustive_access_theorem", 38564),
+        ):
+            with self.subTest(validation_family=family):
+                self.assertEqual(retained_results[family]["message_instances"], expected)
+                if "agreement_checks" in retained_results[family]:
+                    self.assertEqual(retained_results[family]["agreement_checks"], expected)
+                values = re.findall(re.escape(label) + r"\s*&\s*([\d,]+)\s*\\\\", validation_table)
+                self.assertEqual(values, [f"{expected:,}"])
+                self.assertRegex(" ".join(rendered.split()), re.escape(label) + r"\s+" + f"{expected:,}" + r"\b")
+        self.assertNotRegex(validation_table.lower(), r"test baseline|integrity tests|regression tests")
+        scheduled_modules = set(re.findall(r"\btests\.(test_\w+)", SCIENTIFIC_RUNNER.read_text(encoding="utf-8")))
+        self.assertEqual(scheduled_modules, set(current["scientific_modules"]))
+        package_tree = ast.parse(Path(__file__).read_text(encoding="utf-8"))
+        package_methods = [
+            method.name for node in package_tree.body if isinstance(node, ast.ClassDef)
+            for method in node.body if isinstance(method, ast.FunctionDef) and method.name.startswith("test_")
+        ]
+        self.assertEqual(len(package_methods), current["scheduled_tests"]["package"])
+        self.assertEqual(len(discovered) + len(package_methods), current["scheduled_tests"]["combined"])
 
         # The following records describe the retained historical 56/64 suite;
         # current-source counts are checked separately below.
@@ -872,20 +933,133 @@ fi
             self.assertEqual(row['current_label_role'],'alias_with_preserved_narrow_claim' if row['statement_id']!=primary else 'primary_formal_statement')
 
     def test_manuscript_structure_and_statement_location_audit(self):
+        def assert_numbered_section_structure(source, expected_body, expected_appendices):
+            sections, locations = parse_statement_locations(source)
+            self.assertEqual(sections, expected_body + expected_appendices)
+            self.assertEqual(len(re.findall(r"\\appendix\b", source)), 1)
+            body_source, appendix_source = source.split(r"\appendix")
+            # Independently bind the ordered titles to their side of the marker;
+            # a correct total alone must not hide a missing or moved appendix.
+            self.assertEqual(tex_command_arguments(body_source, "section"), expected_body)
+            self.assertEqual(tex_command_arguments(appendix_source, "section"), expected_appendices)
+            return sections, locations
+
+        # Owned controls keep starred metadata separate from numbered sections,
+        # including statement-free appendices; no title is silently discarded.
+        owned = "\n".join([
+            r"\section{Body}",
+            r"\subsection{Details}",
+            r"\begin{lemma}\label{owned:before}",
+            "Before.",
+            r"\end{lemma}",
+            r"\begin{proof}",
+            "Proof.",
+            r"\end{proof}",
+            r"\section*{Artifact Availability}",
+            "Metadata.",
+            r"\begin{lemma}\label{owned:after}",
+            "After.",
+            r"\end{lemma}",
+            r"\begin{proof}",
+            "Proof.",
+            r"\end{proof}",
+            r"\appendix",
+            r"\section{Appendix}",
+            r"\begin{theorem}\label{owned:appendix}",
+            "Appendix statement.",
+            r"\end{theorem}",
+            r"\begin{proof}",
+            "Proof.",
+            r"\end{proof}",
+            r"\section{Background}",
+        ])
+        owned_sections, owned_records = assert_numbered_section_structure(
+            owned, ["Body"], ["Appendix", "Background"]
+        )
+        self.assertEqual(owned_sections, ["Body", "Appendix", "Background"])
+        self.assertEqual(set(owned_records), {"owned:before", "owned:after", "owned:appendix"})
+        for label, environment, number, start, end, proof_start, proof_end, section, subsection in (
+            ("owned:before", "lemma", "1.1", 3, 5, 6, 8, "Body", "Details"),
+            ("owned:after", "lemma", "1.2", 11, 13, 14, 16, "Artifact Availability", None),
+            ("owned:appendix", "theorem", "A.1", 19, 21, 22, 24, "Appendix", None),
+        ):
+            with self.subTest(control="starred metadata", statement=label):
+                self.assertEqual(owned_records[label], {
+                    "environment": environment,
+                    "number": number,
+                    "statement_start_line": start,
+                    "statement_end_line": end,
+                    "proof_start_line": proof_start,
+                    "proof_end_line": proof_end,
+                    "section": section,
+                    "subsection": subsection,
+                    "subsubsection": None,
+                })
+
+        # Removing the star must count the same title and reset the counter;
+        # inserting a source line must change the bound source/proof positions.
+        numbered_sections, numbered_records = parse_statement_locations(
+            owned.replace(r"\section*{Artifact Availability}", r"\section{Artifact Availability}")
+        )
+        self.assertEqual(numbered_sections, ["Body", "Artifact Availability", "Appendix", "Background"])
+        self.assertEqual(numbered_records["owned:after"]["number"], "2.1")
+        self.assertNotEqual(numbered_records, owned_records)
+        for control, changed_source in (
+            ("missing second appendix", owned.replace(r"\section{Background}", "")),
+            ("renamed second appendix", owned.replace(r"\section{Background}", r"\section{Other}")),
+            ("starred second appendix", owned.replace(r"\section{Background}", r"\section*{Background}")),
+            ("reversed appendices", owned.replace(r"\section{Appendix}", r"\section{Swap}")
+             .replace(r"\section{Background}", r"\section{Appendix}")
+             .replace(r"\section{Swap}", r"\section{Background}")),
+            ("moved appendix marker", r"\appendix" + "\n" + owned.replace(r"\appendix", "")),
+        ):
+            with self.subTest(control=control), self.assertRaises(AssertionError):
+                assert_numbered_section_structure(changed_source, ["Body"], ["Appendix", "Background"])
+        shifted_source = "\n" + owned
+        shifted_sections, shifted_records = parse_statement_locations(shifted_source)
+        self.assertEqual(shifted_sections, owned_sections)
+        self.assertNotEqual(sha256_text(shifted_source), sha256_text(owned))
+        for label, record in owned_records.items():
+            shifted = dict(record)
+            for field in ("statement_start_line", "statement_end_line", "proof_start_line", "proof_end_line"):
+                shifted[field] += 1
+            self.assertEqual(shifted_records[label], shifted)
+            self.assertNotEqual(shifted_records[label], record)
+
         manuscript = strip_tex_comments(MANUSCRIPT.read_text(encoding="utf-8"))
-        top_sections, source_records = parse_statement_locations(manuscript)
+        expected_body_sections = [
+            "Introduction",
+            "Semantic Model",
+            "Capacity under Observational Constraints",
+            "Recognition and Finite Evidence",
+            "Examples and Design Implications",
+            "Finite Executable Cross-Checks",
+            "Related Work and Limitations",
+            "Conclusion",
+        ]
+        expected_appendix_sections = [
+            "Contract laws and observation profiles",
+            "Background on preservation proofs",
+        ]
+        top_sections, source_records = assert_numbered_section_structure(
+            manuscript, expected_body_sections, expected_appendix_sections
+        )
         audit = json.loads(CURRENT_STATEMENTS.read_text(encoding="utf-8"))
         audit_records = {entry["statement_id"]: entry for entry in audit["entries"]}
         self.assertEqual(len(audit_records),len(audit['entries']))
 
-        self.assertEqual(len(top_sections), 9)
-        self.assertEqual(audit["top_level_section_count"], 9)
+        self.assertEqual(len(top_sections), 10)
+        self.assertEqual(audit["top_level_section_count"], 10)
         self.assertEqual(audit['body_top_level_section_count'], 8)
         self.assertEqual(tex_command_arguments(manuscript,"author"),["Anonymous Author(s)"])
         self.assertEqual(audit["top_level_sections"], top_sections)
         self.assertEqual(len(re.findall(r"\\appendix\b", manuscript)), 1)
-        self.assertEqual(top_sections[-1], 'Contract laws and observation profiles')
+        self.assertEqual(top_sections[:8], expected_body_sections)
+        self.assertEqual(top_sections[8:], expected_appendix_sections)
+        self.assertEqual(len(top_sections[8:]), 2)
+        self.assertEqual(top_sections[-1], 'Background on preservation proofs')
         self.assertIn(r"\label{app:standard-facts}", manuscript)
+        self.assertIn(r"\label{app:preservation-background}", manuscript)
         self.assertEqual(audit["manuscript_sha256"], sha256_file(MANUSCRIPT))
         self.assertEqual(audit["pdf_sha256"], sha256_file(PDF))
         self.assertEqual(audit["formal_statement_count"], 52)
@@ -895,7 +1069,7 @@ fi
         current=json.loads(CURRENT_PACKAGE.read_text(encoding='utf-8'))
         self.assertEqual(current['current_formal_label_aliases'],aliases)
         self.assertEqual(current['current_formal_primary_ids'],sorted(source_records))
-        self.assertEqual(current['current_structure'],dict(formal_statements=52,proofs=52,figures=4,tables=10,sections=9,body_sections=8,bibliography_keys=70,citation_commands=105))
+        self.assertEqual(current['current_structure'],dict(formal_statements=52,proofs=52,figures=4,tables=10,sections=10,body_sections=8,bibliography_keys=70,citation_commands=105))
         self.assertTrue(set(aliases.values())<=set(source_records))
         self.assertTrue(set(aliases).isdisjoint(source_records))
         self.assertEqual(audit["schema"], "CURRENT_STATEMENT_LOCATIONS_V1")

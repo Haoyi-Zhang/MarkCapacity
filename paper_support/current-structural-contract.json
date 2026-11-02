@@ -3,7 +3,7 @@
   "approved_for_refresh": true,
   "approval_instruction": "Same approved identities, all 52 formal objects/proofs/labels and class roles; only reviewed background appendix adds one section; current source binding and locations refreshed",
   "approved_source_sha256": {
-    "paper/main.tex": "8fd03438439fe74bf81cf1894ac2f68b977140060c47cb44d83f845ef1ce1805",
+    "paper/main.tex": "74ab6957d543ce756767d8ec1adf1f419435f2a5b25165a010548b91685b2bc5",
     "paper/titlepage.tex": "03f22865e8622441a1e7f26b49224f3ac43abbfc543d734078b96897e09f421e",
     "paper/references.bib": "634ce14322d89cf1803241f6e70a46daea35301166b1531a8e2ddcf0cee67e0e"
   },
@@ -148,9 +148,9 @@
     "historical_bib_entry_sha256": "9d1efe8aca4934cbb6220a78ab00c9c667a993f2de3825f8bb80d87af9677e46",
     "template_source": "7f0559a5b14a75d3325940584522447465698b6b4fe4398aefcef31dd400a53e"
   },
-  "selected_parent_build_receipt_sha256": "94c4039e3c41a064c1705aa0c68b86c333f4360484f1f65b08c16d97f10a7e9d",
+  "selected_parent_build_receipt_sha256": "edd3008d3f729980a9c58485e02ba763d3db3712f35b91d6ed75fcfb2df15eb6",
   "selected_parent_build_outputs": {
-    "paper/main.pdf": "40ac3a996f2bb45de508ca511b46d7cd14cdb5f6e7665dbe9874db6b2d34c347",
+    "paper/main.pdf": "02a4ba464bca945a3e35edddd04f63bd21f1461bc1751ea83a457d0599b18125",
     "paper/titlepage.pdf": "4fdd6ca4f3decd7f9cdd53ba23ac9556f4c3d7bc99161529a0a4b92181af422a"
   }
 }

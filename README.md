@@ -146,6 +146,19 @@ The prepared `scientific-checks.yml` workflow runs from this directory as a flat
 
 ## Current source-export checks
 
+The bounded 2026-11-02 integration passed the ZIP-backed full current-export
+entry point under ordinary Python and `-O`: 8 package checks and 7 export
+regressions in each run, with real Poppler 26.07 on Windows. The actual private
+two-root ZIP was checked against every current file, including Unix regular-file
+transport modes `100644`/`100755` derived from the prior current manifest.
+This does not attest NTFS physical POSIX permissions or execute remote CI.
+The selected genuine Tectonic main PDF/bibliography were integrated only after
+exact source/input matching; the main remains 50 pages. Its compile warnings
+are retained, not represented as a warning-free build. Current citation and
+statement bindings were refreshed mechanically, preserving all 70 inherited
+body-support facts/statuses and historical records. No new source-body reading,
+scientific campaign, native source campaign or model API call was performed.
+
 For a complete source export, run `./run-current-export-checks.sh`. It validates
 the exact current inventory and actual modes, runs all eight existing package checks,
 and then runs seven portable export regressions, with unchanged Poppler

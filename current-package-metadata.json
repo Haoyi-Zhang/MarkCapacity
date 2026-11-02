@@ -8,8 +8,8 @@
     486.0,
     720.0
   ],
-  "pdf_sha256": "40ac3a996f2bb45de508ca511b46d7cd14cdb5f6e7665dbe9874db6b2d34c347",
-  "manuscript_sha256": "8fd03438439fe74bf81cf1894ac2f68b977140060c47cb44d83f845ef1ce1805",
+  "pdf_sha256": "02a4ba464bca945a3e35edddd04f63bd21f1461bc1751ea83a457d0599b18125",
+  "manuscript_sha256": "74ab6957d543ce756767d8ec1adf1f419435f2a5b25165a010548b91685b2bc5",
   "scheduled_tests": {
     "scientific": 92,
     "package": 8,
@@ -302,13 +302,13 @@
   },
   "current_file_sha256": {
     "artifact/correctness_correspondence.csv": "70e22e5a74797ac9b720bea0bb569cce3ea8f4a8744d9fd17e686764b4624718",
-    "artifact/paper_support/current-statement-locations.json": "d98e88a31e6acbe609e7ce683b521460ffd32216668013090715d76999f83387",
-    "artifact/citation-contexts.csv": "92c250eb04367dd8143d8fb48e0f0c2a7668e6940fff4c2b8d0c19fc00164c25",
+    "artifact/paper_support/current-statement-locations.json": "b56a36f1dea77025cab9181e52917831f8f5d0c706931b9c1af6ddeb1721e491",
+    "artifact/citation-contexts.csv": "91050a915b2f38b978ba136405e001d6dc0690607071c0ab0c66a80cde420cde",
     "artifact/reference-audit-final.csv": "07ba2f05bc88c2ac03b265dcea949c5dd2c4652f269aa5fc4f7933d508eb0f85",
-    "artifact/citation_support.csv": "9f4fdeb6c7a12c4c9d85e0c990f7e7217464ca8669f5f1aa4ad63b5f371f1fbd",
+    "artifact/citation_support.csv": "18eeb1275d6ba3975f199bbf7375f9288582740888dc729eedc652e831ca6e7a",
     "artifact/claim_evidence_ledger.csv": "ebe147d50173f1fc8cd7f6a7ab5de7ca3bf8bfbcfbcfe9ae3cdbf8f8bd8e72e7",
-    "artifact/literature-evidence/records.jsonl": "c98a2e0698d438a0f8041358226ea307fc896284fd30c594f6b1b3fed62e35a4",
-    "artifact/paper_support/current-structural-contract.json": "07f10c236057d4796cb9c057af1ba228d71ad0d2216b1ae6e56ad632b367a365"
+    "artifact/literature-evidence/records.jsonl": "46f3642f5fc70af2dd49144ef064f4c46b4839bf128109a9bdf9935647111d58",
+    "artifact/paper_support/current-structural-contract.json": "93b053ca65926faf8c0b1997119b9e1e5e2b6efa5d7e255608fa14da1a56e0a9"
   },
   "current_binding_date": "2026-11-02",
   "additional_separately_recorded_regressions": 5,
@@ -341,8 +341,8 @@
     "paper/main.pdf": {
       "role": "anonymous_main",
       "source": "paper/main.tex",
-      "source_sha256": "8fd03438439fe74bf81cf1894ac2f68b977140060c47cb44d83f845ef1ce1805",
-      "pdf_sha256": "40ac3a996f2bb45de508ca511b46d7cd14cdb5f6e7665dbe9874db6b2d34c347",
+      "source_sha256": "74ab6957d543ce756767d8ec1adf1f419435f2a5b25165a010548b91685b2bc5",
+      "pdf_sha256": "02a4ba464bca945a3e35edddd04f63bd21f1461bc1751ea83a457d0599b18125",
       "pages": 50,
       "page_size_points": [
         486.0,
@@ -479,8 +479,8 @@
     "thm:uniform": "thm:open",
     "cor:uniform-finite-detector": "thm:open"
   },
-  "source_support_ledger_sha256": "756693b4583047c54d737f962dfdc1ecb2fc4dee36592b181640a6fd3281d32c",
-  "current_census_sha256": "bcdb6403d651c3c289286945400dcac25b9dcae68ebc8d880bfd8708a2205671",
+  "source_support_ledger_sha256": "8c2f744226f5815f99ab62d7f5dce528da0d48043aa73d37445c1ed084b24e3f",
+  "current_census_sha256": "a8ec6122c88072c2bc0d2cc364950cc63ca05abcfebb53482214f05e652582fe",
   "current_claim_support_complete": true,
   "historical_retired_reference_records": {
     "sangiorgi2011": {
@@ -629,7 +629,7 @@
         "PublicPackageIntegrityTests.test_manuscript_structure_and_statement_location_audit",
         "PublicPackageIntegrityTests.test_ledgers_match_statement_location_audit"
       ],
-      "executed": false
+      "executed": true
     },
     "export_regressions": {
       "method_count": 7,
@@ -642,7 +642,26 @@
         "CurrentExportTests.test_retained_log_binding_cannot_be_resealed_by_current_manifest",
         "CurrentExportTests.test_vendor_source_and_original_notice_bindings_are_required"
       ],
-      "executed": false
+      "executed": true
     }
+  },
+  "current_export_verification": {
+    "date": "2026-11-02",
+    "host": "Windows",
+    "python": "3.12.14",
+    "modes": [
+      "ordinary",
+      "-O"
+    ],
+    "package_tests": 8,
+    "export_regressions": 7,
+    "permission_basis": "Actual two-root ZIP Unix metadata and exact canonical/extracted bytes; not NTFS POSIX permissions",
+    "poppler_version": "26.07.0",
+    "scientific_campaign_executed": false,
+    "remote_CI_executed": false,
+    "source_body_reading_repeated": false,
+    "source_sha256": "74ab6957d543ce756767d8ec1adf1f419435f2a5b25165a010548b91685b2bc5",
+    "pdf_sha256": "02a4ba464bca945a3e35edddd04f63bd21f1461bc1751ea83a457d0599b18125",
+    "execution_logs_retained_outside_export": true
   }
 }
