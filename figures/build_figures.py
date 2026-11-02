@@ -58,8 +58,8 @@ class Drawing:
 
 def running(out):
     d = Drawing(14.8, 7.8)
-    d.text(3.6, 7.35, '(a) Behavior-preserving variants')
-    d.text(10, 7.35, '(b) Detector-visible cells')
+    d.text(3.6, 7.35, '(a) Behavior-preserving variants\nfour detector ($D$) cells')
+    d.text(10, 7.35, '(b) Two operational ($J$) cells\nafter temporary elimination')
     for x, y, label in [(1.8, 5.8, '$p$\nreturn $x+1$'),
                         (5.2, 5.8, '$p^{s}$\nreturn $1+x$'),
                         (1.8, 3.5, '$p^{l}$\nlet $y=x+1$;\nreturn $y$'),

@@ -204,11 +204,13 @@ or author-added line numbering. The unchanged approved authors/ORCIDs/contacts
 are in the separate `paper/titlepage.tex`, not loaded by main. `REPOSITORY.md`
 retains the real identifying URL for coordination; no anonymous URL is invented
 and the main no longer renders the public link. Self-citations remain intact.
-The parent handles both PDF builds and final anonymity inspection. Existing
-PDFs and historical export inventories are pre-change records, not evidence of
-current anonymous-PDF compliance. Current guide evidence and the >50-page EIC
-contact advice are recorded in `paper/VENUE_RULES.md`. New source inventory,
-hashes, file roles and package tests must be rebuilt centrally before export.
+The supplied `paper/main.pdf` is the current 50-page anonymous manuscript;
+`paper/titlepage.pdf` is the separate one-page identifying sheet with the
+existing five authors and ORCIDs. These are not pre-change identified drafts.
+Historical export inventories still describe their own snapshots. The build
+recipe regenerates both PDFs; document roles, anonymity, layout and current
+inventory/bindings should be checked after source edits. Current guide
+evidence and the >50-page EIC contact advice are in `paper/VENUE_RULES.md`.
 
 ## Portable path notation
 

@@ -3,7 +3,7 @@
   "approved_for_refresh": true,
   "approval_instruction": "Same approved identities, formal object set, class roles and counts; current source binding and locations only",
   "approved_source_sha256": {
-    "paper/main.tex": "716fc66d12f0d09da0b57e89e655c39bab6bb889f9ae29c45f4cf73efcac6281",
+    "paper/main.tex": "44bc0fea4b5d0e398a432d1c5a2ed758fcd99e79b995524471cc345ca5ca9326",
     "paper/titlepage.tex": "03f22865e8622441a1e7f26b49224f3ac43abbfc543d734078b96897e09f421e",
     "paper/references.bib": "634ce14322d89cf1803241f6e70a46daea35301166b1531a8e2ddcf0cee67e0e"
   },
@@ -148,9 +148,9 @@
     "historical_bib_entry_sha256": "9d1efe8aca4934cbb6220a78ab00c9c667a993f2de3825f8bb80d87af9677e46",
     "template_source": "7f0559a5b14a75d3325940584522447465698b6b4fe4398aefcef31dd400a53e"
   },
-  "selected_parent_build_receipt_sha256": "b854bd0a0ec0c8d6e01b799b3d88449cd793f65b759ba76c4a4b307b26e7edc7",
+  "selected_parent_build_receipt_sha256": "968672553c1aa14e31bd8d370d129f26fbf698840164689564bbcb3cd50c5229",
   "selected_parent_build_outputs": {
-    "paper/main.pdf": "02ab58ac6f13f1d2f86d6d3a832cebe30656556d6c389ed31d010ce86a98add7",
-    "paper/titlepage.pdf": "4a0d80c3ba1b2e30bd809199849de14169384d3ce823703ba53f795917746f36"
+    "paper/main.pdf": "d78743e5c1e0591942cbf7c9cc5a20faeac3dba7722b6cad2eaaf37b6e368148",
+    "paper/titlepage.pdf": "ae44e0ec5ada1928f0215704db33e5fe10ccda766039e414d127308ccaba699e"
   }
 }

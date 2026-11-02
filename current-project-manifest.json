@@ -10,7 +10,7 @@
     "artifact",
     "paper"
   ],
-  "file_count": 500,
+  "file_count": 502,
   "files": [
     {
       "path": "paper/.vscode/settings.json",
@@ -62,8 +62,8 @@
     },
     {
       "path": "paper/build.sh",
-      "bytes": 1024,
-      "sha256": "559a9879bc0e8da372606ab5e4078004d1baf2632e10f77db581dca7315a2b48",
+      "bytes": 1290,
+      "sha256": "abd270635e6aa8b67943a916084ad412f74bdff7c49f1e1a4936df02ea729ce9",
       "mode": "0755"
     },
     {
@@ -74,8 +74,14 @@
     },
     {
       "path": "paper/figures/running.pdf",
-      "bytes": 14919,
-      "sha256": "949118984b0a00c70f426ca3b5b07eeab9eb183d1556ab432b757debe7794bfa",
+      "bytes": 12815,
+      "sha256": "c0fc8954a22e244766634f21a8c15cfc82c68ff400f007094b625409aebcc018",
+      "mode": "0644"
+    },
+    {
+      "path": "paper/figures/running.png",
+      "bytes": 61482,
+      "sha256": "43c55a820ae3a43c5b347ed6ee3b1de640875c46b92b3e16528ef481e3159745",
       "mode": "0644"
     },
     {
@@ -98,14 +104,14 @@
     },
     {
       "path": "paper/main.pdf",
-      "bytes": 375668,
-      "sha256": "02ab58ac6f13f1d2f86d6d3a832cebe30656556d6c389ed31d010ce86a98add7",
+      "bytes": 374155,
+      "sha256": "d78743e5c1e0591942cbf7c9cc5a20faeac3dba7722b6cad2eaaf37b6e368148",
       "mode": "0644"
     },
     {
       "path": "paper/main.tex",
-      "bytes": 173352,
-      "sha256": "716fc66d12f0d09da0b57e89e655c39bab6bb889f9ae29c45f4cf73efcac6281",
+      "bytes": 173338,
+      "sha256": "44bc0fea4b5d0e398a432d1c5a2ed758fcd99e79b995524471cc345ca5ca9326",
       "mode": "0644"
     },
     {
@@ -116,8 +122,8 @@
     },
     {
       "path": "paper/provenance/CURRENT-STATE.md",
-      "bytes": 3814,
-      "sha256": "0e01e708561707208fc7782b970d85412524505557677cd9a37746febd0e1e2d",
+      "bytes": 3975,
+      "sha256": "07d86c8d65064d86b63cc12916bcf4e21c607d4be7eb41658622e02a2071eacd",
       "mode": "0644"
     },
     {
@@ -128,8 +134,8 @@
     },
     {
       "path": "paper/README.md",
-      "bytes": 3775,
-      "sha256": "bd3729fe896b6fd4ab312e48fec9f1a0b92f183c2d2b839ded2ccbbe88f5f5c5",
+      "bytes": 3842,
+      "sha256": "15d737b80c11e7c9dadd1bdc3935eae8363a64b5abc5e99ca1d170ccb2250417",
       "mode": "0644"
     },
     {
@@ -140,14 +146,14 @@
     },
     {
       "path": "paper/SUBMISSION-CHECKLIST.md",
-      "bytes": 1163,
-      "sha256": "fca22f10c7792c7d88dbbd24031c21e6d5e3f6dd5b853dba43ed79ceb9ae29a4",
+      "bytes": 1510,
+      "sha256": "ea139dc57facaf48bf24a16053374cc83afc2ee77ee1fd3124817d6945f0c699",
       "mode": "0644"
     },
     {
       "path": "paper/titlepage.pdf",
       "bytes": 44666,
-      "sha256": "4a0d80c3ba1b2e30bd809199849de14169384d3ce823703ba53f795917746f36",
+      "sha256": "ae44e0ec5ada1928f0215704db33e5fe10ccda766039e414d127308ccaba699e",
       "mode": "0644"
     },
     {
@@ -158,8 +164,8 @@
     },
     {
       "path": "paper/VENUE_RULES.md",
-      "bytes": 1868,
-      "sha256": "4a5b0c47b86622e335ae1782753995ab10c5b86423986172ba90aa2d138a15eb",
+      "bytes": 1963,
+      "sha256": "ec18b59043a581b5221363dc6b7355f70ec84230d9e0e4fe1104915625ecc37b",
       "mode": "0644"
     },
     {
@@ -195,19 +201,19 @@
     {
       "path": "artifact/citation-contexts.csv",
       "bytes": 71796,
-      "sha256": "82eb821f1ba619ee48a6f16fc554f504a45058e0aa7fe67958c8762269138159",
+      "sha256": "44356dc8844763e811b66b244a6dc19a39ff8c555cea7ca3a85d419a8f8e9e97",
       "mode": "0644"
     },
     {
       "path": "artifact/citation_support.csv",
       "bytes": 63230,
-      "sha256": "78f4255e56fa89eaf72713b0cad17f97844fc4fbf922f4f455eb62d5736f31c5",
+      "sha256": "d6763b58ec7a218c99d06291ab844813b972437d835ce59c100b9500fdc18098",
       "mode": "0644"
     },
     {
       "path": "artifact/claim_evidence_ledger.csv",
-      "bytes": 25590,
-      "sha256": "009f0cb896bfd733f29d646fcd370aa83c5f230fc24590c3c6472ece557427f4",
+      "bytes": 25861,
+      "sha256": "ad581b4ff56a1fae543da52aa6d52a3cfc099efb7d93037f7e4cea4b3781f0f7",
       "mode": "0644"
     },
     {
@@ -225,13 +231,13 @@
     {
       "path": "artifact/current-export-supplement.json",
       "bytes": 793,
-      "sha256": "f41c43fa04f735104dc396e82f12ace01cb621e4116a1ead612ce9cf9a566029",
+      "sha256": "d29be99924041cfbaccc20323a6bd6416ff6199db639798773be358147f881d9",
       "mode": "0644"
     },
     {
       "path": "artifact/current-package-metadata.json",
       "bytes": 37200,
-      "sha256": "01f48e15def45906e09cbe1f036f654224c3b3811a1fb23966efb42e60d8dbfd",
+      "sha256": "aae7867eeac3573b6cf979483abc08c343cfe15e866fc677f02a7b767671a038",
       "mode": "0644"
     },
     {
@@ -260,8 +266,8 @@
     },
     {
       "path": "artifact/figures/build_figures.py",
-      "bytes": 7938,
-      "sha256": "5fe3daa5bde7977b7721d24c4062b63a7c86d87075c98e7d312568ea03d23b02",
+      "bytes": 7999,
+      "sha256": "98fb67504d331167cb3bb1463974ba82d2e2a411e8d7e481ad29844a9b683ff2",
       "mode": "0644"
     },
     {
@@ -272,8 +278,14 @@
     },
     {
       "path": "artifact/figures/running.pdf",
-      "bytes": 14919,
-      "sha256": "949118984b0a00c70f426ca3b5b07eeab9eb183d1556ab432b757debe7794bfa",
+      "bytes": 12815,
+      "sha256": "c0fc8954a22e244766634f21a8c15cfc82c68ff400f007094b625409aebcc018",
+      "mode": "0644"
+    },
+    {
+      "path": "artifact/figures/running.png",
+      "bytes": 61482,
+      "sha256": "43c55a820ae3a43c5b347ed6ee3b1de640875c46b92b3e16528ef481e3159745",
       "mode": "0644"
     },
     {
@@ -320,8 +332,8 @@
     },
     {
       "path": "artifact/literature-evidence/records.jsonl",
-      "bytes": 513683,
-      "sha256": "33c91fc3ff7338de419cfcc86f87b2cf687a3e6eed8f159db3e1fc1ddf9c8caf",
+      "bytes": 744001,
+      "sha256": "36f212355495d56990fd4be5ec77a8d849d9c3f7060e52b63b8d3fcefee813b6",
       "mode": "0644"
     },
     {
@@ -339,13 +351,13 @@
     {
       "path": "artifact/paper_support/current-statement-locations.json",
       "bytes": 26119,
-      "sha256": "618e6db16d800849df514e43e888e9f69faa96c6b8a6bc2dc0f75c71230d4a50",
+      "sha256": "c0030f706d7eb73abd56c5d8d5bed2ffa0e56b5a026de7cb4fe8748629c7f7f7",
       "mode": "0644"
     },
     {
       "path": "artifact/paper_support/current-structural-contract.json",
       "bytes": 5161,
-      "sha256": "ee82924b166daee54bb52e9f48eafa37e657306e6ed838f5f91108c32aa95f0f",
+      "sha256": "82549a45ea0a4021a23400b254ff1bf155fd64dd3ee8efc8183cb171661896bf",
       "mode": "0644"
     },
     {
@@ -416,14 +428,14 @@
     },
     {
       "path": "artifact/README.md",
-      "bytes": 17295,
-      "sha256": "79098c37bebd232344b0f4c214aafaf3214b37b33a9d9df7361b66e6ef6f190f",
+      "bytes": 17433,
+      "sha256": "d0023ccc29050cf0ddc9f3f291bf4810979cecc09897c62d58e7b7f5739ac5c3",
       "mode": "0644"
     },
     {
       "path": "artifact/reference-audit-final.csv",
       "bytes": 78666,
-      "sha256": "a93d7ab34bc78b48c8e4d5b2136833668d0b419488207808ac0e79cfccd99ac3",
+      "sha256": "5f4e9a3cddbe69daa4125605395e0d5312efbbc16ac714734e96505dea25726a",
       "mode": "0644"
     },
     {
@@ -440,8 +452,8 @@
     },
     {
       "path": "artifact/regressions/test_dual_role_access.py",
-      "bytes": 3562,
-      "sha256": "410d5793d0916fb41f721ad5cd5b5fc4acec02bc66ece79f1e840f7c874b0bc5",
+      "bytes": 4268,
+      "sha256": "d7f7f3812fa44e74a839b61b5389db0509bdb6ea777c872044518f4654aa1826",
       "mode": "0644"
     },
     {
@@ -2786,8 +2798,8 @@
     },
     {
       "path": "artifact/review-status.json",
-      "bytes": 2975,
-      "sha256": "0e3009a7d1ce26b4df86bb55b381d6d9c1d75800c432d1efbe2d335d0e0bd52f",
+      "bytes": 3041,
+      "sha256": "2573c4ddad1dd7d5cf9147fbbb0022546354361466cdc080206f1ffae05cbc6c",
       "mode": "0644"
     },
     {
@@ -2877,7 +2889,7 @@
     {
       "path": "artifact/submission-materials-map.json",
       "bytes": 2655,
-      "sha256": "3680406c87e80e594b619687c7f618501334b907913937d594a2a3174a031a0e",
+      "sha256": "df869fa1dd0a278333f3020352a85e89dc1739f4259a2d298c059303b6b887ec",
       "mode": "0644"
     },
     {
@@ -2906,8 +2918,8 @@
     },
     {
       "path": "artifact/tests/test_package_integrity.py",
-      "bytes": 48099,
-      "sha256": "c88e4905dc2204db3e6e2aaa60ae93b9080f51f2bc10e5d457fc64462653c74c",
+      "bytes": 54271,
+      "sha256": "76f9477776fd25e371dd0912a3c2ab05d165600f42c0d3b9bc91b79005c2f3d6",
       "mode": "0644"
     },
     {

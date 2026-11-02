@@ -4,6 +4,7 @@ These are exact finite proof witnesses, not independently sampled software or
 a performance experiment. Historical test/campaign counts remain unchanged.
 """
 from itertools import product
+import csv
 from pathlib import Path
 import sys
 import unittest
@@ -50,6 +51,16 @@ def direct_capacity(cells, rows):
 
 class DualRoleAccessTests(unittest.TestCase):
     def test_reflexive_transitive_old_access_does_not_prevent_counterexample(self):
+        ledger = Path(__file__).resolve().parents[1] / 'claim_evidence_ledger.csv'
+        with ledger.open(encoding='utf-8', newline='') as stream:
+            row = next(row for row in csv.DictReader(stream) if row['claim_id'] == 'C34')
+        for field in ('claim_text', 'claim_scope'):
+            self.assertIn('R_T=R union T', row[field])
+            self.assertIn('J_T=EqCl(J union T)', row[field])
+            self.assertRegex(row[field].lower(), r'reflexive old (?:access )?r\b')
+        self.assertIn('not alternating closure', row['claim_scope'])
+        self.assertIn('1/1/2', row['limitations'])
+        self.assertIn('regressions/test_dual_role_access.py', row['source_or_test'])
         self.assertEqual(closure(OLD_ACCESS), OLD_ACCESS)
         union = {p: OLD_ACCESS[p] | REWRITE[p] for p in PROGRAMS}
         composed = closure(union)

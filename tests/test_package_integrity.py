@@ -7,7 +7,9 @@ import os
 import ast
 import re
 import subprocess
+import shutil
 import sys
+import tempfile
 from pathlib import Path
 import unittest
 from collections import Counter
@@ -576,6 +578,14 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         current_state = CURRENT_STATE.read_text(encoding="utf-8")
         research_plan = RESEARCH_PLAN.read_text(encoding="utf-8")
         paper_readme = PAPER_README.read_text(encoding="utf-8")
+        for description in (current_state, paper_readme):
+            normalized=' '.join(description.split())
+            self.assertIn(f"{current['pdf_pages']}-page anonymous", normalized)
+            self.assertIn("titlepage.pdf", normalized)
+            self.assertNotIn("current 52-page manuscript", normalized)
+            self.assertNotIn("page count is not yet measured", normalized)
+        historical_status=json.loads((ROOT/'artifact/review-status.json').read_text(encoding='utf-8'))
+        self.assertIn(f"current {current['pdf_pages']}-page anonymous main",historical_status['current_entrypoints'])
         for text in (current_state, research_plan):
             self.assertRegex(text, r"52 (?:formal statements|formal results)")
             self.assertRegex(text, r"(?:four|Four|4) (?:native )?vector figures")
@@ -677,15 +687,106 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         self.assertNotIn(r'\begin{tikzpicture}', manuscript)
         self.assertIn("left-order cell", generator)
         self.assertIn("right-order cell", generator)
-        self.assertIn("every source reaches both cells", figure)
+        self.assertIn("both reachable from every source", figure)
         self.assertIn("one fixed message", generator)
-        self.assertIn("pure integer fragment", figure)
+        self.assertIn("pure-integer example", figure)
         self.assertIn('$p^{s}$', generator)
         self.assertIn('$p^{l}$', generator)
+        self.assertIn('four detector ($D$) cells', generator)
+        self.assertIn('Two operational ($J$) cells', generator)
+        self.assertIn('after temporary elimination', generator)
+        self.assertNotIn('Detector-visible cells', generator)
+        self.assertIn('four detector ($D$) cells', figure)
+        self.assertIn('two operational ($J$) cells', figure)
+        self.assertIn('Temporary-elimination attacks', figure)
+        description = re.search(r'\\Description\{([^{}]+)\}', figure).group(1)
+        for phrase in ('four detector cells', 'two operational cells', 'Temporary-elimination attack'):
+            self.assertIn(phrase, description)
+        self.assertNotIn('two detector-visible cells', figure)
         for name in ('running', 'triangle-product', 'stochastic-triangle', 'capacity-closure'):
             self.assertTrue((ROOT / 'paper/figures' / (name + '.pdf')).is_file())
             self.assertEqual((ROOT / 'paper/figures' / (name + '.pdf')).read_bytes(),
                              (ROOT / 'artifact/figures' / (name + '.pdf')).read_bytes())
+
+        for name in ('paper/VENUE_RULES.md', 'paper/SUBMISSION-CHECKLIST.md', 'artifact/README.md'):
+            with self.subTest(document=name):
+                text = (ROOT / name).read_text(encoding='utf-8')
+                self.assertRegex(text, r'50(?:-page| pages)')
+                self.assertIn('one-page', text)
+                self.assertIn('five authors', text)
+                self.assertNotIn('PDF binaries are pre-change', text)
+                self.assertNotIn('retained pre-change identified `main.pdf`', text)
+                self.assertNotIn('PDFs and historical export inventories are pre-change', text)
+
+        # POSIX-only execution of the real recipe in an owned disposable tree.
+        # Every renderer/TeX command is a stub: this is not a TeX build or a
+        # re-execution of the retained scientific evidence/test-count baseline.
+        if os.name != 'posix':
+            return
+        bash = shutil.which('bash')
+        self.assertIsNotNone(bash, 'POSIX build-recipe controls require bash')
+        recipe = (ROOT / 'paper/build.sh').read_bytes()
+        for branch in ('normal', 'fallback', 'missing'):
+            cases = ('success',) if branch == 'missing' else ('success', 'fail-figures', 'fail-main', 'fail-titlepage', 'omit-main', 'omit-titlepage')
+            for case in cases:
+                with self.subTest(bibtex_branch=branch, recipe_case=case), tempfile.TemporaryDirectory() as temporary:
+                    work = Path(temporary)
+                    paper, commands = work / 'paper', work / 'bin'
+                    paper.mkdir(); commands.mkdir()
+                    (paper / 'build.sh').write_bytes(recipe)
+                    for document in ('main', 'titlepage'):
+                        (paper / (document + '.tex')).write_text('owned stub input\n', encoding='utf-8')
+                    # Restrict PATH so host-installed BibTeX/TeX cannot be used.
+                    for command in ('dirname', 'mktemp', 'ln', 'rm'):
+                        target = shutil.which(command)
+                        self.assertIsNotNone(target)
+                        (commands / command).symlink_to(target)
+                    stubs = {
+                        'python3': '#!/bin/sh\n[ "$CONTROL" != fail-figures ] || exit 23\nexit 0\n',
+                        'bibtex': '#!/bin/sh\nexit ' + ('0' if branch == 'normal' else '1') + '\n',
+                        'latexmk': '''#!/bin/sh
+for argument do
+    case "$argument" in
+        -no-shell-escape) safe=yes ;;
+        -halt-on-error) halt=yes ;;
+        *.tex) document="$argument" ;;
+    esac
+done
+[ "$safe" = yes ] && [ "$halt" = yes ] || exit 96
+bibtex --version >/dev/null 2>&1 || exit 97
+printf '%s\\n' "$document" >> "$BUILD_LOG"
+[ "$CONTROL" != "fail-${document%.tex}" ] || exit 23
+if [ "$CONTROL" != "omit-${document%.tex}" ]; then
+    printf '%s\\n' 'owned non-PDF build stub output' > "${document%.tex}.pdf"
+fi
+'''
+                    }
+                    if branch == 'fallback':
+                        stubs['bibtex.original'] = '#!/bin/sh\nexit 0\n'
+                    for name, content in stubs.items():
+                        path = commands / name
+                        path.write_text(content, encoding='utf-8', newline='\n')
+                        path.chmod(0o755)
+                    log = work / 'build-calls.txt'
+                    environment = dict(os.environ, PATH=str(commands), BUILD_LOG=str(log), CONTROL=case)
+                    completed = subprocess.run([bash, str(paper / 'build.sh')], cwd=work,
+                                               env=environment, capture_output=True, text=True, timeout=10)
+                    calls = log.read_text(encoding='utf-8').splitlines() if log.exists() else []
+                    if branch == 'missing':
+                        self.assertEqual(completed.returncode, 127)
+                        self.assertEqual(calls, [])
+                    elif case == 'success':
+                        self.assertEqual(completed.returncode, 0, completed.stderr)
+                        self.assertEqual(calls, ['main.tex', 'titlepage.tex'])
+                        self.assertTrue(all((paper / (name + '.pdf')).stat().st_size for name in ('main', 'titlepage')))
+                    else:
+                        self.assertNotEqual(completed.returncode, 0)
+                        expected = [] if case == 'fail-figures' else (['main.tex'] if case in ('fail-main', 'omit-main') else ['main.tex', 'titlepage.tex'])
+                        self.assertEqual(calls, expected)
+                        if case.startswith('fail-'):
+                            self.assertEqual(completed.returncode, 23)
+                        if case.startswith('omit-'):
+                            self.assertIn('BUILD_OUTPUT_ERROR', completed.stderr)
 
     def test_project_manifest_covers_exact_public_tree_and_excludes_debris(self):
         manifest = json.loads(CURRENT_MANIFEST.read_text(encoding="utf-8"))
