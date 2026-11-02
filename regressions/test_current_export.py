@@ -60,7 +60,7 @@ def fixture():
             info = tarfile.TarInfo("owned-upstream/" + name)
             info.size = len(data)
             archive.addfile(info, io.BytesIO(data))
-    files["paper/acmart-source-v2.19.tar.gz"] = buffer.getvalue()
+    files["artifact/vendor/acmart-source.tar.gz"] = buffer.getvalue()
     current = dict(manuscript_sha256=sha(files["paper/main.tex"]),
                    current_bib_entry_sha256=dict.fromkeys(keys, "fixture"),
                    historical_file_sha256={"artifact/results/current/scientific.log": sha(files["artifact/results/current/scientific.log"])},

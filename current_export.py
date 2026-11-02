@@ -22,7 +22,7 @@ EXPORT_ROOTS = ("paper", "artifact")
 BIB_PATHS = ("paper/main.tex", "paper/references.bib", "paper/main.bbl")
 SUBMISSION_PATHS = ("paper/titlepage.tex", "paper/project-repository.tex", "paper/main.pdf", "paper/titlepage.pdf")
 VENDOR_PATHS = ("paper/acmart.cls", "paper/acmart.dtx", "paper/acmart.ins",
-                "paper/acmart-source-v2.19.tar.gz", "paper/ACM-SOURCE-NOTICE.md")
+                "artifact/vendor/acmart-source.tar.gz", "paper/ACM-SOURCE-NOTICE.md")
 FORBIDDEN = {".pyc", ".pyo", ".aux", ".blg", ".bbl", ".log", ".fls", ".fdb_latexmk", ".toc"}
 FORBIDDEN_PARTS = {"__pycache__", ".pytest_cache", ".mypy_cache", ".git"}
 ARCHIVE_ENV = "TOPLAS19_EXPORT_ARCHIVE"
@@ -264,7 +264,7 @@ def validate_vendor(files, current):
     require("Copyright 2016-2026, Association for Computing Machinery" in text
             and "LaTeX Project Public License" in text and "maintained" in text,
             "template original notices")
-    with tarfile.open(fileobj=io.BytesIO(files["paper/acmart-source-v2.19.tar.gz"]), mode="r:gz") as archive:
+    with tarfile.open(fileobj=io.BytesIO(files["artifact/vendor/acmart-source.tar.gz"]), mode="r:gz") as archive:
         members = archive.getmembers()
         require(len(members) == len({member.name for member in members}), "upstream duplicate entry")
         selected = {}

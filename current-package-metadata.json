@@ -196,11 +196,11 @@
     "extraction_scope": "isolated xetex docstrip, exact class bytes; no pages of output",
     "ctan_release_notice": "https://ctan.org/ctan-ann/id/f991b965e3dbf134@hogwart",
     "file_sha256": {
-      "paper/ACM-SOURCE-NOTICE.md": "e336feb851a29c4b3824d570de57d256c239de76ec42f542854a878d5177cc87",
+      "paper/ACM-SOURCE-NOTICE.md": "cac39af7099fedee38500269c4d1ba16ba268e969839c475ade71237ab824a20",
       "paper/acmart.dtx": "4e2fd29fc8a45c3d02facb616ed29954d7932891883185460bf374303036f3e1",
-      "paper/acmart-source-v2.19.tar.gz": "f53c0125da8b37a61f2eabdfde15ae493728c89e83d3caabb0de0dc65f0413da",
       "paper/acmart.cls": "2f949e6e3f2a79f2cdc218b9dcdbaa7dd451adb4ee0be1af6dc7ebe00b318ea7",
-      "paper/acmart.ins": "fa7daaa9375775ce699f33f909667bdb83c0408fd8d67606926df86c346c4044"
+      "paper/acmart.ins": "fa7daaa9375775ce699f33f909667bdb83c0408fd8d67606926df86c346c4044",
+      "artifact/vendor/acmart-source.tar.gz": "f53c0125da8b37a61f2eabdfde15ae493728c89e83d3caabb0de0dc65f0413da"
     },
     "upstream_commit": "062edc8119be9067a346ce874281eab48b2c29a4",
     "date": "2026-06-27",

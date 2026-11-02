@@ -13,162 +13,6 @@
   "file_count": 509,
   "files": [
     {
-      "path": "paper/.vscode/settings.json",
-      "bytes": 95,
-      "sha256": "e2916fa3ec34456efba17136bafa323c367db0b972b20a268c99de3cabf0a934",
-      "mode": "0644"
-    },
-    {
-      "path": "paper/ACM-LICENSE.txt",
-      "bytes": 19038,
-      "sha256": "244a2a04f81733d23ece64853319ce059c203d4f773b12fbef193f64d0efd6f1",
-      "mode": "0644"
-    },
-    {
-      "path": "paper/ACM-Reference-Format.bst",
-      "bytes": 93560,
-      "sha256": "8ec002c927068bfc5b3cfe71b66aa4767b9e485530ac3c67ba5c064df4c2e6ac",
-      "mode": "0644"
-    },
-    {
-      "path": "paper/ACM-SOURCE-NOTICE.md",
-      "bytes": 1604,
-      "sha256": "e336feb851a29c4b3824d570de57d256c239de76ec42f542854a878d5177cc87",
-      "mode": "0644"
-    },
-    {
-      "path": "paper/acmart-source-v2.19.tar.gz",
-      "bytes": 681851,
-      "sha256": "f53c0125da8b37a61f2eabdfde15ae493728c89e83d3caabb0de0dc65f0413da",
-      "mode": "0644"
-    },
-    {
-      "path": "paper/acmart.cls",
-      "bytes": 121737,
-      "sha256": "2f949e6e3f2a79f2cdc218b9dcdbaa7dd451adb4ee0be1af6dc7ebe00b318ea7",
-      "mode": "0644"
-    },
-    {
-      "path": "paper/acmart.dtx",
-      "bytes": 305356,
-      "sha256": "4e2fd29fc8a45c3d02facb616ed29954d7932891883185460bf374303036f3e1",
-      "mode": "0644"
-    },
-    {
-      "path": "paper/acmart.ins",
-      "bytes": 1016,
-      "sha256": "fa7daaa9375775ce699f33f909667bdb83c0408fd8d67606926df86c346c4044",
-      "mode": "0644"
-    },
-    {
-      "path": "paper/build.sh",
-      "bytes": 1290,
-      "sha256": "abd270635e6aa8b67943a916084ad412f74bdff7c49f1e1a4936df02ea729ce9",
-      "mode": "0755"
-    },
-    {
-      "path": "paper/figures/capacity-closure.pdf",
-      "bytes": 11611,
-      "sha256": "9458d73a80a9c1210e4df9c5b0003de7423beea759453e3fa2658fde958f0f75",
-      "mode": "0644"
-    },
-    {
-      "path": "paper/figures/running.pdf",
-      "bytes": 12815,
-      "sha256": "c0fc8954a22e244766634f21a8c15cfc82c68ff400f007094b625409aebcc018",
-      "mode": "0644"
-    },
-    {
-      "path": "paper/figures/running.png",
-      "bytes": 61482,
-      "sha256": "43c55a820ae3a43c5b347ed6ee3b1de640875c46b92b3e16528ef481e3159745",
-      "mode": "0644"
-    },
-    {
-      "path": "paper/figures/stochastic-triangle.pdf",
-      "bytes": 12004,
-      "sha256": "6a4897e2a32c5289571c670e28d98ead87e1548586a07dde00b7fdda89c55cf7",
-      "mode": "0644"
-    },
-    {
-      "path": "paper/figures/triangle-product.pdf",
-      "bytes": 11331,
-      "sha256": "592820680510acf2ca6adc87e7a823e692fb75a15ca822918422c84747d0e621",
-      "mode": "0644"
-    },
-    {
-      "path": "paper/main.bbl",
-      "bytes": 43555,
-      "sha256": "244d8a973ae5283229f65a3e21f0dfbea8af48adac9a2550a71ac827663fe444",
-      "mode": "0644"
-    },
-    {
-      "path": "paper/main.pdf",
-      "bytes": 374111,
-      "sha256": "40ac3a996f2bb45de508ca511b46d7cd14cdb5f6e7665dbe9874db6b2d34c347",
-      "mode": "0644"
-    },
-    {
-      "path": "paper/main.tex",
-      "bytes": 172786,
-      "sha256": "8fd03438439fe74bf81cf1894ac2f68b977140060c47cb44d83f845ef1ce1805",
-      "mode": "0644"
-    },
-    {
-      "path": "paper/project-repository.tex",
-      "bytes": 179,
-      "sha256": "79c93f35e82b0126eb5fb9881315af837ea9e29666f3cdc1d970b3d266b719a8",
-      "mode": "0644"
-    },
-    {
-      "path": "paper/provenance/CURRENT-STATE.md",
-      "bytes": 3975,
-      "sha256": "07d86c8d65064d86b63cc12916bcf4e21c607d4be7eb41658622e02a2071eacd",
-      "mode": "0644"
-    },
-    {
-      "path": "paper/provenance/research-plan.md",
-      "bytes": 3163,
-      "sha256": "7c73122e4f1786e4d84f483e8378051b08a33056033c8841912277c996466b0f",
-      "mode": "0644"
-    },
-    {
-      "path": "paper/README.md",
-      "bytes": 3842,
-      "sha256": "15d737b80c11e7c9dadd1bdc3935eae8363a64b5abc5e99ca1d170ccb2250417",
-      "mode": "0644"
-    },
-    {
-      "path": "paper/references.bib",
-      "bytes": 25806,
-      "sha256": "634ce14322d89cf1803241f6e70a46daea35301166b1531a8e2ddcf0cee67e0e",
-      "mode": "0644"
-    },
-    {
-      "path": "paper/SUBMISSION-CHECKLIST.md",
-      "bytes": 1510,
-      "sha256": "ea139dc57facaf48bf24a16053374cc83afc2ee77ee1fd3124817d6945f0c699",
-      "mode": "0644"
-    },
-    {
-      "path": "paper/titlepage.pdf",
-      "bytes": 44666,
-      "sha256": "4fdd6ca4f3decd7f9cdd53ba23ac9556f4c3d7bc99161529a0a4b92181af422a",
-      "mode": "0644"
-    },
-    {
-      "path": "paper/titlepage.tex",
-      "bytes": 1593,
-      "sha256": "03f22865e8622441a1e7f26b49224f3ac43abbfc543d734078b96897e09f421e",
-      "mode": "0644"
-    },
-    {
-      "path": "paper/VENUE_RULES.md",
-      "bytes": 1963,
-      "sha256": "ec18b59043a581b5221363dc6b7355f70ec84230d9e0e4fe1104915625ecc37b",
-      "mode": "0644"
-    },
-    {
       "path": "artifact/.gitattributes",
       "bytes": 232,
       "sha256": "f759524d933017e62fc5cd2a1e8760d9ad11f4140b642293935028961ff4ef8f",
@@ -230,14 +74,14 @@
     },
     {
       "path": "artifact/current-export-supplement.json",
-      "bytes": 793,
-      "sha256": "d2bfcbb472011811cdcb998d4fbb71b0c5c31fd252955bc1bc0ab539fa4b85dc",
+      "bytes": 797,
+      "sha256": "2368deeb4dd892ed513703935bf832b9e137189955ad7e7992ffff7ef9cab330",
       "mode": "0644"
     },
     {
       "path": "artifact/current-package-metadata.json",
-      "bytes": 37201,
-      "sha256": "db1bfcd8a06397246cd027ae02da2560100f1a8562dbb4fc3210868624df0b63",
+      "bytes": 37205,
+      "sha256": "bc1bc362a460583e3029ec499f84392da08436d63209de1f7c9d0a52d6eeda65",
       "mode": "0644"
     },
     {
@@ -248,8 +92,8 @@
     },
     {
       "path": "artifact/current_export.py",
-      "bytes": 22057,
-      "sha256": "04c1c87fb7af5ef6d25e1489110c8d0255dcabb429032e59d0922a4b79ccab8b",
+      "bytes": 22065,
+      "sha256": "0a8ee2f8dcb6c9c4040debb14639a2e69480e6a02bcdcd0ad7ae9f75302f1546",
       "mode": "0644"
     },
     {
@@ -446,8 +290,8 @@
     },
     {
       "path": "artifact/regressions/test_current_export.py",
-      "bytes": 22116,
-      "sha256": "e37fb39dd7faf944bdf9df1789b076031e0235884997b854d5c36388b72697d6",
+      "bytes": 22120,
+      "sha256": "20044ddc7ebd73bce8605462831cc718d0b44179c9351b9334e9a7d78acab6a0",
       "mode": "0644"
     },
     {
@@ -3007,6 +2851,12 @@
       "mode": "0644"
     },
     {
+      "path": "artifact/vendor/acmart-source.tar.gz",
+      "bytes": 681851,
+      "sha256": "f53c0125da8b37a61f2eabdfde15ae493728c89e83d3caabb0de0dc65f0413da",
+      "mode": "0644"
+    },
+    {
       "path": "artifact/venue-calibration-status.json",
       "bytes": 1188,
       "sha256": "2307557fef512357653a3a7229fd8c54c3fd33f27f8220623763d249a274bbbf",
@@ -3064,6 +2914,156 @@
       "path": "artifact/venue-evidence/recent-toplas-reference-calibration.json",
       "bytes": 6996,
       "sha256": "8231290ade90c213c84cdbfbfe024177def494aad288ef10e2aebeca6f2f0cac",
+      "mode": "0644"
+    },
+    {
+      "path": "paper/.vscode/settings.json",
+      "bytes": 95,
+      "sha256": "e2916fa3ec34456efba17136bafa323c367db0b972b20a268c99de3cabf0a934",
+      "mode": "0644"
+    },
+    {
+      "path": "paper/ACM-LICENSE.txt",
+      "bytes": 19038,
+      "sha256": "244a2a04f81733d23ece64853319ce059c203d4f773b12fbef193f64d0efd6f1",
+      "mode": "0644"
+    },
+    {
+      "path": "paper/ACM-Reference-Format.bst",
+      "bytes": 93560,
+      "sha256": "8ec002c927068bfc5b3cfe71b66aa4767b9e485530ac3c67ba5c064df4c2e6ac",
+      "mode": "0644"
+    },
+    {
+      "path": "paper/ACM-SOURCE-NOTICE.md",
+      "bytes": 1614,
+      "sha256": "cac39af7099fedee38500269c4d1ba16ba268e969839c475ade71237ab824a20",
+      "mode": "0644"
+    },
+    {
+      "path": "paper/acmart.cls",
+      "bytes": 121737,
+      "sha256": "2f949e6e3f2a79f2cdc218b9dcdbaa7dd451adb4ee0be1af6dc7ebe00b318ea7",
+      "mode": "0644"
+    },
+    {
+      "path": "paper/acmart.dtx",
+      "bytes": 305356,
+      "sha256": "4e2fd29fc8a45c3d02facb616ed29954d7932891883185460bf374303036f3e1",
+      "mode": "0644"
+    },
+    {
+      "path": "paper/acmart.ins",
+      "bytes": 1016,
+      "sha256": "fa7daaa9375775ce699f33f909667bdb83c0408fd8d67606926df86c346c4044",
+      "mode": "0644"
+    },
+    {
+      "path": "paper/build.sh",
+      "bytes": 1290,
+      "sha256": "abd270635e6aa8b67943a916084ad412f74bdff7c49f1e1a4936df02ea729ce9",
+      "mode": "0755"
+    },
+    {
+      "path": "paper/figures/capacity-closure.pdf",
+      "bytes": 11611,
+      "sha256": "9458d73a80a9c1210e4df9c5b0003de7423beea759453e3fa2658fde958f0f75",
+      "mode": "0644"
+    },
+    {
+      "path": "paper/figures/running.pdf",
+      "bytes": 12815,
+      "sha256": "c0fc8954a22e244766634f21a8c15cfc82c68ff400f007094b625409aebcc018",
+      "mode": "0644"
+    },
+    {
+      "path": "paper/figures/running.png",
+      "bytes": 61482,
+      "sha256": "43c55a820ae3a43c5b347ed6ee3b1de640875c46b92b3e16528ef481e3159745",
+      "mode": "0644"
+    },
+    {
+      "path": "paper/figures/stochastic-triangle.pdf",
+      "bytes": 12004,
+      "sha256": "6a4897e2a32c5289571c670e28d98ead87e1548586a07dde00b7fdda89c55cf7",
+      "mode": "0644"
+    },
+    {
+      "path": "paper/figures/triangle-product.pdf",
+      "bytes": 11331,
+      "sha256": "592820680510acf2ca6adc87e7a823e692fb75a15ca822918422c84747d0e621",
+      "mode": "0644"
+    },
+    {
+      "path": "paper/main.bbl",
+      "bytes": 43555,
+      "sha256": "244d8a973ae5283229f65a3e21f0dfbea8af48adac9a2550a71ac827663fe444",
+      "mode": "0644"
+    },
+    {
+      "path": "paper/main.pdf",
+      "bytes": 374111,
+      "sha256": "40ac3a996f2bb45de508ca511b46d7cd14cdb5f6e7665dbe9874db6b2d34c347",
+      "mode": "0644"
+    },
+    {
+      "path": "paper/main.tex",
+      "bytes": 172786,
+      "sha256": "8fd03438439fe74bf81cf1894ac2f68b977140060c47cb44d83f845ef1ce1805",
+      "mode": "0644"
+    },
+    {
+      "path": "paper/project-repository.tex",
+      "bytes": 179,
+      "sha256": "79c93f35e82b0126eb5fb9881315af837ea9e29666f3cdc1d970b3d266b719a8",
+      "mode": "0644"
+    },
+    {
+      "path": "paper/provenance/CURRENT-STATE.md",
+      "bytes": 3975,
+      "sha256": "07d86c8d65064d86b63cc12916bcf4e21c607d4be7eb41658622e02a2071eacd",
+      "mode": "0644"
+    },
+    {
+      "path": "paper/provenance/research-plan.md",
+      "bytes": 3163,
+      "sha256": "7c73122e4f1786e4d84f483e8378051b08a33056033c8841912277c996466b0f",
+      "mode": "0644"
+    },
+    {
+      "path": "paper/README.md",
+      "bytes": 3842,
+      "sha256": "15d737b80c11e7c9dadd1bdc3935eae8363a64b5abc5e99ca1d170ccb2250417",
+      "mode": "0644"
+    },
+    {
+      "path": "paper/references.bib",
+      "bytes": 25806,
+      "sha256": "634ce14322d89cf1803241f6e70a46daea35301166b1531a8e2ddcf0cee67e0e",
+      "mode": "0644"
+    },
+    {
+      "path": "paper/SUBMISSION-CHECKLIST.md",
+      "bytes": 1510,
+      "sha256": "ea139dc57facaf48bf24a16053374cc83afc2ee77ee1fd3124817d6945f0c699",
+      "mode": "0644"
+    },
+    {
+      "path": "paper/titlepage.pdf",
+      "bytes": 44666,
+      "sha256": "4fdd6ca4f3decd7f9cdd53ba23ac9556f4c3d7bc99161529a0a4b92181af422a",
+      "mode": "0644"
+    },
+    {
+      "path": "paper/titlepage.tex",
+      "bytes": 1593,
+      "sha256": "03f22865e8622441a1e7f26b49224f3ac43abbfc543d734078b96897e09f421e",
+      "mode": "0644"
+    },
+    {
+      "path": "paper/VENUE_RULES.md",
+      "bytes": 1963,
+      "sha256": "ec18b59043a581b5221363dc6b7355f70ec84230d9e0e4fe1104915625ecc37b",
       "mode": "0644"
     }
   ],
