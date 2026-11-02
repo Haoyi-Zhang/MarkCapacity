@@ -1,7 +1,7 @@
 {
   "schema": "ARTIFACT_REVIEW_STATUS_V3",
   "scope": "Historical 2026-09-26 release record only. All gate, status, verified, blocking_items and verdict fields below refer to that dated 48-page/56+8-test export, not the current manuscript, author metadata, test schedule or approval state.",
-  "current_entrypoints": "See README.md and SOURCE_EXECUTION.md for execution entrypoints. A full project supplies the current 50-page anonymous main and a separate one-page identifying sheet with five authors, described in ../paper/provenance/CURRENT-STATE.md. The recorded 88-test Windows scientific run is historical and separate from current document/package consistency; no new experiment or author approval is asserted here.",
+  "current_entrypoints": "See README.md and SOURCE_EXECUTION.md for execution entrypoints. A full project supplies the current 50-page anonymous main and a separate one-page identifying sheet with four authors, described in ../paper/provenance/CURRENT-STATE.md. The recorded 88-test Windows scientific run is historical and separate from current document/package consistency; no new experiment or author approval is asserted here.",
   "date": "2026-09-26",
   "gate": "FINAL_REPAIRED_INTERNAL_PACKAGE_WITH_AUTHOR_COMPLETION_AND_EXTERNAL_REVIEW_PENDING",
   "scientific_status": "PASS_INTERNAL",

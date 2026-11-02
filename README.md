@@ -208,7 +208,7 @@ actual stored bytes/modes and rejects unlisted members in either delivery root.
 The current metadata binds 70 rendered references and 105 single-key citation
 commands, 52 primary statements with proofs, and 55 scoped correctness rows
 whose shared-proof aliases remain explicit. It separately binds the anonymous
-main and identifying title page with the existing five authors. Uncited
+main and identifying title page with the approved four authors. Uncited
 database entries do not count as rendered references. Current claim, correctness
 and citation ledgers have their own byte and source-location bindings; original
 identities remain in the unchanged historical `project-manifest.json`. The dated
@@ -232,7 +232,7 @@ retains the real identifying URL for coordination; no anonymous URL is invented
 and the main no longer renders the public link. Self-citations remain intact.
 The supplied `paper/main.pdf` is the current 50-page anonymous manuscript;
 `paper/titlepage.pdf` is the separate one-page identifying sheet with the
-existing five authors and ORCIDs. These are not pre-change identified drafts.
+approved four authors and supplied ORCIDs. These are not pre-change identified drafts.
 Historical export inventories still describe their own snapshots. The build
 recipe regenerates both PDFs; document roles, anonymity, layout and current
 inventory/bindings should be checked after source edits. Current guide

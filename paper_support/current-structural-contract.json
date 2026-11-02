@@ -1,10 +1,10 @@
 {
   "schema": "CAPACITY_CURRENT_STRUCTURAL_CONTRACT_V1",
   "approved_for_refresh": true,
-  "approval_instruction": "Same approved identities, all 52 formal objects/proofs/labels and class roles; only reviewed background appendix adds one section; current source binding and locations refreshed",
+  "approval_instruction": "Exact approved role-specific authorship; anonymous scientific manuscript unchanged",
   "approved_source_sha256": {
     "paper/main.tex": "b9af3d1dfc618bdb724ead3f3b1f890d81050553acef57a05b4e49881658e3af",
-    "paper/titlepage.tex": "03e2da9350fbfc8855a637156700160e33da350613dcecdbb8bb7477307f70f2",
+    "paper/titlepage.tex": "7e052f4409c43ac652be91f11533b047026f6c7c799d4212b00789bea803a5fc",
     "paper/references.bib": "634ce14322d89cf1803241f6e70a46daea35301166b1531a8e2ddcf0cee67e0e"
   },
   "expected_main_options": [
@@ -105,27 +105,22 @@
   "authors_tex": [
     "Haoyi Zhang",
     "Huaijin Ran",
-    "Xunzhu Tang",
-    "Kisub Kim",
-    "Tegawend\\'{e} F. Bissyand\\'{e}"
+    "Yuqiang Sun",
+    "Jiongchi Yu"
   ],
   "author_emails": [
     "hyeliozhang@gmail.com",
     "huaijin003@e.ntu.edu.sg",
-    "realdanieltang@gmail.com",
-    "kisub.kim@dgist.ac.kr",
-    "tegawende.bissyande@uni.lu"
+    "yuqiang.sun@ntu.edu.sg",
+    "jiongchiyu@acm.org"
   ],
   "author_orcids": [
     "0009-0009-3693-786X",
     "0009-0009-2482-2344",
-    "0000-0002-6377-0884",
-    "0000-0002-4462-6916",
-    "0000-0001-7270-9869"
+    "0000-0003-4340-3371",
+    "0000-0002-2888-4499"
   ],
-  "corresponding_author_notes_tex": [
-    "Corresponding author: Tegawend\\'{e} F. Bissyand\\'{e}."
-  ],
+  "corresponding_author_notes_tex": [],
   "claim_display_overrides": {},
   "old_metadata_author_count_is_not_current_authority": true,
   "approved_non_doi": {
@@ -148,9 +143,42 @@
     "historical_bib_entry_sha256": "9d1efe8aca4934cbb6220a78ab00c9c667a993f2de3825f8bb80d87af9677e46",
     "template_source": "1864386020c6f08b0b1ac82098b123393eeeb90b29fe6acb55926b18f2b68972"
   },
-  "selected_parent_build_receipt_sha256": "3954c5d0c67d263a526a80c5b14a7ccb6629c6ea4a54fd4b6178a8d5d8128509",
+  "selected_parent_build_receipt_sha256": "139877df7102e4f527a9fd923eb016ee3fdbf91671ee68804511b4e6b6a376a7",
   "selected_parent_build_outputs": {
     "paper/main.pdf": "1a3571cc12e25262cac661026cf07a009ee54c6a4b07a72af83115e0d6a4c26f",
-    "paper/titlepage.pdf": "97c08a24b30cfe845674742ae13ace2d4da1f8fe80320df77fa3a161ceeefb1d"
-  }
+    "paper/titlepage.pdf": "76e48e02f4efac4542711be95e40ae286f8af3ee32e5e772bb02fd09ba564986"
+  },
+  "author_affiliations": [
+    "\\institution{Xi'an Jiaotong-Liverpool University}\\city{Suzhou}\\country{China}",
+    "\\institution{Nanyang Technological University}\\city{Singapore}\\country{Singapore}",
+    "\\institution{Nanyang Technological University}\\city{Singapore}\\country{Singapore}",
+    "\\institution{Nanyang Technological University}\\city{Singapore}\\country{Singapore}"
+  ],
+  "current_author_records": [
+    {
+      "name": "Haoyi Zhang",
+      "email": "hyeliozhang@gmail.com",
+      "affiliation_tex": "\\institution{Xi'an Jiaotong-Liverpool University}\\city{Suzhou}\\country{China}",
+      "orcid": "0009-0009-3693-786X"
+    },
+    {
+      "name": "Huaijin Ran",
+      "email": "huaijin003@e.ntu.edu.sg",
+      "affiliation_tex": "\\institution{Nanyang Technological University}\\city{Singapore}\\country{Singapore}",
+      "orcid": "0009-0009-2482-2344"
+    },
+    {
+      "name": "Yuqiang Sun",
+      "email": "yuqiang.sun@ntu.edu.sg",
+      "affiliation_tex": "\\institution{Nanyang Technological University}\\city{Singapore}\\country{Singapore}",
+      "orcid": "0000-0003-4340-3371"
+    },
+    {
+      "name": "Jiongchi Yu",
+      "email": "jiongchiyu@acm.org",
+      "affiliation_tex": "\\institution{Nanyang Technological University}\\city{Singapore}\\country{Singapore}",
+      "orcid": "0000-0002-2888-4499"
+    }
+  ],
+  "authorship_approval_sha256": "139877df7102e4f527a9fd923eb016ee3fdbf91671ee68804511b4e6b6a376a7"
 }

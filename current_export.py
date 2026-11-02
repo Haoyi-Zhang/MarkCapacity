@@ -29,9 +29,9 @@ ARCHIVE_ENV = "TOPLAS19_EXPORT_ARCHIVE"
 MAIN_OPTIONS = "acmsmall,screen,anonymous,nonacm"
 TITLE_OPTIONS = "acmsmall,screen,nonacm"
 # Existing approved identities belong to the separate title page, never main.
-APPROVED_AUTHORS = ("Haoyi Zhang", "Huaijin Ran", "Xunzhu Tang", "Kisub Kim", r"Tegawend\'{e} F. Bissyand\'{e}")
-APPROVED_EMAILS = ("hyeliozhang@gmail.com", "huaijin003@e.ntu.edu.sg", "realdanieltang@gmail.com", "kisub.kim@dgist.ac.kr", "tegawende.bissyande@uni.lu")
-APPROVED_ORCIDS = ("0009-0009-3693-786X", "0009-0009-2482-2344", "0000-0002-6377-0884", "0000-0002-4462-6916", "0000-0001-7270-9869")
+APPROVED_AUTHORS = ('Haoyi Zhang', 'Huaijin Ran', 'Yuqiang Sun', 'Jiongchi Yu')
+APPROVED_EMAILS = ('hyeliozhang@gmail.com', 'huaijin003@e.ntu.edu.sg', 'yuqiang.sun@ntu.edu.sg', 'jiongchiyu@acm.org')
+APPROVED_ORCIDS = ('0009-0009-3693-786X', '0009-0009-2482-2344', '0000-0003-4340-3371', '0000-0002-2888-4499')
 NON_DOI_CHAPTER = {"author": "Samson Abramsky", "title": "The Lazy Lambda Calculus", "booktitle": "Research Topics in Functional Programming",
                    "editor": "D. Turner", "publisher": "Addison Wesley", "year": "1990", "pages": "65--117",
                    "url": "https://www.cs.ox.ac.uk/people/samson.abramsky/lazy.pdf", "note": "Author-hosted manuscript"}
@@ -177,6 +177,82 @@ def validate_reference_identities(entries):
     require(len(identities) == len(set(identities)), "duplicate scholarly identity")
 
 
+APPROVED_AUTHOR_RECORDS = [{'name': 'Haoyi Zhang',
+  'email': 'hyeliozhang@gmail.com',
+  'affiliation_tex': "\\institution{Xi'an Jiaotong-Liverpool "
+                     'University}\\city{Suzhou}\\country{China}',
+  'orcid': '0009-0009-3693-786X'},
+ {'name': 'Huaijin Ran',
+  'email': 'huaijin003@e.ntu.edu.sg',
+  'affiliation_tex': '\\institution{Nanyang Technological '
+                     'University}\\city{Singapore}\\country{Singapore}',
+  'orcid': '0009-0009-2482-2344'},
+ {'name': 'Yuqiang Sun',
+  'email': 'yuqiang.sun@ntu.edu.sg',
+  'affiliation_tex': '\\institution{Nanyang Technological '
+                     'University}\\city{Singapore}\\country{Singapore}',
+  'orcid': '0000-0003-4340-3371'},
+ {'name': 'Jiongchi Yu',
+  'email': 'jiongchiyu@acm.org',
+  'affiliation_tex': '\\institution{Nanyang Technological '
+                     'University}\\city{Singapore}\\country{Singapore}',
+  'orcid': '0000-0002-2888-4499'}]
+APPROVED_VARIANT = 'c'
+AUTHORSHIP_APPROVAL_SHA256 = '139877df7102e4f527a9fd923eb016ee3fdbf91671ee68804511b4e6b6a376a7'
+
+"""Pure authorship checks injected into each clone's existing export validator.
+
+APPROVED_AUTHOR_RECORDS, APPROVED_VARIANT and AUTHORSHIP_APPROVAL_SHA256 are
+literal, per-clone constants generated from the exact main-approved source/gate.
+The surrounding validator's bibliography, vendor, inventory and anonymous rules
+remain in force. No external file or mutable metadata supplies the approved list.
+"""
+
+
+def title_author_records(title):
+    source = uncomment(title)
+    starts = list(re.finditer(r"\\author\{", source))
+    require(len(starts) == len(re.findall(r"\\author\b", source)), "approved titlepage identities: literal author blocks")
+    records = []
+    for i, match in enumerate(starts):
+        block = source[match.start():starts[i+1].start() if i+1 < len(starts) else len(source)]
+        names = literal_arguments(block, "author")
+        emails = literal_arguments(block, "email")
+        affiliations = literal_arguments(block, "affiliation")
+        orcids = literal_arguments(block, "orcid")
+        require(len(names) == len(emails) == len(affiliations) == 1 and len(orcids) <= 1,
+                "approved titlepage identities: per-author contact/affiliation/ORCID cardinality")
+        records.append(dict(name=names[0], email=emails[0], affiliation_tex=affiliations[0],
+                            orcid=orcids[0] if orcids else None))
+    require(literal_arguments(source, "email") == [r["email"] for r in records]
+            and literal_arguments(source, "affiliation") == [r["affiliation_tex"] for r in records]
+            and literal_arguments(source, "orcid") == [r["orcid"] for r in records if r["orcid"] is not None],
+            "approved titlepage identities: fields outside author blocks")
+    require(not re.search(r"\\(?:authornote|authornotemark|thanks)\b|corresponding[ -]author", source, re.I),
+            "approved titlepage identities: no corresponding author or author notes")
+    return records
+
+
+def validate_current_authorship(title, current):
+    records = title_author_records(title)
+    require(records == APPROVED_AUTHOR_RECORDS, "approved titlepage identities: exact ordered records")
+    require(current["current_author_records"] == APPROVED_AUTHOR_RECORDS
+            and current["current_authorship_variant"] == APPROVED_VARIANT
+            and current["authorship_approval_sha256"] == AUTHORSHIP_APPROVAL_SHA256,
+            "approved titlepage identities: exact roster approval binding")
+    for field, expected in (("authors_tex", [r["name"] for r in records]),
+                            ("author_emails", [r["email"] for r in records]),
+                            ("author_affiliations", [r["affiliation_tex"] for r in records]),
+                            ("author_orcids", [r["orcid"] for r in records if r["orcid"] is not None])):
+        require(current[field] == expected, "approved titlepage identities: " + field)
+    require(current["corresponding_authors"] == [] and current["corresponding_author_note_tex"] == "",
+            "approved titlepage identities: no current correspondence")
+    document = current["current_documents"]["paper/titlepage.pdf"]
+    for field in ("authors_tex", "author_emails", "author_affiliations", "author_orcids"):
+        require(document[field] == current[field], "approved titlepage identities: title document " + field)
+    require(document["corresponding_authors"] == [], "approved titlepage identities: title document correspondence")
+
+
 def validate_submission(files, current):
     """Check source roles and bound separate documents; not PDF visual QA."""
     main = uncomment(files["paper/main.tex"].decode("utf-8"))
@@ -194,10 +270,7 @@ def validate_submission(files, current):
     require(r"\hypersetup{pdfauthor={}}" in main, "anonymous PDF author metadata clearing")
     require(not any("titlepage" in name for name in literal_arguments(main,"input")), "main inputs identifying titlepage")
     require(not re.search(r"\\(?:section|subsection)\*?\{|\\begin\{(?:abstract|theorem|proof)\}", title), "titlepage is a second manuscript")
-    require(len(literal_arguments(title,"affiliation")) == 5, "titlepage five affiliations")
-    for command, expected, field in (("author",APPROVED_AUTHORS,"authors_tex"), ("email",APPROVED_EMAILS,"author_emails"), ("orcid",APPROVED_ORCIDS,"author_orcids")):
-        require(literal_arguments(title,command) == list(expected) == current[field], "approved titlepage identities: " + command)
-    require(literal_arguments(title,"authornote") == [r"Corresponding author: Tegawend\'{e} F. Bissyand\'{e}."], "titlepage corresponding author")
+    validate_current_authorship(title, current)
     availability = uncomment(files["paper/project-repository.tex"].decode("utf-8"))
     require(not re.search(r"https?://[^\s{}]*(?:github|gitlab)\.[^\s{}]+", main + availability, re.I), "identifying rendered repository URL")
     for identifier in APPROVED_EMAILS + APPROVED_ORCIDS:

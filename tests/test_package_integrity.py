@@ -608,18 +608,16 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         self.assertEqual(len(citation_commands), 105)
         self.assertEqual(tex_command_arguments(manuscript,"author"),["Anonymous Author(s)"])
         self.assertEqual(manuscript.count(r"\affiliation{"), 0)
-        self.assertEqual(titlepage.count(r"\affiliation{"), 5)
-        self.assertEqual(titlepage.count(r"\authornote{Corresponding author:"), 1)
-        self.assertEqual(titlepage.count(r"\orcid{"), 5)
-        self.assertEqual(
-            re.findall(r"\\orcid\{([^{}]+)\}", titlepage),
-            ["0009-0009-3693-786X", "0009-0009-2482-2344", "0000-0002-6377-0884",
-             "0000-0002-4462-6916", "0000-0001-7270-9869"],
-        )
-        self.assertEqual(tex_command_arguments(titlepage, "author"), current["authors_tex"])
-        self.assertEqual(tex_command_arguments(titlepage, "email"), current["author_emails"])
-        self.assertEqual(tex_command_arguments(titlepage, "authornote"),
-                         [current["corresponding_author_note_tex"]])
+        from current_export import APPROVED_AUTHOR_RECORDS, validate_current_authorship
+        validate_current_authorship(titlepage, current)
+        self.assertEqual(current["current_author_records"], APPROVED_AUTHOR_RECORDS)
+        self.assertEqual(tex_command_arguments(titlepage, "author"), [r["name"] for r in APPROVED_AUTHOR_RECORDS])
+        self.assertEqual(tex_command_arguments(titlepage, "email"), [r["email"] for r in APPROVED_AUTHOR_RECORDS])
+        self.assertEqual(tex_command_arguments(titlepage, "affiliation"), [r["affiliation_tex"] for r in APPROVED_AUTHOR_RECORDS])
+        self.assertEqual(tex_command_arguments(titlepage, "orcid"), [r["orcid"] for r in APPROVED_AUTHOR_RECORDS if r["orcid"] is not None])
+        self.assertEqual(tex_command_arguments(titlepage, "authornote"), [])
+        self.assertEqual(current["corresponding_authors"], [])
+        self.assertEqual(current["corresponding_author_note_tex"], "")
         self.assertNotRegex(manuscript, r"\\author\{Author [A-F]\}")
         # The paper reports semantic instances, not software test schedules.
         # Bind its current table to immutable results and real rendered text;
@@ -802,7 +800,8 @@ class PublicPackageIntegrityTests(unittest.TestCase):
                 text = (ROOT / name).read_text(encoding='utf-8')
                 self.assertRegex(text, r'50(?:-page| pages)')
                 self.assertIn('one-page', text)
-                self.assertIn('five authors', text)
+                from current_export import APPROVED_AUTHORS
+                self.assertIn({4: 'four', 5: 'five'}[len(APPROVED_AUTHORS)] + ' authors', text)
                 self.assertNotIn('PDF binaries are pre-change', text)
                 self.assertNotIn('retained pre-change identified `main.pdf`', text)
                 self.assertNotIn('PDFs and historical export inventories are pre-change', text)

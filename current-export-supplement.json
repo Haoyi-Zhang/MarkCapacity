@@ -2,7 +2,7 @@
   "schema": "CURRENT_EXPORT_SUPPLEMENT_V1",
   "date": "2026-10-16",
   "scope": "current source-export roles/schedule only; historical campaign unchanged",
-  "current_metadata_sha256": "8a98a271ab8ad98692f5e22c63ad9376de50abcf692a3d8026459a958ab09cce",
+  "current_metadata_sha256": "130fde8171567ce74ddc5d64e07f2dde267d44719cd3212840bf5655cd23d721",
   "publisher_source_paths": [
     "paper/main.tex",
     "paper/references.bib",
