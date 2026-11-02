@@ -10,7 +10,7 @@
     "artifact",
     "paper"
   ],
-  "file_count": 502,
+  "file_count": 509,
   "files": [
     {
       "path": "paper/.vscode/settings.json",
@@ -231,13 +231,13 @@
     {
       "path": "artifact/current-export-supplement.json",
       "bytes": 793,
-      "sha256": "d29be99924041cfbaccc20323a6bd6416ff6199db639798773be358147f881d9",
+      "sha256": "9fae667e7909cb0055fd5fbc6fb40ed5292cf613e64b0b184eeb4710d2f642d5",
       "mode": "0644"
     },
     {
       "path": "artifact/current-package-metadata.json",
       "bytes": 37200,
-      "sha256": "aae7867eeac3573b6cf979483abc08c343cfe15e866fc677f02a7b767671a038",
+      "sha256": "05fa376524d44193c55b9234d9f34b02c96526379cd1459d605be3ad10ca867c",
       "mode": "0644"
     },
     {
@@ -332,8 +332,8 @@
     },
     {
       "path": "artifact/literature-evidence/records.jsonl",
-      "bytes": 744001,
-      "sha256": "36f212355495d56990fd4be5ec77a8d849d9c3f7060e52b63b8d3fcefee813b6",
+      "bytes": 974319,
+      "sha256": "478acb56e7b1f32a0550d521f8556965d662c9b7da864618419395a59ec10477",
       "mode": "0644"
     },
     {
@@ -428,8 +428,8 @@
     },
     {
       "path": "artifact/README.md",
-      "bytes": 17433,
-      "sha256": "d0023ccc29050cf0ddc9f3f291bf4810979cecc09897c62d58e7b7f5739ac5c3",
+      "bytes": 18945,
+      "sha256": "e3bff79a50224f1c52fe70af448ea4e43ed1b05b311243f30f5dec2896505cda",
       "mode": "0644"
     },
     {
@@ -454,6 +454,12 @@
       "path": "artifact/regressions/test_dual_role_access.py",
       "bytes": 4268,
       "sha256": "d7f7f3812fa44e74a839b61b5389db0509bdb6ea777c872044518f4654aa1826",
+      "mode": "0644"
+    },
+    {
+      "path": "artifact/regressions/test_generator_destination.py",
+      "bytes": 3507,
+      "sha256": "8dbb42903d7f7de86247c4383ce0b98c153364139074ff100cc7252326a10b06",
       "mode": "0644"
     },
     {
@@ -2822,14 +2828,44 @@
     },
     {
       "path": "artifact/run-tests.sh",
-      "bytes": 3926,
-      "sha256": "28eb23cd889bbe5a2d85582981a69df905a66ab44aa62694db787f22d7ead806",
+      "bytes": 4178,
+      "sha256": "77395084af1c050aeef2eea94ddf13a4586951dea8db309595d1fa1e9d309978",
       "mode": "0755"
     },
     {
+      "path": "artifact/source-preimages/abstract/run_all.py",
+      "bytes": 16735,
+      "sha256": "a9f31556e6596655f7f125944ea4d14417dafb70c9ea5b9e634de78633a90ee2",
+      "mode": "0644"
+    },
+    {
+      "path": "artifact/source-preimages/source-execution/arithmetic_language.py",
+      "bytes": 8748,
+      "sha256": "e4253ca53fe1f631a4ac50fe1c2d4c67eff22d8efe74a5bb62b13e963135773d",
+      "mode": "0644"
+    },
+    {
+      "path": "artifact/source-preimages/source-execution/run_source.py",
+      "bytes": 8785,
+      "sha256": "5f3bcd9c3dcff44a7aa247aeab8d6156bbbf5a5a1380611a7cb13714c85e7b7a",
+      "mode": "0644"
+    },
+    {
+      "path": "artifact/source-preimages/source-execution/source_language.py",
+      "bytes": 7904,
+      "sha256": "02c44224d353abec348678501f5ab37d61c954d3a7c663f82271541d6fa58dc7",
+      "mode": "0644"
+    },
+    {
+      "path": "artifact/source-preimages/source-execution/woc.py",
+      "bytes": 55938,
+      "sha256": "3f4fb66dff30b1f69d7fe66243f596b660ad9025ff95372aa2ca0e8ace456148",
+      "mode": "0644"
+    },
+    {
       "path": "artifact/SOURCE_EXECUTION.md",
-      "bytes": 4682,
-      "sha256": "ab3ccccbeedd85c2e93c912d08c7370ed286a7a7586142f3fcbc7a0dfbf46c91",
+      "bytes": 6369,
+      "sha256": "f89a2db608a47c2890c89f91b8676c74df7771479ee46594e70a396c9829ea94",
       "mode": "0644"
     },
     {
@@ -2846,14 +2882,20 @@
     },
     {
       "path": "artifact/src/check_source.py",
-      "bytes": 6975,
-      "sha256": "7333bcb6b1966d7c26f723032c8c16173c078c44169b6763da0dc85266c630c5",
+      "bytes": 14221,
+      "sha256": "443f57f0158289fc70814dfb2c5ff6750f56084dff78caddd69b502684c0b968",
+      "mode": "0644"
+    },
+    {
+      "path": "artifact/src/retained_sources.py",
+      "bytes": 4441,
+      "sha256": "2c61efe2ff22c90d12527e0fc9a59bc4e4dfd307b5df14175faa0c91e476d045",
       "mode": "0644"
     },
     {
       "path": "artifact/src/run_all.py",
-      "bytes": 16735,
-      "sha256": "a9f31556e6596655f7f125944ea4d14417dafb70c9ea5b9e634de78633a90ee2",
+      "bytes": 18070,
+      "sha256": "5d86697646c3788c51e6085129f0c06f36b8cfec29025b53a6ac5dd6d4534828",
       "mode": "0644"
     },
     {
@@ -2864,8 +2906,8 @@
     },
     {
       "path": "artifact/src/source_language.py",
-      "bytes": 7904,
-      "sha256": "02c44224d353abec348678501f5ab37d61c954d3a7c663f82271541d6fa58dc7",
+      "bytes": 8019,
+      "sha256": "8815982ffb123a06b4c973b136630c9a4a26301cc69f9f70490449ef862a911e",
       "mode": "0644"
     },
     {
@@ -2906,8 +2948,8 @@
     },
     {
       "path": "artifact/tests/test_incident_pruning.py",
-      "bytes": 7250,
-      "sha256": "41c133be07a2b930f75ee23e5e495fcf7b8848fc3a278c36a85295e00dedc846",
+      "bytes": 8158,
+      "sha256": "cc11b2bf9f6326504999f4d70df471f5309bff08193b524624c90da5674559a9",
       "mode": "0644"
     },
     {
@@ -2930,8 +2972,8 @@
     },
     {
       "path": "artifact/tests/test_reproduction.py",
-      "bytes": 1980,
-      "sha256": "bcaf07c8f1896f79fa91f7d185aef116037a4ac85b80397f96589a5a23b949dc",
+      "bytes": 1997,
+      "sha256": "af5d8ae62219760152881b33854e36739f85df84b88874c6a6e1504c99120e68",
       "mode": "0644"
     },
     {
@@ -2942,14 +2984,14 @@
     },
     {
       "path": "artifact/tests/test_source_records.py",
-      "bytes": 3503,
-      "sha256": "01d130c0735cb496ed94a10fdc654ea0d2ca0181571e0ad71e3fe37556005607",
+      "bytes": 8910,
+      "sha256": "4d0f99943971b2bbe4b6ca87bbe0c1c7519813825c782c04e1ea099db017c384",
       "mode": "0644"
     },
     {
       "path": "artifact/tests/test_source_witness.py",
-      "bytes": 3198,
-      "sha256": "0f0380f2131a9349106b2956357f1df8eb712f0d1ac7f1ee1bd822a5532ab33e",
+      "bytes": 4127,
+      "sha256": "ef4462b50918c4eb549cc0bc84047f85e69646521941c8dee94fe402642087d8",
       "mode": "0644"
     },
     {

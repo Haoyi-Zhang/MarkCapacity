@@ -9,6 +9,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'src'))
 import woc
+from retained_sources import ABSTRACT_COMMAND, check_abstract_manifests
 
 
 def complete_coloring_reference(edges, vertices, messages):
@@ -122,8 +123,21 @@ class IncidentPruningTests(unittest.TestCase):
             self.assertEqual(current[field], archived[field])
         self.assertEqual(set(current['inputs']), set(archived['inputs']))
         self.assertEqual(set(current['inputs']), {'src/woc.py', 'src/run_all.py', 'src/witness_checks.py'})
-        for rel, digest in current['inputs'].items():
-            self.assertEqual(hashlib.sha256((ROOT / rel).read_bytes()).hexdigest(), digest, rel)
+        resolution=check_abstract_manifests(current)
+        self.assertTrue(resolution['historical_source_preimages_verified'])
+        self.assertFalse(resolution['native_replay'])
+        fresh=json.loads(json.dumps(current))
+        fresh['command']=ABSTRACT_COMMAND
+        fresh['inputs']={rel:hashlib.sha256((ROOT/rel).read_bytes()).hexdigest()
+                         for rel in current['inputs']}
+        self.assertTrue(check_abstract_manifests(current,fresh)['fresh_manifest_checked'])
+        for rel in fresh['inputs']:
+            changed=json.loads(json.dumps(fresh));changed['inputs'][rel]='0'*64
+            with self.subTest(source=rel),self.assertRaisesRegex(ValueError,'fresh abstract source differs'):
+                check_abstract_manifests(current,changed)
+        changed=json.loads(json.dumps(current));changed['inputs']['src/run_all.py']='0'*64
+        with self.assertRaisesRegex(ValueError,'unknown retained'):
+            check_abstract_manifests(changed)
         for rel, digest in archived['outputs'].items():
             self.assertEqual(hashlib.sha256((ROOT / rel).read_bytes()).hexdigest(), digest, rel)
         for line in (ROOT / 'raw/SHA256SUMS').read_text(encoding='utf-8').splitlines():

@@ -43,6 +43,8 @@ def inspect_source(source: str):
                 or not isinstance(statement.targets[0],ast.Name)):
             raise ValueError('only simple fresh temporary assignments are admitted')
         name=statement.targets[0].id
+        if name == '__debug__':
+            raise ValueError('reserved assignment target is outside the fragment')
         if name in bindings or name in {a.arg for a in args.args} or name=='carrier':
             raise ValueError('temporary binding must be fresh and unique')
         bindings[name]=statement.value

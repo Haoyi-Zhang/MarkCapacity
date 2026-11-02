@@ -13,6 +13,7 @@ from fractions import Fraction
 from pathlib import Path
 
 from witness_checks import run_witness_checks, run_larger_stress_checks
+from retained_sources import ABSTRACT_COMMAND
 
 from woc import (
     access_exact_feasible,
@@ -51,8 +52,32 @@ def sha256(path: Path) -> str:
     return h.hexdigest()
 
 
-def main(output_root: Path = ROOT) -> int:
-    """Regenerate evidence separately from the retained records when requested."""
+def reserve_output(output_root=None) -> Path:
+    """Reject omitted, existing and overlapping destinations before any science."""
+    if output_root is None:
+        raise ValueError('an explicit fresh output directory is required')
+    try:
+        supplied = Path(output_root)
+        output = supplied.resolve()
+    except (TypeError, ValueError, OSError) as error:
+        raise ValueError('invalid output directory') from error
+    protected = ROOT.resolve()
+    if protected.name == 'artifact' and (protected.parent/'paper').is_dir():
+        protected = protected.parent
+    if output == protected or protected in output.parents or output in protected.parents:
+        raise ValueError('output must not overlap the retained project')
+    if supplied.is_symlink() or output.exists():
+        raise ValueError('output directory must be absent')
+    try:
+        output.mkdir(parents=True, exist_ok=False)
+    except OSError as error:
+        raise ValueError('cannot reserve a fresh output directory') from error
+    return output
+
+
+def main(output_root=None) -> int:
+    """Regenerate only into an explicit, atomically reserved fresh directory."""
+    output_root = reserve_output(output_root)
     RAW = output_root / "raw"
     GEN = output_root / "generated"
     RAW.mkdir(parents=True, exist_ok=True)
@@ -368,7 +393,7 @@ def main(output_root: Path = ROOT) -> int:
     result_path.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
 
     manifest = {
-        "command": "python3 src/run_all.py",
+        "command": ABSTRACT_COMMAND,
         "inputs": {
             "src/woc.py": sha256(ROOT / "src" / "woc.py"),
             "src/run_all.py": sha256(ROOT / "src" / "run_all.py"),
@@ -400,9 +425,19 @@ def main(output_root: Path = ROOT) -> int:
     return 0
 
 
+def cli(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--out", type=Path, required=True,
+                        help="absent output directory outside the retained project")
+    args = parser.parse_args(argv)
+    if args.out.is_symlink():
+        parser.error('output directory must be absent, not a symlink')
+    try:
+        return main(args.out.resolve())
+    except ValueError as error:
+        parser.error(str(error))
+
+
 if __name__ == "__main__":
     sys.stdout.reconfigure(encoding="utf-8", newline="\n")
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--out", type=Path, default=ROOT,
-                        help="output root (use a separate directory to preserve retained evidence)")
-    raise SystemExit(main(parser.parse_args().out.resolve()))
+    raise SystemExit(cli())

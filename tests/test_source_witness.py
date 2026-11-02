@@ -40,6 +40,18 @@ class SourceWitnessTests(unittest.TestCase):
                 adapter.verify_receipt(text, bad, forged)
 
     def test_identity_binding_normalization_and_message_premises(self):
+        # Static admission/receipt checks only; no input is compiled or executed.
+        reserved='def carrier(x0):\n    __debug__ = x0 + 1\n    return (__debug__,)\n'
+        forged={'source_sha256':adapter.digest(reserved),'output_sha256':adapter.digest(reserved),
+                'message':0,'normalized_sites':[],'commute_site':None,'commutations':0}
+        for action in (lambda:source.inspect_source(reserved),lambda:source.parse_source(reserved),
+                       lambda:adapter.encode_with_receipt(reserved,0),
+                       lambda:adapter.verify_receipt(reserved,reserved,forged)):
+            with self.assertRaisesRegex(ValueError,'reserved assignment'):
+                action()
+        for n,naming in ((0,0),(1,0),(1,1)):
+            valid=source.render(source.language.make_procedure(n,0,naming))
+            self.assertEqual(source.parse_source(valid),source.language.make_procedure(n,0,naming))
         text = source.render(source.language.make_procedure(2))
         out, receipt = adapter.encode_with_receipt(text, 1, (1,))
         for changed in (dict(receipt, source_sha256='0'*64),

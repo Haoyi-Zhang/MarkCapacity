@@ -75,3 +75,29 @@ scientific JSON, table and stdout match the old data. Current source manifests
 are distinct from the historical source manifest. Windows CPython 3.12.14 ran
 all 88 scientific tests; the POSIX launchers, package/export mode checks, older
 Python versions and remote CI were not executed by that Windows run.
+
+## Read-only retained-record validation after source maintenance
+
+Run `python -B src/check_source.py --out results/source-execution` from this
+checkout. This is a checkout-root data consumer, not an installation/wheel CLI.
+It requires the complete fixed four-producer source map. For the historical
+map it reads the exact byte-verified `source-preimages/source-execution/` files,
+including the parser before its reserved-target repair. These sources are never
+loaded or executed. This retained-protocol consumer rejects any different map,
+even a map matching repaired current code: relabeling an old receipt cannot
+establish that the repaired code was measured. A future protocol/source era
+would need its own explicit binding rather than changing these saved identities.
+
+The consumer binds and parses both fixed negative cases, checks their typed
+inputs and returns, derives their values only as bounded data, and compares all
+protocol/count fields. It does not execute negative source text. A success keeps
+the recorded 290,997 calls and 5,820 compilations unchanged and reports
+`data_only_derivation_no_native_replay`; it is not a new measurement or native
+replay. Original summary/environment/timing/row/source-map bytes remain intact.
+The bounded four-method source-record regression suite also exercises omitted
+bindings, corrupt/missing preimages, altered negatives and contradictory summary
+fields under both ordinary Python and `-O`.
+
+`source_language.inspect_source` rejects Python's reserved `__debug__` assignment
+target before source/receipt admission. This remains an owned finite grammar,
+not an arbitrary-code sandbox; the generated `v_i` source contract is unchanged.

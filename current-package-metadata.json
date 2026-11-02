@@ -302,13 +302,13 @@
   },
   "current_file_sha256": {
     "artifact/reference-audit-final.csv": "5f4e9a3cddbe69daa4125605395e0d5312efbbc16ac714734e96505dea25726a",
-    "artifact/paper_support/current-statement-locations.json": "c0030f706d7eb73abd56c5d8d5bed2ffa0e56b5a026de7cb4fe8748629c7f7f7",
-    "artifact/citation-contexts.csv": "44356dc8844763e811b66b244a6dc19a39ff8c555cea7ca3a85d419a8f8e9e97",
     "artifact/paper_support/current-structural-contract.json": "82549a45ea0a4021a23400b254ff1bf155fd64dd3ee8efc8183cb171661896bf",
-    "artifact/citation_support.csv": "d6763b58ec7a218c99d06291ab844813b972437d835ce59c100b9500fdc18098",
     "artifact/claim_evidence_ledger.csv": "ad581b4ff56a1fae543da52aa6d52a3cfc099efb7d93037f7e4cea4b3781f0f7",
+    "artifact/citation-contexts.csv": "44356dc8844763e811b66b244a6dc19a39ff8c555cea7ca3a85d419a8f8e9e97",
     "artifact/correctness_correspondence.csv": "43e074f868461fed1b462e93bf2eda33653dc8fbd2d8ee8ddc077b20d02a73c2",
-    "artifact/literature-evidence/records.jsonl": "36f212355495d56990fd4be5ec77a8d849d9c3f7060e52b63b8d3fcefee813b6"
+    "artifact/citation_support.csv": "d6763b58ec7a218c99d06291ab844813b972437d835ce59c100b9500fdc18098",
+    "artifact/paper_support/current-statement-locations.json": "c0030f706d7eb73abd56c5d8d5bed2ffa0e56b5a026de7cb4fe8748629c7f7f7",
+    "artifact/literature-evidence/records.jsonl": "478acb56e7b1f32a0550d521f8556965d662c9b7da864618419395a59ec10477"
   },
   "current_binding_date": "2026-11-02",
   "additional_separately_recorded_regressions": 5,

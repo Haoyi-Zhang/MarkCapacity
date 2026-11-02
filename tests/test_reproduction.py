@@ -19,7 +19,7 @@ class ReproductionTests(unittest.TestCase):
                     for directory in ('raw', 'generated')
                     for p in (root / directory).glob('*') if p.is_file()}
         output = Path(tempfile.mkdtemp(prefix='woc-serialization-',
-                                      dir=os.environ.get('WOC_CHECK_OUTPUT')))
+                                      dir=os.environ.get('WOC_CHECK_OUTPUT'))) / 'fresh-output'
         refinement = run_all.exhaustive_refinement_check
         general = run_all.exhaustive_general_check
         access = run_all.exhaustive_access_check
