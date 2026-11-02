@@ -8,8 +8,8 @@
     486.0,
     720.0
   ],
-  "pdf_sha256": "02a4ba464bca945a3e35edddd04f63bd21f1461bc1751ea83a457d0599b18125",
-  "manuscript_sha256": "74ab6957d543ce756767d8ec1adf1f419435f2a5b25165a010548b91685b2bc5",
+  "pdf_sha256": "1a3571cc12e25262cac661026cf07a009ee54c6a4b07a72af83115e0d6a4c26f",
+  "manuscript_sha256": "b9af3d1dfc618bdb724ead3f3b1f890d81050553acef57a05b4e49881658e3af",
   "scheduled_tests": {
     "scientific": 92,
     "package": 8,
@@ -302,13 +302,13 @@
   },
   "current_file_sha256": {
     "artifact/correctness_correspondence.csv": "70e22e5a74797ac9b720bea0bb569cce3ea8f4a8744d9fd17e686764b4624718",
-    "artifact/paper_support/current-statement-locations.json": "b56a36f1dea77025cab9181e52917831f8f5d0c706931b9c1af6ddeb1721e491",
-    "artifact/citation-contexts.csv": "91050a915b2f38b978ba136405e001d6dc0690607071c0ab0c66a80cde420cde",
+    "artifact/paper_support/current-statement-locations.json": "aabf3a3e48160fffcd28b074e9b94f9464324c0591a997041b0845209b445d8a",
+    "artifact/citation-contexts.csv": "cc5e3bf9e4746da7683e2bd3cb7e95f527090cad153420f1d0d44c11ed65ad05",
     "artifact/reference-audit-final.csv": "07ba2f05bc88c2ac03b265dcea949c5dd2c4652f269aa5fc4f7933d508eb0f85",
-    "artifact/citation_support.csv": "18eeb1275d6ba3975f199bbf7375f9288582740888dc729eedc652e831ca6e7a",
-    "artifact/claim_evidence_ledger.csv": "ebe147d50173f1fc8cd7f6a7ab5de7ca3bf8bfbcfbcfe9ae3cdbf8f8bd8e72e7",
-    "artifact/literature-evidence/records.jsonl": "46f3642f5fc70af2dd49144ef064f4c46b4839bf128109a9bdf9935647111d58",
-    "artifact/paper_support/current-structural-contract.json": "93b053ca65926faf8c0b1997119b9e1e5e2b6efa5d7e255608fa14da1a56e0a9"
+    "artifact/citation_support.csv": "9f1ad227ae9145f353ed948157340e312cd660a48f7290d748e9851002057509",
+    "artifact/claim_evidence_ledger.csv": "fcc67d21525572d1301cb7981b48485188a13d2b27c5fbf9bd65f9536bc18cb2",
+    "artifact/literature-evidence/records.jsonl": "d0e201d7af0f03d14059958386494feaf432015f36c36659a7ba78004f0f01cb",
+    "artifact/paper_support/current-structural-contract.json": "927e93bffd11efcc8fdffe8609f2382e1a2b9953660d103699203dd2a975c8c5"
   },
   "current_binding_date": "2026-11-02",
   "additional_separately_recorded_regressions": 5,
@@ -341,12 +341,12 @@
     "paper/main.pdf": {
       "role": "anonymous_main",
       "source": "paper/main.tex",
-      "source_sha256": "74ab6957d543ce756767d8ec1adf1f419435f2a5b25165a010548b91685b2bc5",
-      "pdf_sha256": "02a4ba464bca945a3e35edddd04f63bd21f1461bc1751ea83a457d0599b18125",
+      "source_sha256": "b9af3d1dfc618bdb724ead3f3b1f890d81050553acef57a05b4e49881658e3af",
+      "pdf_sha256": "1a3571cc12e25262cac661026cf07a009ee54c6a4b07a72af83115e0d6a4c26f",
       "pages": 50,
       "page_size_points": [
-        486.0,
-        720.0
+        486,
+        720
       ],
       "class_options": [
         "acmsmall",
@@ -363,12 +363,12 @@
     "paper/titlepage.pdf": {
       "role": "identifying_titlepage",
       "source": "paper/titlepage.tex",
-      "source_sha256": "03f22865e8622441a1e7f26b49224f3ac43abbfc543d734078b96897e09f421e",
-      "pdf_sha256": "4fdd6ca4f3decd7f9cdd53ba23ac9556f4c3d7bc99161529a0a4b92181af422a",
+      "source_sha256": "03e2da9350fbfc8855a637156700160e33da350613dcecdbb8bb7477307f70f2",
+      "pdf_sha256": "97c08a24b30cfe845674742ae13ace2d4da1f8fe80320df77fa3a161ceeefb1d",
       "pages": 1,
       "page_size_points": [
-        486.0,
-        720.0
+        486,
+        720
       ],
       "class_options": [
         "acmsmall",
@@ -479,8 +479,8 @@
     "thm:uniform": "thm:open",
     "cor:uniform-finite-detector": "thm:open"
   },
-  "source_support_ledger_sha256": "8c2f744226f5815f99ab62d7f5dce528da0d48043aa73d37445c1ed084b24e3f",
-  "current_census_sha256": "a8ec6122c88072c2bc0d2cc364950cc63ca05abcfebb53482214f05e652582fe",
+  "source_support_ledger_sha256": "7533c94750d891d67f402187719fa501767c82c61c76c557848be56a14b69973",
+  "current_census_sha256": "d509adc7061e15ae2f57f092ca460c3bdbe5e7ff0ca0b555d13e9b1f9f4a67b5",
   "current_claim_support_complete": true,
   "historical_retired_reference_records": {
     "sangiorgi2011": {
@@ -655,13 +655,14 @@
     ],
     "package_tests": 8,
     "export_regressions": 7,
-    "permission_basis": "Actual two-root ZIP Unix metadata and exact canonical/extracted bytes; not NTFS POSIX permissions",
+    "permission_basis": "Actual two-root ZIP Unix modes and exact canonical/staged/extracted bytes; not NTFS POSIX modes",
     "poppler_version": "26.07.0",
     "scientific_campaign_executed": false,
     "remote_CI_executed": false,
     "source_body_reading_repeated": false,
-    "source_sha256": "74ab6957d543ce756767d8ec1adf1f419435f2a5b25165a010548b91685b2bc5",
-    "pdf_sha256": "02a4ba464bca945a3e35edddd04f63bd21f1461bc1751ea83a457d0599b18125",
+    "source_sha256": "b9af3d1dfc618bdb724ead3f3b1f890d81050553acef57a05b4e49881658e3af",
+    "pdf_sha256": "1a3571cc12e25262cac661026cf07a009ee54c6a4b07a72af83115e0d6a4c26f",
+    "titlepage_pdf_sha256": "97c08a24b30cfe845674742ae13ace2d4da1f8fe80320df77fa3a161ceeefb1d",
     "execution_logs_retained_outside_export": true
   }
 }

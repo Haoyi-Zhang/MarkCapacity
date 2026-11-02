@@ -1,8 +1,8 @@
 {
   "schema": "CURRENT_STATEMENT_LOCATIONS_V1",
   "scope": "Actual primary objects with complete shared-proof alias map; aliases are not independent proofs",
-  "manuscript_sha256": "74ab6957d543ce756767d8ec1adf1f419435f2a5b25165a010548b91685b2bc5",
-  "pdf_sha256": "02a4ba464bca945a3e35edddd04f63bd21f1461bc1751ea83a457d0599b18125",
+  "manuscript_sha256": "b9af3d1dfc618bdb724ead3f3b1f890d81050553acef57a05b4e49881658e3af",
+  "pdf_sha256": "1a3571cc12e25262cac661026cf07a009ee54c6a4b07a72af83115e0d6a4c26f",
   "top_level_section_count": 10,
   "body_top_level_section_count": 8,
   "top_level_sections": [
@@ -765,5 +765,5 @@
     "thm:uniform": "thm:open",
     "cor:uniform-finite-detector": "thm:open"
   },
-  "aux_sha256": "7cfff46aaaf8091ea6171f16470ee5ea384b80a7861e178c86c918cd4ff75bea"
+  "aux_sha256": "6f7ec9b87f59d419fcdf76f85b90f2498df6737929685635e9b75914a5df785b"
 }

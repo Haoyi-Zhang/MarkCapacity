@@ -461,6 +461,12 @@ class PublicPackageIntegrityTests(unittest.TestCase):
             self.assertEqual(sha256_file(ROOT / rel), digest, rel)
         for rel, digest in current["current_file_sha256"].items():
             self.assertEqual(sha256_file(ROOT / rel), digest, rel)
+        active_contract = json.loads((ROOT/"artifact/paper_support/current-structural-contract.json").read_text(encoding="utf-8"))
+        for key, expected in active_contract["immutable_metadata_sha256"].items():
+            actual = hashlib.sha256(json.dumps(current[key], ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()
+            self.assertEqual(actual, expected, key)
+        for rel, expected in current["template_source"]["file_sha256"].items():
+            self.assertEqual(sha256_file(ROOT/rel), expected, rel)
         mutable_ledgers = {'artifact/claim_evidence_ledger.csv', 'artifact/correctness_correspondence.csv',
                            'artifact/literature-evidence/records.jsonl', 'artifact/citation_support.csv',
                            'artifact/reference-audit-final.csv'}
@@ -502,8 +508,30 @@ class PublicPackageIntegrityTests(unittest.TestCase):
             r"\\setlength\{\\(?:textwidth|textheight|oddsidemargin|evensidemargin|topmargin)\}",
         )
         self.assertNotIn(r"\fancypagestyle", manuscript)
-        self.assertNotIn(r"\acmVolume", manuscript)
-        self.assertNotIn(r"\acmNumber", manuscript)
+        # Approved suppression of unassigned acmart defaults, not assigned metadata.
+        def empty_publication_setters(source):
+            for command in ("acmVolume", "acmNumber"):
+                if tex_command_arguments(source, command) != [""]:
+                    return False
+                tokens = list(re.finditer(r"\\" + command + r"\b", source))
+                if len(tokens) != 1 or not source[tokens[0].start():].startswith("\\" + command + "{}"):
+                    return False
+                if source.count(r"\begin{document}") != 1 or tokens[0].start() >= source.index(r"\begin{document}"):
+                    return False
+            return True
+        for document in (manuscript, strip_tex_comments((ROOT/"paper/titlepage.tex").read_text(encoding="utf-8"))):
+            self.assertTrue(empty_publication_setters(document))
+        owned = r"\acmVolume{}\acmNumber{}\begin{document}"
+        self.assertTrue(empty_publication_setters(owned))
+        for invalid in (owned.replace(r"\acmVolume{}", r"\acmVolume{1}"),
+                        owned.replace(r"\acmNumber{}", r"\acmNumber{1}"),
+                        owned.replace(r"\acmVolume{}", ""),
+                        owned.replace(r"\acmNumber{}", ""),
+                        r"\acmVolume{}" + owned, r"\acmNumber{}" + owned,
+                        owned + r"\acmVolume{1}",
+                        r"\begin{document}\acmVolume{}\acmNumber{}",
+                        owned.replace(r"\acmVolume{}", r"\acmVolume {}")):
+            self.assertFalse(empty_publication_setters(invalid))
         self.assertNotIn(r"\acmArticle", manuscript)
         self.assertNotIn(r"\acmYear", manuscript)
         self.assertNotIn(r"\acmMonth", manuscript)
