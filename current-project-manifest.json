@@ -38,8 +38,8 @@
     },
     {
       "path": "artifact/README.md",
-      "bytes": 19882,
-      "sha256": "1ed94d528e3ddcf4486cf5552d9292d729afee4ce734fca8e6a88d1d0c3572a7",
+      "bytes": 19880,
+      "sha256": "e5e514ebe4263a40cc75cdda37dce262e04643fe92fa484575ef60c02bd19567",
       "mode": "0644"
     },
     {
@@ -93,13 +93,13 @@
     {
       "path": "artifact/current-export-supplement.json",
       "bytes": 773,
-      "sha256": "3d1e7b557dccd6cf94e7d8eb326c0013237ee417d3bc527cc7a0cff99888a506",
+      "sha256": "92d70816616ee4673760167a402d79e7e80a72a49819db39b0a83ac6211ea86d",
       "mode": "0644"
     },
     {
       "path": "artifact/current-package-metadata.json",
-      "bytes": 38607,
-      "sha256": "130fde8171567ce74ddc5d64e07f2dde267d44719cd3212840bf5655cd23d721",
+      "bytes": 40149,
+      "sha256": "ddd8ad8e34c37898895f792b1b99dbc9b1651b6b960c7ec76128a5b449b63f35",
       "mode": "0644"
     },
     {
@@ -110,8 +110,8 @@
     },
     {
       "path": "artifact/current_export.py",
-      "bytes": 25991,
-      "sha256": "3e3c5e17ebceb1ab34f7a9d62ac041b214c63a6e980c659efbd23547e17eb1ec",
+      "bytes": 27215,
+      "sha256": "1769c79aacc3235ca177267a664478e52a9934546a21ddc9b4ed88324fc8d235",
       "mode": "0644"
     },
     {
@@ -218,8 +218,8 @@
     },
     {
       "path": "artifact/paper_support/current-structural-contract.json",
-      "bytes": 6418,
-      "sha256": "e83e9bf204e85f3ed9db884e58bd98a50eb85b445591a71255bd9281171d3f31",
+      "bytes": 6699,
+      "sha256": "4841042ec306d78e2c2758805626047b192309b0aa869d1480a42789aa86c861",
       "mode": "0644"
     },
     {
@@ -302,8 +302,8 @@
     },
     {
       "path": "artifact/regressions/test_current_export.py",
-      "bytes": 24246,
-      "sha256": "5ea74e89435293657bcbceae938d13c15d1ea17aeed040640535a2a2083c9a25",
+      "bytes": 26682,
+      "sha256": "15fe86ec5fc1db0dd54f9eb4e60786849697a0b4dc0a60f687239033b2301fd6",
       "mode": "0644"
     },
     {
@@ -2775,7 +2775,7 @@
     {
       "path": "artifact/submission-materials-map.json",
       "bytes": 2628,
-      "sha256": "233856d0488905564a74dac64f4e6567b62b80098026038696e2ac9452a74a94",
+      "sha256": "4010ee62945abc268b27b8278e5613cf429fba4d302e068311f50f2305c8186d",
       "mode": "0644"
     },
     {
@@ -2804,8 +2804,8 @@
     },
     {
       "path": "artifact/tests/test_package_integrity.py",
-      "bytes": 66547,
-      "sha256": "131ca4e009172641759c0426827c59a44f66cca95137d705578885ed608763cc",
+      "bytes": 67363,
+      "sha256": "8d6cc522c58aafcd609a783de9fe9787b2ba35536dbde55bad02b2e25e8a25db",
       "mode": "0644"
     },
     {
@@ -3027,7 +3027,7 @@
     {
       "path": "paper/provenance/CURRENT-STATE.md",
       "bytes": 3990,
-      "sha256": "8a6156cf1ba51a500c20978f21b4e584c652d7f3fd2d28b15e8b701676974812",
+      "sha256": "4fc7762b73480c46629cc3b2ad015a1c8be4959d2b64a7bf6f0bd6bd073b0e0f",
       "mode": "0644"
     },
     {
@@ -3044,14 +3044,14 @@
     },
     {
       "path": "paper/titlepage.pdf",
-      "bytes": 41695,
-      "sha256": "76e48e02f4efac4542711be95e40ae286f8af3ee32e5e772bb02fd09ba564986",
+      "bytes": 41684,
+      "sha256": "25e0ec77b3ddc4cd5763722a6775eeae594beeebe9e2c2dae1809c8842ec9412",
       "mode": "0644"
     },
     {
       "path": "paper/titlepage.tex",
       "bytes": 1337,
-      "sha256": "7e052f4409c43ac652be91f11533b047026f6c7c799d4212b00789bea803a5fc",
+      "sha256": "bff9141d80b186daa0f6b5abc5d383e1ca161709b7e816e6a196c983a4e7ab62",
       "mode": "0644"
     }
   ],

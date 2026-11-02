@@ -615,9 +615,15 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         self.assertEqual(tex_command_arguments(titlepage, "email"), [r["email"] for r in APPROVED_AUTHOR_RECORDS])
         self.assertEqual(tex_command_arguments(titlepage, "affiliation"), [r["affiliation_tex"] for r in APPROVED_AUTHOR_RECORDS])
         self.assertEqual(tex_command_arguments(titlepage, "orcid"), [r["orcid"] for r in APPROVED_AUTHOR_RECORDS if r["orcid"] is not None])
-        self.assertEqual(tex_command_arguments(titlepage, "authornote"), [])
-        self.assertEqual(current["corresponding_authors"], [])
-        self.assertEqual(current["corresponding_author_note_tex"], "")
+        from current_export import APPROVED_CORRESPONDING_AUTHOR, APPROVED_CORRESPONDING_NOTE
+        self.assertEqual(tex_command_arguments(titlepage, "authornote"), [r["authornote"] for r in APPROVED_AUTHOR_RECORDS if r["authornote"] is not None])
+        self.assertEqual(current["corresponding_authors"], [APPROVED_CORRESPONDING_AUTHOR] if APPROVED_CORRESPONDING_AUTHOR else [])
+        self.assertEqual(current["corresponding_author_note_tex"], APPROVED_CORRESPONDING_NOTE)
+        self.assertEqual(active_contract["current_author_records"], APPROVED_AUTHOR_RECORDS)
+        self.assertEqual(active_contract["corresponding_authors"], current["corresponding_authors"])
+        self.assertEqual(active_contract["corresponding_author"], APPROVED_CORRESPONDING_AUTHOR)
+        self.assertEqual(active_contract["corresponding_author_notes_tex"], [APPROVED_CORRESPONDING_NOTE] if APPROVED_CORRESPONDING_NOTE else [])
+        self.assertEqual(active_contract["authorship_approval_sha256"], current["authorship_approval_sha256"])
         self.assertNotRegex(manuscript, r"\\author\{Author [A-F]\}")
         # The paper reports semantic instances, not software test schedules.
         # Bind its current table to immutable results and real rendered text;

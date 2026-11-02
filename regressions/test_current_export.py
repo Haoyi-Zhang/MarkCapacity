@@ -47,7 +47,10 @@ def fixture():
     files['paper/project-repository.tex'] = b'Accompanying finite checker.'
     title = "\\documentclass[acmsmall,screen,nonacm]{acmart}\n"
     for row in validator.APPROVED_AUTHOR_RECORDS:
-        title += '\\author{'+row['name']+'}\n\\email{'+row['email']+'}\n'
+        title += '\\author{'+row['name']+'}\n'
+        if row['authornote'] is not None:
+            title += '\\authornote{'+row['authornote']+'}\n'
+        title += '\\email{'+row['email']+'}\n'
         if row['orcid'] is not None:
             title += '\\orcid{'+row['orcid']+'}\n'
         title += '\\affiliation{'+row['affiliation_tex']+'}\n'
@@ -84,10 +87,13 @@ def fixture():
                    current_authorship_variant=validator.APPROVED_VARIANT,
                    authorship_approval_sha256=validator.AUTHORSHIP_APPROVAL_SHA256,
                    author_affiliations=[r['affiliation_tex'] for r in validator.APPROVED_AUTHOR_RECORDS],
-                   corresponding_authors=[], corresponding_author_note_tex='')
+                   corresponding_authors=[validator.APPROVED_CORRESPONDING_AUTHOR] if validator.APPROVED_CORRESPONDING_AUTHOR else [],
+                   corresponding_author=validator.APPROVED_CORRESPONDING_AUTHOR,
+                   corresponding_author_note_tex=validator.APPROVED_CORRESPONDING_NOTE)
     current['current_documents']['paper/titlepage.pdf'].update(
         **{k:copy.deepcopy(current[k]) for k in ('authors_tex','author_emails','author_affiliations','author_orcids')},
-        corresponding_authors=[])
+        **{k:copy.deepcopy(current[k]) for k in ('current_author_records','current_authorship_variant','authorship_approval_sha256',
+            'corresponding_authors','corresponding_author','corresponding_author_note_tex')})
     records = {path: (data, "0755" if path.endswith(".sh") else "0644") for path, data in files.items()}
     records[validator.MANIFEST] = (b"manifest fixture", "0644")
     return records, manifest_for(records), current
@@ -333,6 +339,31 @@ class CurrentExportTests(unittest.TestCase):
             with self.assertRaises(ValueError):validator.validate_submission(badfiles,badmeta)
         badmeta=copy.deepcopy(current);badmeta['current_author_records'][0]['email']='resealed@example.invalid'
         with self.assertRaisesRegex(ValueError,'approved titlepage identities'):validator.validate_submission(files,badmeta)
+        # Same seven methods; exact new source approval, never a roster-wide waiver.
+        note = b'\\authornote{Corresponding author.}\n'
+        wrong_notes = [
+            title + b'\\authornote{Equal contribution.}',
+            title.replace(b'\\author{Haoyi Zhang}\n', b'\\author{Haoyi Zhang}\n'+note),
+            title.replace(b'\\author{Jiongchi Yu}', b'OWNED_ORDER_SWAP').replace(b'\\author{Yuqiang Sun}', b'\\author{Jiongchi Yu}').replace(b'OWNED_ORDER_SWAP', b'\\author{Yuqiang Sun}'),
+        ]
+        if validator.APPROVED_CORRESPONDING_AUTHOR:
+            wrong_notes += [
+                title.replace(note,b''),
+                title.replace(note,b'\\authornote{Corresponding author: Ziming Zhao.}\n'),
+                title.replace(note,note+note),
+                title.replace(note,b'').replace(b'\\author{Haoyi Zhang}\n',b'\\author{Haoyi Zhang}\n'+note),
+                title.replace(b'\\author{Ziming Zhao}\n'+note,b'\\author{Ziming Zhao}\n').replace(
+                    b'\\email{zhaoziming@zju.edu.cn}\n',b'\\email{zhaoziming@zju.edu.cn}\n'+note),
+            ]
+        for changed in wrong_notes:
+            badfiles=dict(files);badfiles['paper/titlepage.tex']=changed
+            badmeta=copy.deepcopy(current);badmeta['current_documents']['paper/titlepage.pdf']['source_sha256']=sha(changed)
+            with self.assertRaisesRegex(ValueError,'approved titlepage identities'):
+                validator.validate_submission(badfiles,badmeta)
+        for key,value in (('corresponding_author','Haoyi Zhang'),('corresponding_authors',['Haoyi Zhang']),
+                          ('corresponding_author_note_tex','Equal contribution.'),('authorship_approval_sha256','0'*64)):
+            badmeta=copy.deepcopy(current);badmeta[key]=value
+            with self.assertRaisesRegex(ValueError,'approved titlepage identities'):validator.validate_submission(files,badmeta)
         badfiles=dict(files);badfiles['paper/identified-main.pdf']=b'owned extra full draft'
         with self.assertRaisesRegex(ValueError,'exact main/titlepage PDF roles'):validator.validate_submission(badfiles,current)
         badfiles=dict(files);badfiles['paper/project-repository.tex']=b'\\url{https://github.com/owned-identifying/repository}'

@@ -226,7 +226,7 @@ or decide whether the scientific artifact or full paper should be published.
 ## Anonymous TOPLAS main and identifying title page
 
 The current `paper/main.tex` uses `acmsmall,screen,anonymous`, without `review`
-or author-added line numbering. The unchanged approved authors/ORCIDs/contacts
+or author-added line numbering. The approved current authors/ORCIDs/contacts
 are in the separate `paper/titlepage.tex`, not loaded by main. `REPOSITORY.md`
 retains the real identifying URL for coordination; no anonymous URL is invented
 and the main no longer renders the public link. Self-citations remain intact.

@@ -4,7 +4,7 @@
   "approval_instruction": "Exact approved role-specific authorship; anonymous scientific manuscript unchanged",
   "approved_source_sha256": {
     "paper/main.tex": "b9af3d1dfc618bdb724ead3f3b1f890d81050553acef57a05b4e49881658e3af",
-    "paper/titlepage.tex": "7e052f4409c43ac652be91f11533b047026f6c7c799d4212b00789bea803a5fc",
+    "paper/titlepage.tex": "bff9141d80b186daa0f6b5abc5d383e1ca161709b7e816e6a196c983a4e7ab62",
     "paper/references.bib": "634ce14322d89cf1803241f6e70a46daea35301166b1531a8e2ddcf0cee67e0e"
   },
   "expected_main_options": [
@@ -105,20 +105,20 @@
   "authors_tex": [
     "Haoyi Zhang",
     "Huaijin Ran",
-    "Yuqiang Sun",
-    "Jiongchi Yu"
+    "Jiongchi Yu",
+    "Yuqiang Sun"
   ],
   "author_emails": [
     "hyeliozhang@gmail.com",
     "huaijin003@e.ntu.edu.sg",
-    "yuqiang.sun@ntu.edu.sg",
-    "jiongchiyu@acm.org"
+    "jiongchiyu@acm.org",
+    "yuqiang.sun@ntu.edu.sg"
   ],
   "author_orcids": [
     "0009-0009-3693-786X",
     "0009-0009-2482-2344",
-    "0000-0003-4340-3371",
-    "0000-0002-2888-4499"
+    "0000-0002-2888-4499",
+    "0000-0003-4340-3371"
   ],
   "corresponding_author_notes_tex": [],
   "claim_display_overrides": {},
@@ -143,10 +143,10 @@
     "historical_bib_entry_sha256": "9d1efe8aca4934cbb6220a78ab00c9c667a993f2de3825f8bb80d87af9677e46",
     "template_source": "1864386020c6f08b0b1ac82098b123393eeeb90b29fe6acb55926b18f2b68972"
   },
-  "selected_parent_build_receipt_sha256": "139877df7102e4f527a9fd923eb016ee3fdbf91671ee68804511b4e6b6a376a7",
+  "selected_parent_build_receipt_sha256": "0558ac8d74f7e8236e67045a6e860dbfc908eacc89d5b0b4012153ae8fc348d6",
   "selected_parent_build_outputs": {
     "paper/main.pdf": "1a3571cc12e25262cac661026cf07a009ee54c6a4b07a72af83115e0d6a4c26f",
-    "paper/titlepage.pdf": "76e48e02f4efac4542711be95e40ae286f8af3ee32e5e772bb02fd09ba564986"
+    "paper/titlepage.pdf": "25e0ec77b3ddc4cd5763722a6775eeae594beeebe9e2c2dae1809c8842ec9412"
   },
   "author_affiliations": [
     "\\institution{Xi'an Jiaotong-Liverpool University}\\city{Suzhou}\\country{China}",
@@ -159,26 +159,33 @@
       "name": "Haoyi Zhang",
       "email": "hyeliozhang@gmail.com",
       "affiliation_tex": "\\institution{Xi'an Jiaotong-Liverpool University}\\city{Suzhou}\\country{China}",
-      "orcid": "0009-0009-3693-786X"
+      "orcid": "0009-0009-3693-786X",
+      "authornote": null
     },
     {
       "name": "Huaijin Ran",
       "email": "huaijin003@e.ntu.edu.sg",
       "affiliation_tex": "\\institution{Nanyang Technological University}\\city{Singapore}\\country{Singapore}",
-      "orcid": "0009-0009-2482-2344"
-    },
-    {
-      "name": "Yuqiang Sun",
-      "email": "yuqiang.sun@ntu.edu.sg",
-      "affiliation_tex": "\\institution{Nanyang Technological University}\\city{Singapore}\\country{Singapore}",
-      "orcid": "0000-0003-4340-3371"
+      "orcid": "0009-0009-2482-2344",
+      "authornote": null
     },
     {
       "name": "Jiongchi Yu",
       "email": "jiongchiyu@acm.org",
       "affiliation_tex": "\\institution{Nanyang Technological University}\\city{Singapore}\\country{Singapore}",
-      "orcid": "0000-0002-2888-4499"
+      "orcid": "0000-0002-2888-4499",
+      "authornote": null
+    },
+    {
+      "name": "Yuqiang Sun",
+      "email": "yuqiang.sun@ntu.edu.sg",
+      "affiliation_tex": "\\institution{Nanyang Technological University}\\city{Singapore}\\country{Singapore}",
+      "orcid": "0000-0003-4340-3371",
+      "authornote": null
     }
   ],
-  "authorship_approval_sha256": "139877df7102e4f527a9fd923eb016ee3fdbf91671ee68804511b4e6b6a376a7"
+  "authorship_approval_sha256": "0558ac8d74f7e8236e67045a6e860dbfc908eacc89d5b0b4012153ae8fc348d6",
+  "corresponding_authors": [],
+  "corresponding_author": null,
+  "prior_current_authorship_contract_sha256": "e83e9bf204e85f3ed9db884e58bd98a50eb85b445591a71255bd9281171d3f31"
 }

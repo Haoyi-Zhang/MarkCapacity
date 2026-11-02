@@ -16,10 +16,10 @@
     {
       "material": "separate identifying title page",
       "path": "paper/titlepage.tex -> paper/titlepage.pdf",
-      "format": "Separate identifying title page; approved 4-author order, supplied contact/ORCID fields, no corresponding author",
+      "format": "Separate identifying title page; approved 4-author order, supplied contact/ORCID fields; no corresponding author",
       "status": "CURRENT_DOCUMENT_SOURCE_BOUND",
-      "pdf_sha256": "76e48e02f4efac4542711be95e40ae286f8af3ee32e5e772bb02fd09ba564986",
-      "source_sha256": "7e052f4409c43ac652be91f11533b047026f6c7c799d4212b00789bea803a5fc",
+      "pdf_sha256": "25e0ec77b3ddc4cd5763722a6775eeae594beeebe9e2c2dae1809c8842ec9412",
+      "source_sha256": "bff9141d80b186daa0f6b5abc5d383e1ca161709b7e816e6a196c983a4e7ab62",
       "pages": 1
     },
     {

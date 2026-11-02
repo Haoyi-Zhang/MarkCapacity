@@ -29,9 +29,15 @@ ARCHIVE_ENV = "TOPLAS19_EXPORT_ARCHIVE"
 MAIN_OPTIONS = "acmsmall,screen,anonymous,nonacm"
 TITLE_OPTIONS = "acmsmall,screen,nonacm"
 # Existing approved identities belong to the separate title page, never main.
-APPROVED_AUTHORS = ('Haoyi Zhang', 'Huaijin Ran', 'Yuqiang Sun', 'Jiongchi Yu')
-APPROVED_EMAILS = ('hyeliozhang@gmail.com', 'huaijin003@e.ntu.edu.sg', 'yuqiang.sun@ntu.edu.sg', 'jiongchiyu@acm.org')
-APPROVED_ORCIDS = ('0009-0009-3693-786X', '0009-0009-2482-2344', '0000-0003-4340-3371', '0000-0002-2888-4499')
+APPROVED_AUTHORS = ('Haoyi Zhang', 'Huaijin Ran', 'Jiongchi Yu', 'Yuqiang Sun')
+APPROVED_EMAILS = ('hyeliozhang@gmail.com',
+ 'huaijin003@e.ntu.edu.sg',
+ 'jiongchiyu@acm.org',
+ 'yuqiang.sun@ntu.edu.sg')
+APPROVED_ORCIDS = ('0009-0009-3693-786X',
+ '0009-0009-2482-2344',
+ '0000-0002-2888-4499',
+ '0000-0003-4340-3371')
 NON_DOI_CHAPTER = {"author": "Samson Abramsky", "title": "The Lazy Lambda Calculus", "booktitle": "Research Topics in Functional Programming",
                    "editor": "D. Turner", "publisher": "Addison Wesley", "year": "1990", "pages": "65--117",
                    "url": "https://www.cs.ox.ac.uk/people/samson.abramsky/lazy.pdf", "note": "Author-hosted manuscript"}
@@ -181,24 +187,28 @@ APPROVED_AUTHOR_RECORDS = [{'name': 'Haoyi Zhang',
   'email': 'hyeliozhang@gmail.com',
   'affiliation_tex': "\\institution{Xi'an Jiaotong-Liverpool "
                      'University}\\city{Suzhou}\\country{China}',
-  'orcid': '0009-0009-3693-786X'},
+  'orcid': '0009-0009-3693-786X',
+  'authornote': None},
  {'name': 'Huaijin Ran',
   'email': 'huaijin003@e.ntu.edu.sg',
   'affiliation_tex': '\\institution{Nanyang Technological '
                      'University}\\city{Singapore}\\country{Singapore}',
-  'orcid': '0009-0009-2482-2344'},
- {'name': 'Yuqiang Sun',
-  'email': 'yuqiang.sun@ntu.edu.sg',
-  'affiliation_tex': '\\institution{Nanyang Technological '
-                     'University}\\city{Singapore}\\country{Singapore}',
-  'orcid': '0000-0003-4340-3371'},
+  'orcid': '0009-0009-2482-2344',
+  'authornote': None},
  {'name': 'Jiongchi Yu',
   'email': 'jiongchiyu@acm.org',
   'affiliation_tex': '\\institution{Nanyang Technological '
                      'University}\\city{Singapore}\\country{Singapore}',
-  'orcid': '0000-0002-2888-4499'}]
+  'orcid': '0000-0002-2888-4499',
+  'authornote': None},
+ {'name': 'Yuqiang Sun',
+  'email': 'yuqiang.sun@ntu.edu.sg',
+  'affiliation_tex': '\\institution{Nanyang Technological '
+                     'University}\\city{Singapore}\\country{Singapore}',
+  'orcid': '0000-0003-4340-3371',
+  'authornote': None}]
 APPROVED_VARIANT = 'c'
-AUTHORSHIP_APPROVAL_SHA256 = '139877df7102e4f527a9fd923eb016ee3fdbf91671ee68804511b4e6b6a376a7'
+AUTHORSHIP_APPROVAL_SHA256 = '0558ac8d74f7e8236e67045a6e860dbfc908eacc89d5b0b4012153ae8fc348d6'
 
 """Pure authorship checks injected into each clone's existing export validator.
 
@@ -209,48 +219,61 @@ remain in force. No external file or mutable metadata supplies the approved list
 """
 
 
+APPROVED_CORRESPONDING_AUTHOR = None
+APPROVED_CORRESPONDING_NOTE = ''
+
 def title_author_records(title):
     source = uncomment(title)
     starts = list(re.finditer(r"\\author\{", source))
     require(len(starts) == len(re.findall(r"\\author\b", source)), "approved titlepage identities: literal author blocks")
+    require(not re.search(r"\\(?:authornotemark|thanks)\b", source), "approved titlepage identities: no shared/cofirst/thanks notes")
     records = []
     for i, match in enumerate(starts):
         block = source[match.start():starts[i+1].start() if i+1 < len(starts) else len(source)]
-        names = literal_arguments(block, "author")
-        emails = literal_arguments(block, "email")
-        affiliations = literal_arguments(block, "affiliation")
-        orcids = literal_arguments(block, "orcid")
-        require(len(names) == len(emails) == len(affiliations) == 1 and len(orcids) <= 1,
-                "approved titlepage identities: per-author contact/affiliation/ORCID cardinality")
-        records.append(dict(name=names[0], email=emails[0], affiliation_tex=affiliations[0],
-                            orcid=orcids[0] if orcids else None))
-    require(literal_arguments(source, "email") == [r["email"] for r in records]
-            and literal_arguments(source, "affiliation") == [r["affiliation_tex"] for r in records]
-            and literal_arguments(source, "orcid") == [r["orcid"] for r in records if r["orcid"] is not None],
-            "approved titlepage identities: fields outside author blocks")
-    require(not re.search(r"\\(?:authornote|authornotemark|thanks)\b|corresponding[ -]author", source, re.I),
-            "approved titlepage identities: no corresponding author or author notes")
+        fields = {key:literal_arguments(block, key) for key in ('author','email','affiliation','orcid','authornote')}
+        for key, values in fields.items():
+            require(len(values) == len(re.findall(r"\\"+key+r"\b",block)), "approved titlepage identities: literal field "+key)
+        require(len(fields['author']) == len(fields['email']) == len(fields['affiliation']) == 1
+                and len(fields['orcid']) <= 1 and len(fields['authornote']) <= 1,
+                "approved titlepage identities: per-author field cardinality")
+        note = fields['authornote'][0] if fields['authornote'] else None
+        if note is not None:
+            require(note == 'Corresponding author.' and re.match(
+                r"\\author\{"+re.escape(fields['author'][0])+r"\}\s*\\authornote\{Corresponding author\.\}", block),
+                "approved titlepage identities: single exact immediately attached note")
+        records.append(dict(name=fields['author'][0], email=fields['email'][0], affiliation_tex=fields['affiliation'][0],
+                            orcid=fields['orcid'][0] if fields['orcid'] else None, authornote=note))
+    for command,key in (('email','email'),('affiliation','affiliation_tex'),('orcid','orcid'),('authornote','authornote')):
+        require(literal_arguments(source,command) == [r[key] for r in records if r[key] is not None]
+                and len(re.findall(r"\\"+command+r"\b",source)) == len(literal_arguments(source,command)),
+                "approved titlepage identities: fields outside author blocks")
+    require(len(re.findall(r"corresponding[ -]author",source,re.I)) == sum(r['authornote'] is not None for r in records),
+            "approved titlepage identities: stray corresponding-author text")
     return records
 
 
 def validate_current_authorship(title, current):
     records = title_author_records(title)
-    require(records == APPROVED_AUTHOR_RECORDS, "approved titlepage identities: exact ordered records")
-    require(current["current_author_records"] == APPROVED_AUTHOR_RECORDS
-            and current["current_authorship_variant"] == APPROVED_VARIANT
-            and current["authorship_approval_sha256"] == AUTHORSHIP_APPROVAL_SHA256,
+    require(records == APPROVED_AUTHOR_RECORDS, "approved titlepage identities: exact ordered records and note owner")
+    require(current['current_author_records'] == APPROVED_AUTHOR_RECORDS
+            and current['current_authorship_variant'] == APPROVED_VARIANT
+            and current['authorship_approval_sha256'] == AUTHORSHIP_APPROVAL_SHA256,
             "approved titlepage identities: exact roster approval binding")
-    for field, expected in (("authors_tex", [r["name"] for r in records]),
-                            ("author_emails", [r["email"] for r in records]),
-                            ("author_affiliations", [r["affiliation_tex"] for r in records]),
-                            ("author_orcids", [r["orcid"] for r in records if r["orcid"] is not None])):
-        require(current[field] == expected, "approved titlepage identities: " + field)
-    require(current["corresponding_authors"] == [] and current["corresponding_author_note_tex"] == "",
-            "approved titlepage identities: no current correspondence")
-    document = current["current_documents"]["paper/titlepage.pdf"]
-    for field in ("authors_tex", "author_emails", "author_affiliations", "author_orcids"):
-        require(document[field] == current[field], "approved titlepage identities: title document " + field)
-    require(document["corresponding_authors"] == [], "approved titlepage identities: title document correspondence")
+    for field, expected in (('authors_tex',[r['name'] for r in records]),
+                            ('author_emails',[r['email'] for r in records]),
+                            ('author_affiliations',[r['affiliation_tex'] for r in records]),
+                            ('author_orcids',[r['orcid'] for r in records if r['orcid'] is not None])):
+        require(current[field] == expected, "approved titlepage identities: "+field)
+    names = [APPROVED_CORRESPONDING_AUTHOR] if APPROVED_CORRESPONDING_AUTHOR else []
+    require(current['corresponding_authors'] == names
+            and current['corresponding_author'] == APPROVED_CORRESPONDING_AUTHOR
+            and current['corresponding_author_note_tex'] == APPROVED_CORRESPONDING_NOTE,
+            "approved titlepage identities: exact current correspondence")
+    document = current['current_documents']['paper/titlepage.pdf']
+    for field in ('authors_tex','author_emails','author_affiliations','author_orcids',
+                  'current_author_records','current_authorship_variant','authorship_approval_sha256',
+                  'corresponding_authors','corresponding_author','corresponding_author_note_tex'):
+        require(document[field] == current[field], "approved titlepage identities: title document "+field)
 
 
 def validate_submission(files, current):
