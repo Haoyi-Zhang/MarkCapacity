@@ -1,9 +1,9 @@
 {
   "schema": "CURRENT_STATEMENT_LOCATIONS_V1",
   "scope": "Actual primary objects with complete shared-proof alias map; aliases are not independent proofs",
-  "manuscript_sha256": "44bc0fea4b5d0e398a432d1c5a2ed758fcd99e79b995524471cc345ca5ca9326",
-  "pdf_sha256": "d78743e5c1e0591942cbf7c9cc5a20faeac3dba7722b6cad2eaaf37b6e368148",
-  "top_level_section_count": 9,
+  "manuscript_sha256": "8fd03438439fe74bf81cf1894ac2f68b977140060c47cb44d83f845ef1ce1805",
+  "pdf_sha256": "40ac3a996f2bb45de508ca511b46d7cd14cdb5f6e7665dbe9874db6b2d34c347",
+  "top_level_section_count": 10,
   "body_top_level_section_count": 8,
   "top_level_sections": [
     "Introduction",
@@ -14,7 +14,8 @@
     "Finite Executable Cross-Checks",
     "Related Work and Limitations",
     "Conclusion",
-    "Contract laws and observation profiles"
+    "Contract laws and observation profiles",
+    "Background on preservation proofs"
   ],
   "formal_statement_count": 52,
   "entries": [
@@ -707,10 +708,10 @@
     {
       "statement_id": "prop:detector-refinement",
       "environment": "proposition",
-      "statement_start_line": 2315,
-      "statement_end_line": 2334,
-      "proof_start_line": 2336,
-      "proof_end_line": 2338,
+      "statement_start_line": 2275,
+      "statement_end_line": 2294,
+      "proof_start_line": 2296,
+      "proof_end_line": 2298,
       "section": "Contract laws and observation profiles",
       "subsection": "Algebraic laws of the calculus",
       "subsubsection": null,
@@ -721,24 +722,24 @@
     {
       "statement_id": "thm:semantic-observable",
       "environment": "theorem",
-      "statement_start_line": 2344,
-      "statement_end_line": 2347,
-      "proof_start_line": 2349,
-      "proof_end_line": 2351,
+      "statement_start_line": 2304,
+      "statement_end_line": 2307,
+      "proof_start_line": 2309,
+      "proof_end_line": 2311,
       "section": "Contract laws and observation profiles",
       "subsection": "Observability in principle",
       "subsubsection": null,
       "number": "A.2",
-      "pdf_page": 50,
-      "tex_label_page": 50
+      "pdf_page": 49,
+      "tex_label_page": 49
     },
     {
       "statement_id": "thm:open",
       "environment": "theorem",
-      "statement_start_line": 2366,
-      "statement_end_line": 2372,
-      "proof_start_line": 2374,
-      "proof_end_line": 2376,
+      "statement_start_line": 2326,
+      "statement_end_line": 2332,
+      "proof_start_line": 2334,
+      "proof_end_line": 2336,
       "section": "Contract laws and observation profiles",
       "subsection": "Finite Observational Evidence",
       "subsubsection": null,
@@ -764,5 +765,5 @@
     "thm:uniform": "thm:open",
     "cor:uniform-finite-detector": "thm:open"
   },
-  "aux_sha256": "ae55607c311ea051fcda0ff910889a4e444dbb8ecbb0a76d876afcfa358ebda4"
+  "aux_sha256": "7878ba16ee5d32a9edbd2b081600db98823fc7202f70569673ab61c1e3382431"
 }

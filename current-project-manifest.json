@@ -104,14 +104,14 @@
     },
     {
       "path": "paper/main.pdf",
-      "bytes": 374155,
-      "sha256": "d78743e5c1e0591942cbf7c9cc5a20faeac3dba7722b6cad2eaaf37b6e368148",
+      "bytes": 374111,
+      "sha256": "40ac3a996f2bb45de508ca511b46d7cd14cdb5f6e7665dbe9874db6b2d34c347",
       "mode": "0644"
     },
     {
       "path": "paper/main.tex",
-      "bytes": 173338,
-      "sha256": "44bc0fea4b5d0e398a432d1c5a2ed758fcd99e79b995524471cc345ca5ca9326",
+      "bytes": 172786,
+      "sha256": "8fd03438439fe74bf81cf1894ac2f68b977140060c47cb44d83f845ef1ce1805",
       "mode": "0644"
     },
     {
@@ -153,7 +153,7 @@
     {
       "path": "paper/titlepage.pdf",
       "bytes": 44666,
-      "sha256": "ae44e0ec5ada1928f0215704db33e5fe10ccda766039e414d127308ccaba699e",
+      "sha256": "4fdd6ca4f3decd7f9cdd53ba23ac9556f4c3d7bc99161529a0a4b92181af422a",
       "mode": "0644"
     },
     {
@@ -200,20 +200,20 @@
     },
     {
       "path": "artifact/citation-contexts.csv",
-      "bytes": 71796,
-      "sha256": "44356dc8844763e811b66b244a6dc19a39ff8c555cea7ca3a85d419a8f8e9e97",
+      "bytes": 71452,
+      "sha256": "92c250eb04367dd8143d8fb48e0f0c2a7668e6940fff4c2b8d0c19fc00164c25",
       "mode": "0644"
     },
     {
       "path": "artifact/citation_support.csv",
-      "bytes": 63230,
-      "sha256": "d6763b58ec7a218c99d06291ab844813b972437d835ce59c100b9500fdc18098",
+      "bytes": 62597,
+      "sha256": "9f4fdeb6c7a12c4c9d85e0c990f7e7217464ca8669f5f1aa4ad63b5f371f1fbd",
       "mode": "0644"
     },
     {
       "path": "artifact/claim_evidence_ledger.csv",
       "bytes": 25861,
-      "sha256": "ad581b4ff56a1fae543da52aa6d52a3cfc099efb7d93037f7e4cea4b3781f0f7",
+      "sha256": "ebe147d50173f1fc8cd7f6a7ab5de7ca3bf8bfbcfbcfe9ae3cdbf8f8bd8e72e7",
       "mode": "0644"
     },
     {
@@ -225,19 +225,19 @@
     {
       "path": "artifact/correctness_correspondence.csv",
       "bytes": 29591,
-      "sha256": "43e074f868461fed1b462e93bf2eda33653dc8fbd2d8ee8ddc077b20d02a73c2",
+      "sha256": "70e22e5a74797ac9b720bea0bb569cce3ea8f4a8744d9fd17e686764b4624718",
       "mode": "0644"
     },
     {
       "path": "artifact/current-export-supplement.json",
       "bytes": 793,
-      "sha256": "9fae667e7909cb0055fd5fbc6fb40ed5292cf613e64b0b184eeb4710d2f642d5",
+      "sha256": "d2bfcbb472011811cdcb998d4fbb71b0c5c31fd252955bc1bc0ab539fa4b85dc",
       "mode": "0644"
     },
     {
       "path": "artifact/current-package-metadata.json",
-      "bytes": 37200,
-      "sha256": "05fa376524d44193c55b9234d9f34b02c96526379cd1459d605be3ad10ca867c",
+      "bytes": 37201,
+      "sha256": "db1bfcd8a06397246cd027ae02da2560100f1a8562dbb4fc3210868624df0b63",
       "mode": "0644"
     },
     {
@@ -332,8 +332,8 @@
     },
     {
       "path": "artifact/literature-evidence/records.jsonl",
-      "bytes": 974319,
-      "sha256": "478acb56e7b1f32a0550d521f8556965d662c9b7da864618419395a59ec10477",
+      "bytes": 1204685,
+      "sha256": "c98a2e0698d438a0f8041358226ea307fc896284fd30c594f6b1b3fed62e35a4",
       "mode": "0644"
     },
     {
@@ -350,14 +350,14 @@
     },
     {
       "path": "artifact/paper_support/current-statement-locations.json",
-      "bytes": 26119,
-      "sha256": "c0030f706d7eb73abd56c5d8d5bed2ffa0e56b5a026de7cb4fe8748629c7f7f7",
+      "bytes": 26162,
+      "sha256": "d98e88a31e6acbe609e7ce683b521460ffd32216668013090715d76999f83387",
       "mode": "0644"
     },
     {
       "path": "artifact/paper_support/current-structural-contract.json",
-      "bytes": 5161,
-      "sha256": "82549a45ea0a4021a23400b254ff1bf155fd64dd3ee8efc8183cb171661896bf",
+      "bytes": 5229,
+      "sha256": "07f10c236057d4796cb9c057af1ba228d71ad0d2216b1ae6e56ad632b367a365",
       "mode": "0644"
     },
     {
@@ -434,8 +434,8 @@
     },
     {
       "path": "artifact/reference-audit-final.csv",
-      "bytes": 78666,
-      "sha256": "5f4e9a3cddbe69daa4125605395e0d5312efbbc16ac714734e96505dea25726a",
+      "bytes": 78033,
+      "sha256": "07ba2f05bc88c2ac03b265dcea949c5dd2c4652f269aa5fc4f7933d508eb0f85",
       "mode": "0644"
     },
     {
@@ -2931,7 +2931,7 @@
     {
       "path": "artifact/submission-materials-map.json",
       "bytes": 2655,
-      "sha256": "df869fa1dd0a278333f3020352a85e89dc1739f4259a2d298c059303b6b887ec",
+      "sha256": "46967a402670843cd688a9d7118b8a99f08a6206b3262bd922eabe3a137313e7",
       "mode": "0644"
     },
     {

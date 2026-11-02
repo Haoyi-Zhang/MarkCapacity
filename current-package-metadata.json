@@ -8,8 +8,8 @@
     486.0,
     720.0
   ],
-  "pdf_sha256": "d78743e5c1e0591942cbf7c9cc5a20faeac3dba7722b6cad2eaaf37b6e368148",
-  "manuscript_sha256": "44bc0fea4b5d0e398a432d1c5a2ed758fcd99e79b995524471cc345ca5ca9326",
+  "pdf_sha256": "40ac3a996f2bb45de508ca511b46d7cd14cdb5f6e7665dbe9874db6b2d34c347",
+  "manuscript_sha256": "8fd03438439fe74bf81cf1894ac2f68b977140060c47cb44d83f845ef1ce1805",
   "scheduled_tests": {
     "scientific": 92,
     "package": 8,
@@ -301,14 +301,14 @@
     "artifact/reference-audit-final.csv": "4ed830e4181cfaa4f778beb587e2bd63f243ca8d1ba93d692447aa97d6ce7a10"
   },
   "current_file_sha256": {
-    "artifact/reference-audit-final.csv": "5f4e9a3cddbe69daa4125605395e0d5312efbbc16ac714734e96505dea25726a",
-    "artifact/paper_support/current-structural-contract.json": "82549a45ea0a4021a23400b254ff1bf155fd64dd3ee8efc8183cb171661896bf",
-    "artifact/claim_evidence_ledger.csv": "ad581b4ff56a1fae543da52aa6d52a3cfc099efb7d93037f7e4cea4b3781f0f7",
-    "artifact/citation-contexts.csv": "44356dc8844763e811b66b244a6dc19a39ff8c555cea7ca3a85d419a8f8e9e97",
-    "artifact/correctness_correspondence.csv": "43e074f868461fed1b462e93bf2eda33653dc8fbd2d8ee8ddc077b20d02a73c2",
-    "artifact/citation_support.csv": "d6763b58ec7a218c99d06291ab844813b972437d835ce59c100b9500fdc18098",
-    "artifact/paper_support/current-statement-locations.json": "c0030f706d7eb73abd56c5d8d5bed2ffa0e56b5a026de7cb4fe8748629c7f7f7",
-    "artifact/literature-evidence/records.jsonl": "478acb56e7b1f32a0550d521f8556965d662c9b7da864618419395a59ec10477"
+    "artifact/correctness_correspondence.csv": "70e22e5a74797ac9b720bea0bb569cce3ea8f4a8744d9fd17e686764b4624718",
+    "artifact/paper_support/current-statement-locations.json": "d98e88a31e6acbe609e7ce683b521460ffd32216668013090715d76999f83387",
+    "artifact/citation-contexts.csv": "92c250eb04367dd8143d8fb48e0f0c2a7668e6940fff4c2b8d0c19fc00164c25",
+    "artifact/reference-audit-final.csv": "07ba2f05bc88c2ac03b265dcea949c5dd2c4652f269aa5fc4f7933d508eb0f85",
+    "artifact/citation_support.csv": "9f4fdeb6c7a12c4c9d85e0c990f7e7217464ca8669f5f1aa4ad63b5f371f1fbd",
+    "artifact/claim_evidence_ledger.csv": "ebe147d50173f1fc8cd7f6a7ab5de7ca3bf8bfbcfbcfe9ae3cdbf8f8bd8e72e7",
+    "artifact/literature-evidence/records.jsonl": "c98a2e0698d438a0f8041358226ea307fc896284fd30c594f6b1b3fed62e35a4",
+    "artifact/paper_support/current-structural-contract.json": "07f10c236057d4796cb9c057af1ba228d71ad0d2216b1ae6e56ad632b367a365"
   },
   "current_binding_date": "2026-11-02",
   "additional_separately_recorded_regressions": 5,
@@ -341,8 +341,8 @@
     "paper/main.pdf": {
       "role": "anonymous_main",
       "source": "paper/main.tex",
-      "source_sha256": "44bc0fea4b5d0e398a432d1c5a2ed758fcd99e79b995524471cc345ca5ca9326",
-      "pdf_sha256": "d78743e5c1e0591942cbf7c9cc5a20faeac3dba7722b6cad2eaaf37b6e368148",
+      "source_sha256": "8fd03438439fe74bf81cf1894ac2f68b977140060c47cb44d83f845ef1ce1805",
+      "pdf_sha256": "40ac3a996f2bb45de508ca511b46d7cd14cdb5f6e7665dbe9874db6b2d34c347",
       "pages": 50,
       "page_size_points": [
         486.0,
@@ -364,7 +364,7 @@
       "role": "identifying_titlepage",
       "source": "paper/titlepage.tex",
       "source_sha256": "03f22865e8622441a1e7f26b49224f3ac43abbfc543d734078b96897e09f421e",
-      "pdf_sha256": "ae44e0ec5ada1928f0215704db33e5fe10ccda766039e414d127308ccaba699e",
+      "pdf_sha256": "4fdd6ca4f3decd7f9cdd53ba23ac9556f4c3d7bc99161529a0a4b92181af422a",
       "pages": 1,
       "page_size_points": [
         486.0,
@@ -403,7 +403,7 @@
     "proofs": 52,
     "figures": 4,
     "tables": 10,
-    "sections": 9,
+    "sections": 10,
     "body_sections": 8,
     "bibliography_keys": 70,
     "citation_commands": 105
@@ -479,8 +479,8 @@
     "thm:uniform": "thm:open",
     "cor:uniform-finite-detector": "thm:open"
   },
-  "source_support_ledger_sha256": "5060cab7ead7fb96b9bbecf0af300307642c36f9436e20ad83b4d7bd8e44affd",
-  "current_census_sha256": "0362490053e77435a920aa2a4d28bb1c2799e4c4d2701c05db521302a49dd4d8",
+  "source_support_ledger_sha256": "756693b4583047c54d737f962dfdc1ecb2fc4dee36592b181640a6fd3281d32c",
+  "current_census_sha256": "bcdb6403d651c3c289286945400dcac25b9dcae68ebc8d880bfd8708a2205671",
   "current_claim_support_complete": true,
   "historical_retired_reference_records": {
     "sangiorgi2011": {
