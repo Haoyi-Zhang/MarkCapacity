@@ -2,8 +2,14 @@
 
 ## Vector figures
 
-`python3 -B figures/build_figures.py --outdir /path/to/figures` regenerates the
-four manuscript illustrations directly with Matplotlib 3.11.2, without TeX.
+Generate the manuscript's ten vector illustrations with Matplotlib. The renderer
+loads the same Linux Libertine O faces as the paper through `kpsewhich` or
+`FIGURE_TEX_FONT_DIR`; it does not invoke a TeX renderer.
+
+```sh
+python3 -B figures/build_figures.py --outdir /path/to/figures
+python3 -B figures/publication_figures.py --outdir /path/to/figures
+```
 The closure diagram reads `generated/capacity_table.csv`; the other diagrams
 show the explicitly defined running, triangle-product and stochastic-triangle
 instances. The saved PDFs embed their fonts. Copy the generated PDFs to the
@@ -208,7 +214,7 @@ actual stored bytes/modes and rejects unlisted members in either delivery root.
 The current metadata binds 70 rendered references and 105 single-key citation
 commands, 52 primary statements with proofs, and 55 scoped correctness rows
 whose shared-proof aliases remain explicit. It separately binds the anonymous
-main and identifying title page with the approved four authors. Uncited
+main and the separate identifying title page for the current six authors. Uncited
 database entries do not count as rendered references. Current claim, correctness
 and citation ledgers have their own byte and source-location bindings; original
 identities remain in the unchanged historical `project-manifest.json`. The dated
@@ -232,7 +238,8 @@ retains the real identifying URL for coordination; no anonymous URL is invented
 and the main no longer renders the public link. Self-citations remain intact.
 The supplied `paper/main.pdf` is the current 50-page anonymous manuscript;
 `paper/titlepage.pdf` is the separate one-page identifying sheet with the
-approved four authors and supplied ORCIDs. These are not pre-change identified drafts.
+current author roster and supplied ORCIDs. These documents are distributed only
+in the complete paper/artifact package, not in the standalone code repository.
 Historical export inventories still describe their own snapshots. The build
 recipe regenerates both PDFs; document roles, anonymity, layout and current
 inventory/bindings should be checked after source edits. Current guide
