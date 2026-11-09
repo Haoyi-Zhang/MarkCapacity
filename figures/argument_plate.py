@@ -6,7 +6,7 @@ from article_diagrams import FIGURES
 from diagram_ink import emit
 from figure_style import paper_style
 from figure_style import Plate, BLUE, TEAL, AMBER, RULE
-from matplotlib.patches import Circle
+from matplotlib.patches import Circle, Rectangle
 from matplotlib.transforms import Bbox
 
 
@@ -51,8 +51,12 @@ def source_access(spec,out,previews):
                     labels.append((d.text(start+19,y,rf'$x_{i}$',9.3),(start+6,y-7,start+32,y+7)))
                 y=52-i*17
                 if matrix[i][j]:
-                    face=TEAL if start>50 and coloring[j]==0 else BLUE
-                    d.ax.add_patch(Circle((x,y),4,facecolor=face,edgecolor=face,zorder=3))
+                    zero=start>50 and coloring[j]==0
+                    if zero:
+                        d.ax.add_patch(Rectangle((x-3.4,y-3.4),6.8,6.8,
+                                                 facecolor=TEAL,edgecolor=TEAL,zorder=3))
+                    else:
+                        d.ax.add_patch(Circle((x,y),4,facecolor=BLUE,edgecolor=BLUE,zorder=3))
                     if start>50 and i==0 and j==2:
                         d.ax.add_patch(Circle((x,y),7,fill=False,edgecolor=AMBER,linewidth=1.15,zorder=3))
                 else:

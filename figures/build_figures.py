@@ -22,7 +22,7 @@ class Drawing:
         self.ax.axis('off')
         self.labels = []
 
-    def text(self, x, y, text, size=9, **kw):
+    def text(self, x, y, text, size=9.7, **kw):
         label = self.ax.text(x, y, text, ha='center', va='center',
                              fontsize=size, linespacing=1.15, zorder=4, **kw)
         self.labels.append(label)

@@ -34,7 +34,8 @@ def closure(out,preview):
         group=2**i
         d.text(7,y,n,9,ha='left')
         for j in range(0,8,group):
-            d.band(91+j*26,y-6,26*(group-1)+16,12,MINT if (j//group)%2==0 else LIGHT)
+            d.frame(92+j*26,y-5.5,26*(group-1)+14,11,
+                    fill='white',edge=RULE)
             if group>1:d.rule(99+j*26,y,99+(j+group-1)*26,y,c=TEAL,lw=.74)
             for k in range(j,j+group):
                 d.dot(99+k*26,y,'',edge=TEAL,r=2.4)
@@ -66,7 +67,6 @@ def associativity(out, preview):
             d.band(x-7.5,y-4.5,15,9,MINT if live else '#f5f6f7')
             d.text(x,y,str(s['labeling'][j]) if live else '–',9.2,color=INK if live else MUTED)
     d.head(216,96,'(b) Two rotations')
-    d.band(219,39,175,35,LIGHT)
     for i in range(5):
         x=224+i*35
         d.dot(x+14,54,rf'$J_{i}$',edge=PURPLE,r=9)
@@ -89,14 +89,13 @@ def stochastic(out,preview):
             [['0','0','1'],['0','1/2','1'],[r'$\chi_0$',r'$\chi_1$',r'$\chi_2$']],
             ['Fixed labels','Node values: Pr[1]','One of six colorings'])):
         d.text(x,126,title,10,weight='bold')
-        d.band(x-59,43,118,68,LIGHT if k!=1 else MINT)
         xy=[(x-33,55),(x,92),(x+33,55)]
         for (i,j),v,(dx,y) in zip(edges,values[k],[(-34,77),(0,48),(34,77)]):
             worst=v==min(values[k])
             d.rule(*xy[i],*xy[j],c=PURPLE if worst else MUTED,ls='--' if worst else '-',lw=1.05)
-            d.text(x+dx,y,str(v),8,color=PURPLE if worst else MUTED)
+            d.text(x+dx,y,str(v),9.1,color=PURPLE if worst else MUTED)
         for (px,py),lab in zip(xy,labels):d.dot(px,py,lab,r=9)
-        d.text(x,28,note,8.3)
+        d.text(x,28,note,9.1)
         d.text(x,13,'Minimum: '+str(min(values[k])),9,color=PURPLE,weight='bold')
     d.save(out,'stochastic-triangle',preview)
 
