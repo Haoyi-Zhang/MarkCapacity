@@ -1,0 +1,14 @@
+{
+  "venue": "toplas",
+  "figures": [
+    {
+      "name": "interface-contracts"
+    },
+    {
+      "name": "predicate-toggle"
+    },
+    {
+      "name": "source-access"
+    }
+  ]
+}
