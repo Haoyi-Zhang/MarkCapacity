@@ -2,7 +2,7 @@
 
 ## Vector figures
 
-Generate the manuscript's ten vector illustrations with Matplotlib. The renderer
+Generate the manuscript's twelve vector illustrations with Matplotlib. The renderer
 loads the same Linux Libertine O faces as the paper through `kpsewhich` or
 `FIGURE_TEX_FONT_DIR`; it does not invoke a TeX renderer.
 
