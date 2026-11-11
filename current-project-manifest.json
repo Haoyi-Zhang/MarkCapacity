@@ -45,7 +45,7 @@
     {
       "path": "artifact/citation-contexts.csv",
       "bytes": 70059,
-      "sha256": "61653b1411db41e659ef303eb2d58d3bf783b5fcd4a980ba2df6e26a0fc59c50",
+      "sha256": "578f14f27d67858805701349be5a038fbfcfed7265588f32e3b79c5c33f861b1",
       "mode": "0644"
     },
     {
@@ -75,13 +75,13 @@
     {
       "path": "artifact/current-export-supplement.json",
       "bytes": 773,
-      "sha256": "5363c54828b77af7f536d76b959386a49086fb1b894acea139fdc5f15aa91394",
+      "sha256": "e855d931f61d015d23aa1ec269bbf992ffd6c48ab7b527d76fe418edcba6002b",
       "mode": "0644"
     },
     {
       "path": "artifact/current-package-metadata.json",
       "bytes": 41889,
-      "sha256": "73683cf6874f0280679104d635b98113d661f8a9c9fb31f5dd8a9a11c98ef6be",
+      "sha256": "15d5c1d557f1ccb1a645323b1a8fb61192874bf7b3f2f8b6913d6dbafd416765",
       "mode": "0644"
     },
     {
@@ -291,13 +291,13 @@
     {
       "path": "artifact/paper_support/current-statement-locations.json",
       "bytes": 25383,
-      "sha256": "869e9616b04fb435d41a09c9efa9d1d390821c092fff1a608a607786b50a089c",
+      "sha256": "31e279da0562132faa2fb0a6181447fb8691b2e121e4a02eed1da997c23e5100",
       "mode": "0644"
     },
     {
       "path": "artifact/paper_support/current-structural-contract.json",
       "bytes": 7545,
-      "sha256": "8a09502f823da52c789b0cbd1d146c35cf52107af6c2ed5d5d4f0b78f2c11fe3",
+      "sha256": "d2391a22a2e706966ff0bea2311e75bf0484b19b107a868e07a15c988b4d0453",
       "mode": "0644"
     },
     {
@@ -2871,7 +2871,7 @@
     {
       "path": "artifact/submission-materials-map.json",
       "bytes": 2648,
-      "sha256": "1ab5e1875fb7159e3b7ab875b67391f67fba026fdc119cdd9cb70e2aa8119a9f",
+      "sha256": "42a700db79633d134d4c7838228cfdafa015a20d576d0f708558ffc820ddd37b",
       "mode": "0644"
     },
     {
@@ -3140,14 +3140,14 @@
     },
     {
       "path": "paper/main.pdf",
-      "bytes": 547254,
-      "sha256": "19ac6828f444c79dd4fb5084a5ddc70f4683323f2aafef02178e9e17693bfd82",
+      "bytes": 547464,
+      "sha256": "c2bcbd973388725b66c55e7c3d218591cbd66417c799d9f37918e00d47337ef3",
       "mode": "0644"
     },
     {
       "path": "paper/main.tex",
-      "bytes": 169008,
-      "sha256": "addca5cef135c2b9f3c4cb131d3b69eabae86b163c098a905f30c081122bf68f",
+      "bytes": 169248,
+      "sha256": "a163fcd1b9c80becc0d5c4b3355aad98e28938029fc7a1de628eff2c488348a3",
       "mode": "0644"
     },
     {

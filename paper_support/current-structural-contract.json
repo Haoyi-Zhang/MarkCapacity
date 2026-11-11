@@ -3,7 +3,7 @@
   "approved_for_refresh": true,
   "approval_instruction": "Exact local roster, anonymous manuscript and current illustration layout",
   "approved_source_sha256": {
-    "paper/main.tex": "addca5cef135c2b9f3c4cb131d3b69eabae86b163c098a905f30c081122bf68f",
+    "paper/main.tex": "a163fcd1b9c80becc0d5c4b3355aad98e28938029fc7a1de628eff2c488348a3",
     "paper/titlepage.tex": "d2d7485ce0ad3f200d53bcbddd9cca016b36ecb6b897e38e23d067389d113a24",
     "paper/references.bib": "634ce14322d89cf1803241f6e70a46daea35301166b1531a8e2ddcf0cee67e0e"
   },
@@ -151,9 +151,9 @@
     "historical_bib_entry_sha256": "9d1efe8aca4934cbb6220a78ab00c9c667a993f2de3825f8bb80d87af9677e46",
     "template_source": "1864386020c6f08b0b1ac82098b123393eeeb90b29fe6acb55926b18f2b68972"
   },
-  "selected_parent_build_receipt_sha256": "506974df55b8dede67b2e9491ab8e58743e07cbbd4b9d774ea718048eff6a315",
+  "selected_parent_build_receipt_sha256": "a63b0d6ae1ae184b92662f286f8e39a04e849967d89915b1cebb82bdb5dc61df",
   "selected_parent_build_outputs": {
-    "paper/main.pdf": "19ac6828f444c79dd4fb5084a5ddc70f4683323f2aafef02178e9e17693bfd82",
+    "paper/main.pdf": "c2bcbd973388725b66c55e7c3d218591cbd66417c799d9f37918e00d47337ef3",
     "paper/titlepage.pdf": "5e9effaf0b9646054db55510dcb4c30c9678b710af275c0047d23b37580d09a0"
   },
   "author_affiliations": [
