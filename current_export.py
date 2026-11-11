@@ -29,15 +29,24 @@ ARCHIVE_ENV = "TOPLAS19_EXPORT_ARCHIVE"
 MAIN_OPTIONS = "acmsmall,screen,anonymous,nonacm"
 TITLE_OPTIONS = "acmsmall,screen,nonacm"
 # Existing approved identities belong to the separate title page, never main.
-APPROVED_AUTHORS = ('Haoyi Zhang', 'Huaijin Ran', 'Jiongchi Yu', 'Yuqiang Sun')
+APPROVED_AUTHORS = ('Haoyi Zhang',
+ 'Huaijin Ran',
+ 'Fanqi Kong',
+ 'Yuqiang Sun',
+ 'Jiongchi Yu',
+ 'Ziming Zhao')
 APPROVED_EMAILS = ('hyeliozhang@gmail.com',
  'huaijin003@e.ntu.edu.sg',
+ 'fanqikong@st.gxu.edu.cn',
+ 'yuqiang.sun@ntu.edu.sg',
  'jiongchiyu@acm.org',
- 'yuqiang.sun@ntu.edu.sg')
+ 'zhaoziming@zju.edu.cn')
 APPROVED_ORCIDS = ('0009-0009-3693-786X',
  '0009-0009-2482-2344',
+ '0009-0000-4831-6387',
+ '0000-0003-4340-3371',
  '0000-0002-2888-4499',
- '0000-0003-4340-3371')
+ '0000-0003-1455-4330')
 NON_DOI_CHAPTER = {"author": "Samson Abramsky", "title": "The Lazy Lambda Calculus", "booktitle": "Research Topics in Functional Programming",
                    "editor": "D. Turner", "publisher": "Addison Wesley", "year": "1990", "pages": "65--117",
                    "url": "https://www.cs.ox.ac.uk/people/samson.abramsky/lazy.pdf", "note": "Author-hosted manuscript"}
@@ -195,20 +204,32 @@ APPROVED_AUTHOR_RECORDS = [{'name': 'Haoyi Zhang',
                      'University}\\city{Singapore}\\country{Singapore}',
   'orcid': '0009-0009-2482-2344',
   'authornote': None},
- {'name': 'Jiongchi Yu',
-  'email': 'jiongchiyu@acm.org',
-  'affiliation_tex': '\\institution{Nanyang Technological '
-                     'University}\\city{Singapore}\\country{Singapore}',
-  'orcid': '0000-0002-2888-4499',
+ {'name': 'Fanqi Kong',
+  'email': 'fanqikong@st.gxu.edu.cn',
+  'affiliation_tex': '\\institution{Guangxi '
+                     'University}\\city{Nanning}\\country{China}',
+  'orcid': '0009-0000-4831-6387',
   'authornote': None},
  {'name': 'Yuqiang Sun',
   'email': 'yuqiang.sun@ntu.edu.sg',
   'affiliation_tex': '\\institution{Nanyang Technological '
                      'University}\\city{Singapore}\\country{Singapore}',
   'orcid': '0000-0003-4340-3371',
-  'authornote': None}]
-APPROVED_VARIANT = 'c'
-AUTHORSHIP_APPROVAL_SHA256 = '0558ac8d74f7e8236e67045a6e860dbfc908eacc89d5b0b4012153ae8fc348d6'
+  'authornote': None},
+ {'name': 'Jiongchi Yu',
+  'email': 'jiongchiyu@acm.org',
+  'affiliation_tex': '\\institution{Nanyang Technological '
+                     'University}\\city{Singapore}\\country{Singapore}',
+  'orcid': '0000-0002-2888-4499',
+  'authornote': None},
+ {'name': 'Ziming Zhao',
+  'email': 'zhaoziming@zju.edu.cn',
+  'affiliation_tex': '\\institution{Zhejiang '
+                     'University}\\city{Hangzhou}\\country{China}',
+  'orcid': '0000-0003-1455-4330',
+  'authornote': 'Corresponding author.'}]
+APPROVED_VARIANT = 'z'
+AUTHORSHIP_APPROVAL_SHA256 = '41976cf3e59ae5ef703fb41a1ea35fcbae0700c22062510d1456910d080f743b'
 
 """Pure authorship checks injected into each clone's existing export validator.
 
@@ -219,8 +240,8 @@ remain in force. No external file or mutable metadata supplies the approved list
 """
 
 
-APPROVED_CORRESPONDING_AUTHOR = None
-APPROVED_CORRESPONDING_NOTE = ''
+APPROVED_CORRESPONDING_AUTHOR = 'Ziming Zhao'
+APPROVED_CORRESPONDING_NOTE = 'Corresponding author.'
 
 def title_author_records(title):
     source = uncomment(title)

@@ -5,7 +5,7 @@ from pathlib import Path
 from article_diagrams import FIGURES
 from diagram_ink import emit
 from figure_style import paper_style
-from figure_style import Plate, BLUE, TEAL, AMBER, RULE
+from figure_style import Plate, BLUE, TEAL, AMBER, MUTED
 from matplotlib.patches import Circle, Rectangle
 from matplotlib.transforms import Bbox
 
@@ -51,8 +51,8 @@ def source_access(spec,out,previews):
                     labels.append((d.text(start+19,y,rf'$x_{i}$',9.3),(start+6,y-7,start+32,y+7)))
                 y=52-i*17
                 if matrix[i][j]:
-                    zero=start>50 and coloring[j]==0
-                    if zero:
+                    one=start>50 and coloring[j]==1
+                    if one:
                         d.ax.add_patch(Rectangle((x-3.4,y-3.4),6.8,6.8,
                                                  facecolor=TEAL,edgecolor=TEAL,zorder=3))
                     else:
@@ -60,9 +60,14 @@ def source_access(spec,out,previews):
                     if start>50 and i==0 and j==2:
                         d.ax.add_patch(Circle((x,y),7,fill=False,edgecolor=AMBER,linewidth=1.15,zorder=3))
                 else:
-                    d.rule(x-3,y,x+3,y,c=RULE,lw=.85)
+                    d.rule(x-3,y,x+3,y,c=MUTED,lw=.85)
     a,b=(170,43),(222,43)
     d.arrow(a,b,color=AMBER);arrows.append((a,b))
+    labels.append((d.text(196,55,'Add access',8.7,color=AMBER),(171,49,222,62)))
+    d.ax.add_patch(Circle((253,6),2.4,facecolor=BLUE,edgecolor=BLUE,zorder=3))
+    d.text(260,6,'Label 0',8.3,ha='left',color=BLUE)
+    d.ax.add_patch(Rectangle((310,3.5),5,5,facecolor=TEAL,edgecolor=TEAL,zorder=3))
+    d.text(320,6,'Label 1',8.3,ha='left',color=TEAL)
     check_labels(d,labels,arrows)
     d.save(out,spec['name'],previews)
 

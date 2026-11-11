@@ -9,17 +9,17 @@
       "format": "acmsmall anonymous main; no review option and no author-added line numbers",
       "anonymity": "double-anonymous regular route; approved identifying data only in separate titlepage.tex",
       "status": "CURRENT_DOCUMENT_SOURCE_BOUND",
-      "pdf_sha256": "1a3571cc12e25262cac661026cf07a009ee54c6a4b07a72af83115e0d6a4c26f",
-      "source_sha256": "b9af3d1dfc618bdb724ead3f3b1f890d81050553acef57a05b4e49881658e3af",
+      "pdf_sha256": "19ac6828f444c79dd4fb5084a5ddc70f4683323f2aafef02178e9e17693bfd82",
+      "source_sha256": "addca5cef135c2b9f3c4cb131d3b69eabae86b163c098a905f30c081122bf68f",
       "pages": 50
     },
     {
       "material": "separate identifying title page",
       "path": "paper/titlepage.tex -> paper/titlepage.pdf",
-      "format": "Separate identifying title page; approved 4-author order, supplied contact/ORCID fields; no corresponding author",
+      "format": "Separate identifying title page; current 6-author order, supplied contact/ORCID fields; Ziming Zhao is the sole corresponding author",
       "status": "CURRENT_DOCUMENT_SOURCE_BOUND",
-      "pdf_sha256": "25e0ec77b3ddc4cd5763722a6775eeae594beeebe9e2c2dae1809c8842ec9412",
-      "source_sha256": "bff9141d80b186daa0f6b5abc5d383e1ca161709b7e816e6a196c983a4e7ab62",
+      "pdf_sha256": "5e9effaf0b9646054db55510dcb4c30c9678b710af275c0047d23b37580d09a0",
+      "source_sha256": "d2d7485ce0ad3f200d53bcbddd9cca016b36ecb6b897e38e23d067389d113a24",
       "pages": 1
     },
     {

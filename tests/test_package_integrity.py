@@ -599,10 +599,15 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         self.assertNotIn(r"\renewcommand{\shortauthors}{Zhang et al.}", manuscript)
         self.assertIn(r"\renewcommand{\shortauthors}{Zhang et al.}",titlepage)
         self.assertEqual((formal_count, proof_count), (52, 52))
-        self.assertEqual((figure_count, table_count), (4, 10))
+        self.assertEqual((figure_count, table_count), (13, 8))
+        self.assertNotIn(r"\label{tab:associativity}", manuscript)
+        self.assertIn("12,500 calls with no return or recovery mismatch", " ".join(rendered.split()))
+        self.assertTrue((ROOT / "artifact/results/associativity/table.tex").is_file())
         self.assertEqual((author_count, section_count), (1, 10))
         self.assertEqual(len(re.findall(r"\\appendix\b", manuscript)), 1)
         body_source, appendix_source = manuscript.split(r"\appendix")
+        self.assertNotIn(r"\label{fig:finite-certificate}", body_source)
+        self.assertEqual(appendix_source.count(r"\label{fig:finite-certificate}"), 1)
         self.assertEqual(len(re.findall(r"^\\section\{", body_source, flags=re.MULTILINE)), 8)
         self.assertEqual(len(re.findall(r"^\\section\{", appendix_source, flags=re.MULTILINE)), 2)
         self.assertEqual(len(citation_commands), 105)
@@ -757,9 +762,7 @@ class PublicPackageIntegrityTests(unittest.TestCase):
 
     def test_running_figure_is_narratively_placed_and_notation_light(self):
         manuscript = strip_tex_comments(MANUSCRIPT.read_text(encoding="utf-8"))
-        reference = manuscript.index(
-            r"Figure~\ref{fig:running} illustrates a pure integer fragment:"
-        )
+        reference = manuscript.index(r"Figure~\ref{fig:running}")
         figure_start = manuscript.index(r"\begin{figure}[t]", reference)
         next_paragraph = manuscript.index(
             "Software-watermarking models distinguish", figure_start
@@ -775,26 +778,28 @@ class PublicPackageIntegrityTests(unittest.TestCase):
         self.assertNotIn(r"[p]_{\approx}", figure)
         self.assertNotIn(r"J_{\mathsf", figure)
         self.assertNotIn(r"\delta", figure)
-        generator = (ROOT / 'artifact/figures/build_figures.py').read_text(encoding='utf-8')
+        entry = (ROOT / 'artifact/figures/build_figures.py').read_text(encoding='utf-8')
+        publication = (ROOT / 'artifact/figures/publication_figures.py').read_text(encoding='utf-8')
+        generator = (ROOT / 'artifact/figures/article_diagrams.py').read_text(encoding='utf-8')
+        running = generator.split('def running():', 1)[1].split('\ndef ', 1)[0]
         self.assertIn(r'\includegraphics[width=.98\linewidth]{figures/running.pdf}', figure)
         self.assertNotIn(r'\begin{tikzpicture}', manuscript)
-        self.assertIn("left-order cell", generator)
-        self.assertIn("right-order cell", generator)
-        self.assertIn("both reachable from every source", figure)
-        self.assertIn("one fixed message", generator)
-        self.assertIn("pure-integer example", figure)
-        self.assertIn('$p^{s}$', generator)
-        self.assertIn('$p^{l}$', generator)
-        self.assertIn('four detector ($D$) cells', generator)
-        self.assertIn('Two operational ($J$) cells', generator)
-        self.assertIn('after temporary elimination', generator)
-        self.assertNotIn('Detector-visible cells', generator)
-        self.assertIn('four detector ($D$) cells', figure)
-        self.assertIn('two operational ($J$) cells', figure)
-        self.assertIn('Temporary-elimination attacks', figure)
+        self.assertIn('from publication_figures import closure, running, stochastic', entry)
+        self.assertIn("emit('running',out,preview)", publication)
+        for label in ('Local rewrites', 'Decoder quotient', 'Label 0', 'Label 1',
+                      'Normalize operands', 'One operational cell'):
+            self.assertIn(label, running)
+        explanation = manuscript[reference:figure_start]
+        for phrase in ('each reachable from every source', 'detector distinguishes all four',
+                       'two operational cells', 'temporary elimination', 'one bit',
+                       'operand normalization merges the cells'):
+            self.assertIn(phrase, explanation)
+        caption = re.search(r'\\caption\{([^{}]+)\}', figure).group(1)
+        self.assertIn('pure-integer fragment', caption)
+        self.assertLess(len(caption.split()), 16)
         description = re.search(r'\\Description\{([^{}]+)\}', figure).group(1)
-        for phrase in ('four detector cells', 'two operational cells', 'Temporary-elimination attack'):
-            self.assertIn(phrase, description)
+        for phrase in ('four detector cells', 'two operational cells', 'temporary-elimination attack'):
+            self.assertIn(phrase, description.casefold())
         self.assertNotIn('two detector-visible cells', figure)
         for name in ('running', 'triangle-product', 'stochastic-triangle', 'capacity-closure'):
             self.assertTrue((ROOT / 'paper/figures' / (name + '.pdf')).is_file())
@@ -807,7 +812,7 @@ class PublicPackageIntegrityTests(unittest.TestCase):
                 self.assertRegex(text, r'50(?:-page| pages)')
                 self.assertIn('one-page', text)
                 from current_export import APPROVED_AUTHORS
-                self.assertIn({4: 'four', 5: 'five'}[len(APPROVED_AUTHORS)] + ' authors', text)
+                self.assertIn({4: 'four', 5: 'five', 6: 'six'}[len(APPROVED_AUTHORS)] + ' authors', text)
                 self.assertNotIn('PDF binaries are pre-change', text)
                 self.assertNotIn('retained pre-change identified `main.pdf`', text)
                 self.assertNotIn('PDFs and historical export inventories are pre-change', text)
@@ -930,16 +935,22 @@ fi
         begin_pattern = re.compile(
             r"\\begin\{(theorem|lemma|proposition|corollary)\}"
         )
-        labeled_begin_pattern = re.compile(
+        formal_block_pattern = re.compile(
             r"\\begin\{(theorem|lemma|proposition|corollary)\}"
-            r"(?:\[[^\]]*\])?\s*\\label\{([^{}]+)\}"
+            r"(.*?)\\end\{\1\}", re.DOTALL
         )
 
         begins = begin_pattern.findall(manuscript)
-        matches = labeled_begin_pattern.findall(manuscript)
+        blocks = formal_block_pattern.findall(manuscript)
         self.assertTrue(begins)
-        self.assertEqual(len(matches), len(begins))
-        labels = [label for _environment, label in matches]
+        self.assertEqual([environment for environment, _ in blocks], begins)
+        labels = []
+        for environment, body in blocks:
+            # The label can follow the first word to keep its TeX page write
+            # on the theorem's first printed line rather than the previous page.
+            first = re.search(r"\\label\{([^{}]+)\}", body)
+            self.assertIsNotNone(first, (environment, body[:80]))
+            labels.append(first.group(1))
         self.assertEqual(len(labels), len(set(labels)))
         aliases=formal_aliases(manuscript)
         self.assertEqual(len(aliases),15)
@@ -1071,8 +1082,8 @@ fi
             "Conclusion",
         ]
         expected_appendix_sections = [
-            "Contract laws and observation profiles",
-            "Background on preservation proofs",
+            "Contract Laws and Observation Profiles",
+            "Background on Preservation Proofs",
         ]
         top_sections, source_records = assert_numbered_section_structure(
             manuscript, expected_body_sections, expected_appendix_sections
@@ -1090,7 +1101,7 @@ fi
         self.assertEqual(top_sections[:8], expected_body_sections)
         self.assertEqual(top_sections[8:], expected_appendix_sections)
         self.assertEqual(len(top_sections[8:]), 2)
-        self.assertEqual(top_sections[-1], 'Background on preservation proofs')
+        self.assertEqual(top_sections[-1], 'Background on Preservation Proofs')
         self.assertIn(r"\label{app:standard-facts}", manuscript)
         self.assertIn(r"\label{app:preservation-background}", manuscript)
         self.assertEqual(audit["manuscript_sha256"], sha256_file(MANUSCRIPT))
@@ -1102,7 +1113,7 @@ fi
         current=json.loads(CURRENT_PACKAGE.read_text(encoding='utf-8'))
         self.assertEqual(current['current_formal_label_aliases'],aliases)
         self.assertEqual(current['current_formal_primary_ids'],sorted(source_records))
-        self.assertEqual(current['current_structure'],dict(formal_statements=52,proofs=52,figures=4,tables=10,sections=10,body_sections=8,bibliography_keys=70,citation_commands=105))
+        self.assertEqual(current['current_structure'],dict(formal_statements=52,proofs=52,figures=13,tables=9,sections=10,body_sections=8,bibliography_keys=70,citation_commands=105))
         self.assertTrue(set(aliases.values())<=set(source_records))
         self.assertTrue(set(aliases).isdisjoint(source_records))
         self.assertEqual(audit["schema"], "CURRENT_STATEMENT_LOCATIONS_V1")

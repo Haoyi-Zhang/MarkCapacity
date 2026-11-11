@@ -51,12 +51,14 @@ def associativity(out, preview):
     assert len(links)==5 and all((i in edges[j]) for i,j in links)
     assert s['capacity']==2 and s['two_rotation_capacity']==5
     assert s['ternary_colorings']==0 and all({s['labeling'][j] for j in e}=={0,1} for e in edges)
-    d=Plate(410,107)
+    from diagram_ink import Diagram
+    d=Diagram(410,107)
     d.head(9,96,'(a) One rotation')
     coords={i:(44+25*sin(tau*k/5),44+22*cos(tau*k/5)) for k,i in enumerate([0,1,3,4,2])}
     for i,j in links:d.rule(*coords[i],*coords[j],c=BLUE,lw=1.1)
     for i,(x,y) in coords.items():
-        d.dot(x,y,rf'$J_{i}$',fill=LIGHT,edge=BLUE,r=7)
+        d.dotmark(x,y,7,c=BLUE,fill=LIGHT)
+        d.node_label(x,y,rf'$J_{i}$',8.6)
     for j in range(5):
         d.text(109+j*17,75,rf'$J_{j}$',9.2)
     for i in range(5):
@@ -65,11 +67,15 @@ def associativity(out, preview):
             x,y=109+j*17,64-i*11
             live=j in edges[i]
             d.band(x-7.5,y-4.5,15,9,MINT if live else '#f5f6f7')
-            d.text(x,y,str(s['labeling'][j]) if live else '–',9.2,color=INK if live else MUTED)
+            if live:
+                d.node_label(x,y,str(s['labeling'][j]),9.2,color=INK)
+            else:
+                d.rule(x-2.5,y,x+2.5,y,c=MUTED,lw=.88)
     d.head(216,96,'(b) Two rotations')
     for i in range(5):
         x=224+i*35
-        d.dot(x+14,54,rf'$J_{i}$',edge=PURPLE,r=9)
+        d.dotmark(x+14,54,9,c=PURPLE)
+        d.node_label(x+14,54,rf'$J_{i}$',9.1)
         d.text(x+14,24,f'Label {i}',9.2)
     d.save(out,'associativity-access',preview)
 
@@ -83,7 +89,8 @@ def stochastic(out,preview):
     values=([value(det,e) for e in edges],[value(priv,e) for e in edges],
             [sum(value(c,e) for c in nonconstant)/len(nonconstant) for e in edges])
     assert tuple(min(v) for v in values)==(half,Fraction(3,4),Fraction(5,6))
-    d=Plate(414,136.8)
+    from diagram_ink import Diagram
+    d=Diagram(414,136.8)
     for k,(x,title,labels,note) in enumerate(zip(
             [69,207,345],['(a) Deterministic','(b) Private coins','(c) Shared coins'],
             [['0','0','1'],['0','1/2','1'],[r'$\chi_0$',r'$\chi_1$',r'$\chi_2$']],
@@ -94,7 +101,9 @@ def stochastic(out,preview):
             worst=v==min(values[k])
             d.rule(*xy[i],*xy[j],c=PURPLE if worst else MUTED,ls='--' if worst else '-',lw=1.05)
             d.text(x+dx,y,str(v),9.1,color=PURPLE if worst else MUTED)
-        for (px,py),lab in zip(xy,labels):d.dot(px,py,lab,r=9)
+        for (px,py),lab in zip(xy,labels):
+            d.dotmark(px,py,9,c=BLUE)
+            d.node_label(px,py,lab,9.1)
         d.text(x,28,note,9.1)
         d.text(x,13,'Minimum: '+str(min(values[k])),9,color=PURPLE,weight='bold')
     d.save(out,'stochastic-triangle',preview)
